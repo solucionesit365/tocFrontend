@@ -438,14 +438,15 @@ export default {
         let cestaId = await getCestaId();
         if (totalTkrs.value > 0 && await cestaId != -1) { /* Ticket restaurant activo */
           const data = {
-            total: Number(total),
+            total: Number(total.value),
             totalTkrs: totalTkrs.value,
             idCesta: cestaId,
             idCliente: infoCliente,
           }
-
+         
           axios.post('tickets/crearTicketTKRS', data).then((res) => {
             if(!res.data.error) {
+              
               reset();
               try {
                 axios.post('impresora/abrirCajon');

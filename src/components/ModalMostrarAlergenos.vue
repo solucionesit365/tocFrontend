@@ -1,5 +1,5 @@
 <template>
-   <div class="modal" id="ModalMostrarAlergenos" tabindex="-1" role="dialog">
+   <div class="modal" id="modalMostrarAlergenos" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document" style="max-width: 600px">
       <div class="modal-content">
         
@@ -25,14 +25,28 @@
 <script>
 
 import { useRoute } from 'vue-router';
-import { ref } from 'vue';
+import {  onMounted, ref, watch } from 'vue';
+
 
 export default {
     setup() {
         const route = useRoute();
-        const { codiBotiga } = route.params.codiBotiga;
-        const { producto } = route.params.producto;
-        const url = ref(`http://silema.hiterp.com/Facturacion/ElForn/gestion/FichaTecnicaHtml.asp?codi=${producto}&Llic=${codiBotiga}`);
+        const codiBotiga = ref(0);
+    const producto = ref(0);
+        const url = ref(`http://silema.hiterp.com/Facturacion/ElForn/gestion/FichaTecnicaHtml.asp?codi=${producto.value}&Llic=${codiBotiga.value}`);
+            
+            
+    onMounted(() => {
+        store.dispatch('Alergenos/setModal');
+    });
+
+
+        watch(() => store.getters['Alergenos/getProducto'], () => {
+        producto.value = store.state.Alergenos.producto;
+        codiBotiga.value = store.state.Alergenos.codiBotiga;
+      
+    })
+        
         return {
             url,
         };

@@ -54,11 +54,14 @@
               </button>
             </div>
             <div v-else>
+              <!-- Botones de los productos -->
               <button v-bind:id="listadoTeclas[(index-1)*6+(index2-1)].idBoton"
               class="btn btn-primary rounded-0 w-100 teclas"
               v-bind:class="[listadoTeclas[(index-1)*6+(index2-1)].color,
               {'invisible': listadoTeclas[(index-1)*6+(index2-1)].idArticle == -1 && !isEditarArticulos(listadoTeclas[(index-1)*6+(index2-1)].idArticle)},
               {'editarArticulos': isEditarArticulos(listadoTeclas[(index-1)*6+(index2-1)].idArticle)}]"
+              @mousedown='mousedown()'
+              @mouseup='mouseup(listadoTeclas[(index-1)*6+(index2-1)].idArticle)'
               @click="clickTecla(listadoTeclas[(index-1)*6+(index2-1)]);
               mostrarInfoVisor(listadoTeclas[(index-1)*6+(index2-1)]);"
               v-on:contextmenu="abrirFicha(listadoTeclas[(index-1)*6+(index2-1)].idArticle)"
@@ -126,6 +129,8 @@ export default {
   setup() {
     const toast = useToast();
     const store = useStore();
+      let inicioMagic = null;
+    let finalMagic = null;
     const cesta = computed(() => store.state.Cesta.cesta);
     const cajaAbierta = computed(() => store.state.Caja.cajaAbierta);
     const listaMenus = ref([{ nomMenu: '' }]);
@@ -134,6 +139,7 @@ export default {
     const showBackButton = ref(false);
     let clickBack = false;
     let clickMenuBloqueado = false;
+    const params = tocGame.getParametros();
     const listaPrecios = ref([{
       _id: -1,
       nombre: '',
@@ -167,6 +173,21 @@ export default {
         });
       }
       modalSuplementos.hide();
+    }
+
+      function mouseup(producto){
+      finalMagic = new Date();
+      const diffTime = Math.abs(finalMagic - inicioMagic);
+      if (diffTime < 2000) {
+        console.log('Pulsación rápida');
+      } else {
+      store.dispatch('ModalEditarProducto/abrirModal', { codiBotiga:params.codigoTienda,producto });
+
+       
+      }
+    }
+    function mousedown(){
+      inicioMagic = new Date();
     }
     // function test() {
     //   emitSocket('test', { destino: 'La concha de tu hermana' });

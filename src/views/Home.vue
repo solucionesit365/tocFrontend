@@ -3,12 +3,15 @@
     <Teclas/>
     <ModalPeso/>
     <ModalEditarProducto />
+    <ModalMostrarAlergenos/>
     <Footer/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import ModalMostrarAlergenos from '@/components/ModalMostrarAlergenos.vue'; // @ is an alias to /src
+
 import Teclas from '@/components/Teclas.vue'; // @ is an alias to /src
 import ModalPeso from '@/components/ModalPeso.vue'; // @ is an alias to /src
 import ModalEditarProducto from '@/components/ModalEditarProducto.vue'; // @ is an alias to /src
@@ -36,6 +39,7 @@ export default {
     return {};
   },
   components: {
+    ModalMostrarAlergenos,
     Teclas,
     ModalPeso,
     ModalEditarProducto,

@@ -104,7 +104,8 @@
                     <button type="button" style="width: 200px" class="btn btn-warning ms-2" @click="actualizarLista()">Actualizar lista</button>
                     <div class="row mt-2">
                         <!-- Selcion de los turnos solo para silema  -->
-                        <!-- <select v-model="idPlanificacion" class="form-select" style="height: 50px; font-size: 20px">
+
+                        <!-- <select v-if="mostrarTurnos" v-model="idPlanificacion" class="form-select" style="height: 50px; font-size: 20px">
                             <option value="SIN_TURNO">Sin turno</option>
                             <option v-for="(item, index) in arrayPlanes" :key="index" :value="arrayPlanes[index].idPlan">{{arrayPlanes[index].turno}}</option>
                         </select> -->
@@ -174,6 +175,7 @@ import axios from 'axios';
 import { useStore } from 'vuex';
 import router from '../router/index';
 import { useToast } from 'vue-toastification';
+import { tocGame } from '../services/tocGame';
 const sha1 = require('sha-1');
 
 export default {
@@ -183,6 +185,7 @@ export default {
         const idPlanificacion = ref('SIN_TURNO');
         const nombre = 'Santy';
         const id = 156;
+        const mostrarTurnos = ref(false);
         let modalFichajes = null;
         let modalPassword = null;
         const arrayTrabajadores = ref([]);
@@ -208,6 +211,9 @@ export default {
             modalFichajes.show();
 
             //La peticion que solo tiene que hacer silema 
+          if (mostrarTurnos.value){
+              console.log("silema")
+          }
             // actualizarTurnos().then(() => {
             //     modalFichajes.show();
             // }).catch((err) => {
@@ -343,6 +349,9 @@ export default {
             modalPassword = new Modal(document.getElementById('modalPassword'), {
                 keyboard: false,
             });
+              if(tocGame.getParametros().database.toLowerCase() == 'fac_tena'){
+               mostrarTurnos.value = true;
+            }
             axios.get('turnos/getPlanes').then((res) => {
                 if (res.data.error == false) {
                     arrayPlanes.value = res.data.info;
@@ -356,6 +365,7 @@ export default {
         });
 
         return {
+            mostrarTurnos,
             goTo,
             goToMenuResponsable,
             abrirModalPassword,

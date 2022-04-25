@@ -10,14 +10,18 @@ export default {
   },
   mutations: {
     abrirModalMutation(state, payload) {
-       
+      state.producto = payload.producto;
+      state.codiBotiga = payload.codiBotiga;
         state.modal.show();
     },
     setModalMutation(state) {
+
       const modalElement = document.getElementById('modalMostrarAlergenos');
+      console.log(modalElement)
       if (modalElement != null) {
         state.modal = new Modal(modalElement);
       }
+
     },
     cerrarModalMutation(state) {
       state.modal.hide();
@@ -29,12 +33,16 @@ export default {
   },
   actions: {
     abrirModal({ commit }, data) {
+      console.log('DAta')
+      console.log(data)
+      
       commit('abrirModalMutation', data);
     },
     cerrarModal({ commit }) {
       commit('cerrarModalMutation');
     },
     setModal(context) {
+      console.log('wallapop')
       context.commit('setModalMutation');
     },
   },

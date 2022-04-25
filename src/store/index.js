@@ -103,7 +103,7 @@ export default createStore({
     }
   },
   modules: {
-    Alergenos,
+
     InstallWizard,
     ModalPeso,
     Cesta,
@@ -117,5 +117,6 @@ export default createStore({
     Footer,
     CestasActivas,
     ModalEditarProducto,
+    Alergenos,
   },
 });

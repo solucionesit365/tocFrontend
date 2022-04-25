@@ -3,8 +3,8 @@
     <Teclas/>
     <ModalPeso/>
     <ModalEditarProducto />
-    <ModalMostrarAlergenos/>
     <Footer/>
+    <ModalMostrarAlergenos/> 
   </div>
 </template>
 
@@ -39,10 +39,11 @@ export default {
     return {};
   },
   components: {
-    ModalMostrarAlergenos,
+   
     Teclas,
     ModalPeso,
     ModalEditarProducto,
+    ModalMostrarAlergenos,
     Footer,
   },
 };

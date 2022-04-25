@@ -129,7 +129,7 @@ export default {
   setup() {
     const toast = useToast();
     const store = useStore();
-      let inicioMagic = null;
+    let inicioMagic = null;
     let finalMagic = null;
     const cesta = computed(() => store.state.Cesta.cesta);
     const cajaAbierta = computed(() => store.state.Caja.cajaAbierta);
@@ -139,7 +139,6 @@ export default {
     const showBackButton = ref(false);
     let clickBack = false;
     let clickMenuBloqueado = false;
-    const params = tocGame.getParametros();
     const listaPrecios = ref([{
       _id: -1,
       nombre: '',
@@ -176,19 +175,32 @@ export default {
     }
 
       function mouseup(producto){
+      
+  
       finalMagic = new Date();
       const diffTime = Math.abs(finalMagic - inicioMagic);
       if (diffTime < 2000) {
+
+       
         console.log('Pulsación rápida');
       } else {
-      store.dispatch('ModalEditarProducto/abrirModal', { codiBotiga:params.codigoTienda,producto });
+       axios.post('/cestas/borrarItemCesta', { _id: store.state.Cesta.cesta._id, idArticulo: producto }).then((res) => {
+          if (res.data.okey) {
+            store.dispatch('Cesta/setCestaAction', res.data.cestaNueva);
+          } else {
+            console.log(res.data.okey);
+          }
+        });
+      
+      store.dispatch('Alergenos/abrirModal', { codiBotiga:tocGame.getParametros().codigoTienda,producto });
 
        
       }
     }
-    function mousedown(){
+        function mousedown(){
       inicioMagic = new Date();
     }
+ 
     // function test() {
     //   emitSocket('test', { destino: 'La concha de tu hermana' });
     //   // socket.emit('test', { destino: 'La concha de tu hermana' });
@@ -728,6 +740,8 @@ export default {
     });
 
     return {
+      mousedown,
+      mouseup,
       edadState,
       listaMenus,
       menuActivo,

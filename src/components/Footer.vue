@@ -22,13 +22,13 @@
           data-bs-toggle="modal" data-bs-target="#modalClientes">
           <i class="bi bi-person-fill display-6"></i>
         </button>
-        <button
+        <router-link
         style="max-width: 106px"
         class="btn btn-secondary botonesPrincipales btn-sm ms-1 menusColorIvan"
-        @click="buscarProducto()"
-        >
+        to='/mesas'>
+        
           <i class="bi bi-cart-plus-fill display-6"></i>
-        </button>
+         </router-link>
       </div>
 
       <div class="row mt-1 ms-2" style="max-width: 220px">

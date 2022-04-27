@@ -12,11 +12,13 @@ class tocGameV3 {
 
     constructor() {
         axios.post(baseURL + 'parametros/getParametros').then((res) => {
+            console.log(res.data)
             if (res.data.error === false) {
                 this.parametros = res.data.parametros;
             } else {
                 throw "Error en parametros/getParametros";
             }
+            
         }).catch((err) => {
             console.log(err);
         });

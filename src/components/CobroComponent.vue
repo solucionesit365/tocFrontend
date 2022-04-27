@@ -591,8 +591,6 @@ export default {
     });
 
     return {
-      mouseup,
-      mousedown,
       test,
       total,
       sizeBilletes,

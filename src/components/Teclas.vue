@@ -60,11 +60,11 @@
               v-bind:class="[listadoTeclas[(index-1)*6+(index2-1)].color,
               {'invisible': listadoTeclas[(index-1)*6+(index2-1)].idArticle == -1 && !isEditarArticulos(listadoTeclas[(index-1)*6+(index2-1)].idArticle)},
               {'editarArticulos': isEditarArticulos(listadoTeclas[(index-1)*6+(index2-1)].idArticle)}]"
-              @mousedown='mousedown()'
-              @mouseup='mouseup(listadoTeclas[(index-1)*6+(index2-1)].idArticle)'
+              @touchstart='mousedown'
+              @touchend='mouseup(listadoTeclas[(index-1)*6+(index2-1)].idArticle)'
               @click="clickTecla(listadoTeclas[(index-1)*6+(index2-1)]);
               mostrarInfoVisor(listadoTeclas[(index-1)*6+(index2-1)]);"
-              v-on:contextmenu="abrirFicha(listadoTeclas[(index-1)*6+(index2-1)].idArticle)"
+             
               style="background-color: #dee3e9;">
               {{listadoTeclas[(index-1)*6+(index2-1)].nombreArticulo.nombre}}
               </button>
@@ -176,7 +176,7 @@ export default {
 
       function mouseup(producto){
       
-  
+         console.log('Mouse up')
       finalMagic = new Date();
       const diffTime = Math.abs(finalMagic - inicioMagic);
       if (diffTime < 2000) {  
@@ -186,6 +186,7 @@ export default {
       }
     }
         function mousedown(){
+          console.log('Mouse down')
       inicioMagic = new Date();
     }
  

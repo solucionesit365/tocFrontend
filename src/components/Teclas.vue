@@ -179,22 +179,10 @@ export default {
   
       finalMagic = new Date();
       const diffTime = Math.abs(finalMagic - inicioMagic);
-      if (diffTime < 2000) {
-
-       
-        console.log('Pulsación rápida');
-      } else {
-       axios.post('/cestas/borrarItemCesta', { _id: store.state.Cesta.cesta._id, idArticulo: producto }).then((res) => {
-          if (res.data.okey) {
-            store.dispatch('Cesta/setCestaAction', res.data.cestaNueva);
-          } else {
-            console.log(res.data.okey);
-          }
-        });
-      
+      if (diffTime < 2000) {  
+    
+      } else {      
       store.dispatch('Alergenos/abrirModal', { codiBotiga:tocGame.getParametros().codigoTienda,producto });
-
-       
       }
     }
         function mousedown(){

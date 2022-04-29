@@ -596,7 +596,11 @@ export default {
             })
             return;
           }
-          alert('Has tocado una tecla vacía.')
+         
+           
+              store.dispatch('ModalAnadirProducto/abrirModal', {idArticle: 333333, precioConIva: 1, nombre: '', tipoIva: 21 });
+           
+         
         } else {
           axios.post('articulos/getArticulo', { idArticulo }).then(({ data }) => {
             if(!data.error) {

@@ -3,6 +3,7 @@
     <Teclas/>
     <ModalPeso/>
     <ModalEditarProducto />
+    <ModalAnadirProducto />
     <Footer/>
     <ModalMostrarAlergenos/> 
   </div>
@@ -15,6 +16,7 @@ import ModalMostrarAlergenos from '@/components/ModalMostrarAlergenos.vue'; // @
 import Teclas from '@/components/Teclas.vue'; // @ is an alias to /src
 import ModalPeso from '@/components/ModalPeso.vue'; // @ is an alias to /src
 import ModalEditarProducto from '@/components/ModalEditarProducto.vue'; // @ is an alias to /src
+import ModalAnadirProducto from '@/components/ModalAnadirProducto.vue';
 import Footer from '@/components/Footer.vue'; // @ is an alias to /src
 import { useStore } from 'vuex';
 import { useToast } from "vue-toastification";
@@ -43,6 +45,7 @@ export default {
     Teclas,
     ModalPeso,
     ModalEditarProducto,
+    ModalAnadirProducto,
     ModalMostrarAlergenos,
     Footer,
   },

@@ -1,5 +1,5 @@
 <template>
-   <div class="modal" id="modalEditarProducto" tabindex="-1" role="dialog">
+   <div class="modal" id="modalAnadirProducto" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document" style="max-width: 600px">
       <div class="modal-content">
         <div class="modal-header">
@@ -8,11 +8,28 @@
         <div class="modal-body">
           <div class="row">
             <label for='nombre'>Nombre producto <input id='nombre' type='text' class='form-control' v-model='nombre' /></label>
-            
-            <label for='precioIva'>Precio con {{parseInt(tipoIva.toString().split('.')[1])}}% de IVA 
-              <input id='precioIva' type='number' class='form-control' v-model='precioConIva' />
-              
-            </label>
+          </div>
+          <div>
+          Precio
+          <input type="number" id='precio' class='form-control'>  
+          </div>
+          Tipo de IVA 
+            <br>
+            <div class="form-check">
+             <label><input type="checkbox" value="4"> 4%</label>
+            </div>
+            <div class="form-check">
+            <label><input type="checkbox" value="10"> 10%</label>
+            </div>
+            <div class="form-check">
+            <label><input type="checkbox" value="21"> 21%</label>
+            </div>
+        <div>
+          Se Puede pesar?
+          <br>
+         <label><input type="checkbox" value="false"> SI</label>
+         <br>
+         <label><input type="checkbox" value="true"> NO</label>
           </div>
         </div>
         <div class="modal-footer">
@@ -54,20 +71,20 @@ export default {
     function confirmar() {
         axios.post('articulos/editarArticulo', { idArticulo: id.value, nombre: nombre.value, precioBase: (parseFloat(precioConIva.value)/parseFloat(tipoIva.value)), precioConIva: parseFloat(precioConIva.value) }).then((data) => {
             console.log(data);
-            store.dispatch('ModalEditarProducto/cerrarModal');
+            store.dispatch('ModalAnadirProducto/cerrarModal');
         })
     }
 
     function cambiarPosicion() {
-      store.dispatch('ModalEditarProducto/cerrarModal');
+      store.dispatch('ModalAnadirProducto/cerrarModal');
       store.dispatch('setModoActual', 'MOVER_ARTICULO');
     }
 
     onMounted(() => {
-        store.dispatch('ModalEditarProducto/setModal');
+        store.dispatch('ModalAnadirProducto/setModal');
     });
 
-    watch(() => store.getters['ModalEditarProducto/getNombre'], () => {
+    watch(() => store.getters['ModalAnadirProducto/getNombre'], () => {
         nombre.value = store.state.ModalEditarProducto.nombre;
         precioConIva.value = store.state.ModalEditarProducto.precioConIva;
         id.value = store.state.ModalEditarProducto.idArticulo;

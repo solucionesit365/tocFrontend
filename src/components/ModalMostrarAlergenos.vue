@@ -34,7 +34,6 @@ export default {
         const route = useRoute();
         const codiBotiga = ref(0);
         const producto = ref(0);
-       console.log(`${producto.value },${codiBotiga.value}`)
        const url = ref('');
         //const url = ref(`http://silema.hiterp.com/Facturacion/ElForn/gestion/FichaTecnicaHtml.asp?codi=3&Llic=00842  `);     
     onMounted(() => {

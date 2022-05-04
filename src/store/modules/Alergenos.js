@@ -17,7 +17,6 @@ export default {
     setModalMutation(state) {
 
       const modalElement = document.getElementById('modalMostrarAlergenos');
-      console.log(modalElement)
       if (modalElement != null) {
         state.modal = new Modal(modalElement);
       }
@@ -33,8 +32,8 @@ export default {
   },
   actions: {
     abrirModal({ commit }, data) {
-      console.log('DAta')
-      console.log(data)
+
+      
       
       commit('abrirModalMutation', data);
     },
@@ -42,7 +41,7 @@ export default {
       commit('cerrarModalMutation');
     },
     setModal(context) {
-      console.log('wallapop')
+
       context.commit('setModalMutation');
     },
   },

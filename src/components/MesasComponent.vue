@@ -1,60 +1,18 @@
 <template>
     <div class="container-mesas">
-        <div v-for="(item, index) in arrayCestas" v-bind:key="index" class="row mt-3">
-            <div v-if="existePosicion(index*4+ 0)" class='col-md-3 text-center'>
-                <div class="card cestaActiva mb-3" style="max-width: 20rem;">
-                    <div class="card-header titleStyle">{{arrayCestas[index*4].nombreCesta}}</div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{getTotalPosicion(index*4+ 0)}} €</h5>
-                        <div class="pt-2">
-                            <button @click="seleccionarCesta(index*4+ 0)" class="btn btn-primary sizeBotones">Abrir</button>
-                            <button @click="borrarCesta(index*4)" class="btn btn-danger ms-2 sizeBotones">Borrar</button>
-                        </div>
-                    </div>
+        <div v-for="i in 10" :key='i' class='row mt-1'>
+            <div v-for='j in 10' :key='j' class='col'>
+                <!-- v-bind:class="[{'cardMesa': findMesa(j, i).activada, 'cardMesaDisabled': !findMesa(j, i).activada}]" -->
+                <div class='mesaGeneral cardMesa' @click='seleccionarCesta(findMesa(j, i))' v-bind:class="[{'enUso': findMesa(j, i).enUso}]">
+                    <p>{{findMesa(j, i).nombre}}</p>
+                    <p>{{parseInt(findMesa(j, i).total).toFixed(2)}}</p>
                 </div>
             </div>
-            <div v-if="existePosicion(index*4+ 1)" class='col-md-3 text-center'>
-                <div class="card cestaActiva mb-3" style="max-width: 20rem;">
-                    <div class="card-header titleStyle">{{arrayCestas[index*4+ 1].nombreCesta}}</div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{getTotalPosicion(index*4+ 1)}} €</h5>
-                        <div class="pt-2">
-                            <button @click="seleccionarCesta(index*4+ 1)" class="btn btn-primary sizeBotones">Abrir</button>
-                            <button @click="borrarCesta(index*4+ 1)" class="btn btn-danger ms-2 sizeBotones">Borrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div v-if="existePosicion(index*4+ 2)" class='col-md-3 text-center'>
-                <div class="card cestaActiva mb-3" style="max-width: 20rem;">
-                    <div class="card-header titleStyle">{{arrayCestas[index*4+ 2].nombreCesta}}</div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{getTotalPosicion(index*4+ 2)}} €</h5>
-                        <div class="pt-2">
-                            <button @click="seleccionarCesta(index*4+ 2)" class="btn btn-primary sizeBotones">Abrir</button>
-                            <button @click="borrarCesta(index*4+ 2)" class="btn btn-danger ms-2 sizeBotones">Borrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div v-if="existePosicion(index*4+ 3)" class='col-md-3 text-center'>
-                <div class="card cestaActiva mb-3" style="max-width: 20rem;">
-                    <div class="card-header titleStyle">{{arrayCestas[index*4+ 3].nombreCesta}}</div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{getTotalPosicion(index*4+ 3)}} €</h5>
-                        <div class="pt-2">
-                            <button @click="seleccionarCesta(index*4+ 3)" class="btn btn-primary sizeBotones">Abrir</button>
-                            <button @click="borrarCesta(index*4+ 3)" class="btn btn-danger ms-2 sizeBotones">Borrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        </div> 
     </div>
     <div class="position-fixed bottom-0 end-0 mb-1 me-2">
         <button @click="volver()" class="btn btn-warning sizeBotones me-2"> Volver </button>
-        <button type="button" class="btn btn-primary sizeBotones" @click="abrirModal()"> Nueva cesta </button>
+        <button type="button" class="btn btn-primary sizeBotones" @click="abrirModal()">Inicio</button>
     </div>
 
     <!-- Modal -->
@@ -125,6 +83,7 @@
             });
             var modal = null;
 
+
             function setActivo(x) {
                 activo.value = x;
             }
@@ -139,6 +98,10 @@
 
             function volver() {
                 router.push('/');
+            }
+
+            function checkEnUso(col, row) {
+
             }
 
             function crearCesta() {
@@ -161,16 +124,45 @@
                 }
             }
 
-            function seleccionarCesta(index) {
-                store.dispatch('Cesta/setIdAction', arrayCestas.value[index]._id);
-                volver();
+            function seleccionarCesta(data) {
+                console.log('Selecionar una cesta ')
+                
+                            store.dispatch('Cesta/setIdAction', data.idMongo);
+                            store.dispatch('CestasActivas/deleteCestaActivaAction', data.idMongo);
+                            store.dispatch('CestasActivas/setCestasActivasAction', {idMongo: data.idMongo, nombre: data.nombre});
+                            volver();
+
+
+                
+               
+            
+              
+              
+                
+            }
+
+            function findMesa(col, row) {
+                let nMesa = col;
+                if(row !== 1) nMesa = (row * 10) - (10 - col);
+                const data = arrayCestas.value.find(i => i.nombreCesta === `TaulaNom${nMesa}`);
+                const enUso = data && data.tiposIva.importe1 + data.tiposIva.importe2 + data.tiposIva.importe3 > 0 ? true : false;
+                        if (data !== undefined){
+                    return  { idMongo: data._id, activada: true, nombre: `Taula ${nMesa}`, total: data.lista.reduce((total, o) =>  o.subtotal + total,0), enUso: enUso }
+                        }else {
+                            return { activada: false, nombre: '', total: '', enUso: enUso}
+                        }
+
+
+                //return  data !== undefined ? { idMongo: data._id, activada: true, nombre: data.idCestaSincro, total: data.lista.reduce((total, o) =>  o.subtotal + total,0), enUso: enUso } : { activada: false, nombre: '', total: '', enUso: enUso};
+                            
             }
 
             function existePosicion(index) {
                 if (arrayCestas.value[index] != undefined) {
                     return true;
                 } else {
-                    return false;
+                    //return false;getCestaByID
+                        return false;
                 }
             }
 
@@ -248,6 +240,7 @@
                 arrayCestas,
                 volver,
                 setActivo,
+                findMesa,
             };
         },
     };
@@ -271,9 +264,37 @@
         width: 210px;
         font-weight: bold;
     }
-
     .titleStyle {
         font-size: 25px;
         font-weight: bold;
+    }
+    .cardMesa {
+        border: 1px solid black;
+        border-radius: 5px;
+        text-align: center;
+        width: 7.5vw;
+        height: 5vw;
+        max-height: 5vw;
+        font-size: .8em;
+        background-color: rgba(252, 0, 0, 0.507);
+    }
+    .cardMesaDisabled {
+        border: 1px solid gray;
+        border-radius: 5px;
+        text-align: center;
+        width: 7.5vw;
+        height: 5vw;
+        max-height: 5vw;
+        color: gray;
+    }
+    .padding0 {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .mesaGeneral {
+        cursor: pointer;
+    }
+    .enUso {
+        background-color: rgba(12, 255, 4, 0.507);
     }
 </style>

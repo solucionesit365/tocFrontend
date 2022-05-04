@@ -336,7 +336,10 @@ export default {
     function regalar(index) {
       axios.post('cestas/regalarProducto', { idCesta: store.getters['Cesta/getCestaId'], index: (index - (cesta.value.lista.length -1))*-1 }).then((res) => {
         if (res.data.error == false) {
+          console.log('regalar')
+          console.log(store.getters['Cesta/getCestaId'])
           store.dispatch('Cesta/setCestaAction', res.data.cesta);
+          console.log(store.getters['Cesta/getCestaId'])
         } else {
           toast.error(res.data.mensaje);
         }
@@ -380,6 +383,8 @@ export default {
       }
       return suma.toFixed(2);
     });
+
+    
     const cestaAlReves = computed(() => {
       const aux = cesta.value.lista; // Reverse muta el array.
       return aux.reverse();
@@ -417,7 +422,10 @@ export default {
         }).then((res) => {
           if (!res.data.error) {
             axios.post('/cestas/getCesta').then((res) => {
+              console.log('crear tickets')
+              console.log(store.getters['Cesta/getCestaId'])
               store.dispatch('Cesta/setCestaAction', res.data);
+              console.log(store.getters['Cesta/getCestaId'])
             });
             /* Ejemplo de como limpiar el estado al completo */
             store.dispatch('setModoActual', 'NORMAL');
@@ -445,7 +453,10 @@ export default {
             estadoPromociones: true
           });
           axios.post('/cestas/getCesta').then((res) => {
+            console.log('cerar devolucion ')
+            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res.data);
+            console.log(store.getters['Cesta/getCestaId'])
           });
           store.dispatch('setModoActual', 'NORMAL');
           store.dispatch('Clientes/resetClienteActivo');
@@ -466,7 +477,10 @@ export default {
       }).then((res) => {
         if (!res.data.error) {
           axios.post('/cestas/getCesta').then((res) => {
+            console.log('consumo personal ')
+            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res.data);
+            console.log(store.getters['Cesta/getCestaId'])
           });
           store.dispatch('setModoActual', 'NORMAL');
           store.dispatch('Clientes/resetClienteActivo');
@@ -551,16 +565,19 @@ export default {
       /* INICIALIZACIÓN DE CESTA */
       // axios.post('/cestas/getCestaByID', { idCesta: store.getters['Cesta/getCestaId'] }).then((res) => {
       //   if (res.data.error == false) {
+      //     console.log(res.data.info)
+      //     console.log('hola hoala vecunito')
       //     store.dispatch('Cesta/setCestaAction', res.data.info);
       //   } else {
+    
       //       toast.error(res.data.mensaje);
       //   }
       // });
-      // axios.post('/trabajadores/getCurrentTrabajador').then((res) => {
-      //   nombreTrabajador.value = res.data.trabajador.nombre;
+      axios.post('/trabajadores/getCurrentTrabajador').then((res) => {
+        nombreTrabajador.value = res.data.trabajador.nombre;
 
-      //   store.dispatch('Trabajadores/setTrabajadorActivo', res.data.trabajador.idTrabajador);
-      // });
+        store.dispatch('Trabajadores/setTrabajadorActivo', res.data.trabajador.idTrabajador);
+      });
 
       
     });
@@ -599,7 +616,10 @@ export default {
       axios.post('cestas/addSuplemento', { idCesta: store.getters['Cesta/getCestaId'], suplementos: suplementosSeleccionados.value, idArticulo: store.getters['Cesta/getItem'], posArticulo: activo.value }).then((res) => {
         if(!res.data.error && !res.data.bloqueado) {
           store.dispatch('resetUnidades');
+          console.log('suplemento')
+          console.log(store.getters['Cesta/getCestaId'])
           store.dispatch('Cesta/setCestaAction', res.data.cesta);
+          console.log(store.getters['Cesta/getCestaId'])
           suplementosSeleccionados.value = [];
           cerrarModal();
         } else {
@@ -620,7 +640,10 @@ export default {
         /* eslint no-underscore-dangle: 0 */
         axios.post('/cestas/borrarArticulosCesta', { idCesta: cesta.value._id }).then((res) => {
           if (res.data.error == false) {
+            console.log('suplemento')
+            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res.data.info);
+            console.log(store.getters['Cesta/getCestaId'])
           } else {
             toast.error(res.data.mensaje);
           }
@@ -634,7 +657,10 @@ export default {
         // cio: "", total: toc.getCesta().tiposIva.importe2, dependienta: ""});
         axios.post('/cestas/borrarItemCesta', { _id: store.state.Cesta.cesta._id, idArticulo: store.getters['Cesta/getItem'] }).then((res) => {
           if (res.data.okey) {
+            console.log('borra cesta ')
+            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res.data.cestaNueva);
+            console.log(store.getters['Cesta/getCestaId'])
           } else {
             console.log(res.data.okey);
           }

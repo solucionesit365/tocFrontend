@@ -165,7 +165,10 @@ export default {
       if(borrarItem) {
         axios.post('/cestas/borrarItemCesta', { _id: cesta.value._id, idArticulo, idArticulo }).then((res) => {
           if (res.data.okey) {
+            console.log('tecals borrar item ')
+            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res.data.cestaNueva);
+            console.log(store.getters['Cesta/getCestaId'])
           } else {
             console.log(res.data.okey);
           }
@@ -176,7 +179,7 @@ export default {
 
       function mouseup(producto){
       
-         console.log('Mouse up')
+       
       finalMagic = new Date();
       const diffTime = Math.abs(finalMagic - inicioMagic);
       if (diffTime < 2000) {  
@@ -186,7 +189,7 @@ export default {
       }
     }
         function mousedown(){
-          console.log('Mouse down')
+         
       inicioMagic = new Date();
     }
  
@@ -558,7 +561,6 @@ export default {
     function clickSubmenu(tag) {
       axios.post('/doble-menus/clickMenu', { tag }).then((res) => {
         if(!res.data.bloqueado) {
-          console.log(res)
           listaMenus.value = res.data.resultado;
           subMenuActivo = tag;
           clickMenuBloqueado = false;
@@ -610,6 +612,9 @@ export default {
         }
         return;
       }
+
+      console.log('click tecla ')
+      console.log(cesta.value)
       axios.post('cestas/clickTeclaArticulo', {
         idArticulo: objListadoTeclas.idArticle,
         idBoton: objListadoTeclas.idBoton,
@@ -624,7 +629,10 @@ export default {
             modalSuplementos.show();
           } else {
             store.dispatch('resetUnidades');
+            console.log('click teclas articulos ')
+            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res2.data.cesta);
+            console.log(store.getters['Cesta/getCestaId'])
           }
         } else {
           console.log('Error en clickTeclaArticulo');
@@ -652,7 +660,10 @@ export default {
       axios.post('cestas/addSuplemento', { idCesta: cesta.value._id, suplementos: suplementosSeleccionados.value, idArticulo, posArticulo: -100 }).then((res) => {
         if(!res.data.error && !res.data.bloqueado) {
           store.dispatch('resetUnidades');
+          console.log('añadir suplemento ')
+          console.log(store.getters['Cesta/getCestaId'])
           store.dispatch('Cesta/setCestaAction', res.data.cesta);
+          console.log(store.getters['Cesta/getCestaId'])
           suplementosSeleccionados.value = [];
           idArticulo = null;
           cerrarModal();
@@ -679,6 +690,7 @@ export default {
       axios.post('/doble-menus/getMenus').then((res) => {
         if(!res.data.bloqueado) {
           if(res.data.resultado.length > 0) {
+
             listaSubmenus.value = res.data.resultado;
             if(!backButton) clickSubmenu(res.data.resultado[0].tag);
             else dobleMenu.value = true;

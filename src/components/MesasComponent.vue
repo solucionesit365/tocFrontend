@@ -1,103 +1,17 @@
 <template>
     <div class="container-mesas">
-        <div v-for="(item, index) in arrayCestas" v-bind:key="index" class="row mt-3">
-            <div v-if="existePosicion(index*4+ 0)" class='col-md-3 text-center'>
-                <div class="card cestaActiva mb-3" style="max-width: 20rem;">
-                    <div class="card-header titleStyle">{{arrayCestas[index*4].nombreCesta}}</div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{getTotalPosicion(index*4+ 0)}} €</h5>
-                        <div class="pt-2">
-                            <button @click="seleccionarCesta(index*4+ 0)" class="btn btn-primary sizeBotones">Abrir</button>
-                            <button @click="borrarCesta(index*4)" class="btn btn-danger ms-2 sizeBotones">Borrar</button>
-                        </div>
-                    </div>
+        <div v-for="i in 10" :key='i' class='row mt-1'>
+            <div v-for='j in 10' :key='j' class='col'>
+                <!-- v-bind:class="[{'cardMesa': findMesa(j, i).activada, 'cardMesaDisabled': !findMesa(j, i).activada}]" -->
+                <div class='mesaGeneral cardMesa' @click='seleccionarCesta(findMesa(j, i))' v-bind:class="[{'enUso': findMesa(j, i).enUso}]">
+                    <p>{{findMesa(j, i).nombre}}</p>
+                    <p>{{parseInt(findMesa(j, i).total).toFixed(2)}}</p>
                 </div>
             </div>
-            <div v-if="existePosicion(index*4+ 1)" class='col-md-3 text-center'>
-                <div class="card cestaActiva mb-3" style="max-width: 20rem;">
-                    <div class="card-header titleStyle">{{arrayCestas[index*4+ 1].nombreCesta}}</div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{getTotalPosicion(index*4+ 1)}} €</h5>
-                        <div class="pt-2">
-                            <button @click="seleccionarCesta(index*4+ 1)" class="btn btn-primary sizeBotones">Abrir</button>
-                            <button @click="borrarCesta(index*4+ 1)" class="btn btn-danger ms-2 sizeBotones">Borrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div v-if="existePosicion(index*4+ 2)" class='col-md-3 text-center'>
-                <div class="card cestaActiva mb-3" style="max-width: 20rem;">
-                    <div class="card-header titleStyle">{{arrayCestas[index*4+ 2].nombreCesta}}</div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{getTotalPosicion(index*4+ 2)}} €</h5>
-                        <div class="pt-2">
-                            <button @click="seleccionarCesta(index*4+ 2)" class="btn btn-primary sizeBotones">Abrir</button>
-                            <button @click="borrarCesta(index*4+ 2)" class="btn btn-danger ms-2 sizeBotones">Borrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div v-if="existePosicion(index*4+ 3)" class='col-md-3 text-center'>
-                <div class="card cestaActiva mb-3" style="max-width: 20rem;">
-                    <div class="card-header titleStyle">{{arrayCestas[index*4+ 3].nombreCesta}}</div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{getTotalPosicion(index*4+ 3)}} €</h5>
-                        <div class="pt-2">
-                            <button @click="seleccionarCesta(index*4+ 3)" class="btn btn-primary sizeBotones">Abrir</button>
-                            <button @click="borrarCesta(index*4+ 3)" class="btn btn-danger ms-2 sizeBotones">Borrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        </div> 
     </div>
     <div class="position-fixed bottom-0 end-0 mb-1 me-2">
         <button @click="volver()" class="btn btn-warning sizeBotones me-2"> Volver </button>
-        <button type="button" class="btn btn-primary sizeBotones" @click="abrirModal()"> Nueva cesta </button>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="modalNuevaCesta" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Crear nueva cesta</h5>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-                <div class="col">
-                    <div class="input-group input-group-lg">
-                    <input v-model="nuevaCestaString" type="text" class="form-control" style="font-weight: bold;" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-md-6 text-center">
-                    <div class="btn-group-vertical">
-                        <button @click="addText(' PISO')" class="btn btn-secondary mnemoSize border">PISO</button>
-                        <button @click="addText(' CASA')" class="btn btn-secondary mt-2 mnemoSize border">CASA</button>
-                        <button @click="addText(' BARCO')" class="btn btn-secondary mt-2 mnemoSize border">BARCO</button>
-                        <button @click="addText(' DEVOLUCIÓN')" class="btn btn-warning mt-2 mnemoSize border">DEVOLUCIÓN</button>
-                    </div>
-                </div>
-                <div class="col-md-6 text-center">
-                    <div class="btn-group-vertical">
-                        <button @click="addText(' BLANCO')" style="background: #EEEEEE; color:black;" class="btn btn-primary mnemoSize border">BLANCO</button>
-                        <button @click="addText(' ROJO')" style="background: #E86A6A; color:black;" class="btn btn-primary mt-2 mnemoSize border">ROJO</button>
-                        <button @click="addText(' AZUL')" style="background: #5399D1; color:black;" class="btn btn-primary mt-2 mnemoSize border">AZUL</button>
-                        <button @click="addText(' VERDE')" style="background: #76B842; color:black;" class="btn btn-warning mt-2 mnemoSize border">VERDE</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer mt-1 mx-auto">
-            <button type="button" class="btn btn-danger btn-lg" @click="cerrarModal()">Cerrar</button>
-            <button type="button" class="btn btn-secondary btn-lg" @click="borrarLetra()">Borrar</button>
-            <button type="button" class="btn btn-primary btn-lg" @click="crearCesta()">Crear</button>
-        </div>
-        </div>
-    </div>
     </div>
 </template>
 <script>
@@ -125,6 +39,7 @@
             });
             var modal = null;
 
+
             function setActivo(x) {
                 activo.value = x;
             }
@@ -139,6 +54,10 @@
 
             function volver() {
                 router.push('/');
+            }
+
+            function checkEnUso(col, row) {
+
             }
 
             function crearCesta() {
@@ -161,9 +80,20 @@
                 }
             }
 
-            function seleccionarCesta(index) {
-                store.dispatch('Cesta/setIdAction', arrayCestas.value[index]._id);
+            function seleccionarCesta(data) {
+                store.dispatch('Cesta/setIdAction', data.idMongo);
+                store.dispatch('CestasActivas/deleteCestaActivaAction', data.idMongo);
+                store.dispatch('CestasActivas/setCestasActivasAction', {idMongo: data.idMongo, nombre: data.nombre});
                 volver();
+            }
+
+            function findMesa(col, row) {
+                let nMesa = col;
+                if(row !== 1) nMesa = (row * 10) - (10 - col);
+                const data = arrayCestas.value.find(i => i.idCestaSincro === `Taula ${nMesa}`);
+                // COMPROBAR SI FUNCIONA SIN EL ? true : false;
+                const enUso = data && data.tiposIva.importe1 + data.tiposIva.importe2 + data.tiposIva.importe3 > 0 ? true : false;
+                return data !== undefined ? { idMongo: data._id, activada: true, nombre: data.idCestaSincro, total: data.lista.reduce((total, o) =>  o.subtotal + total,0), enUso: enUso } : { activada: false, nombre: '', total: '', enUso: enUso};
             }
 
             function existePosicion(index) {
@@ -176,7 +106,6 @@
 
             function getTotalPosicion(index) {
                 let subtotal = 0;
-
                 for (let i = 0; i < arrayCestas.value[index].lista.length; i++) {
                     subtotal += arrayCestas.value[index].lista[i].subtotal;
                 }
@@ -185,7 +114,7 @@
 
             function cargarCestas() {
                 axios.get('cestas/getCestas').then((res) => {
-                    if (res.data.error == false) {
+                    if (!res.data.error) {
                         arrayCestas.value = res.data.info;
                     } else {
                         toast.error(res.data.mensaje);
@@ -248,6 +177,7 @@
                 arrayCestas,
                 volver,
                 setActivo,
+                findMesa,
             };
         },
     };
@@ -271,9 +201,37 @@
         width: 210px;
         font-weight: bold;
     }
-
     .titleStyle {
         font-size: 25px;
         font-weight: bold;
+    }
+    .cardMesa {
+        border: 1px solid black;
+        border-radius: 5px;
+        text-align: center;
+        width: 7.5vw;
+        height: 5vw;
+        max-height: 5vw;
+        font-size: .8em;
+        background-color: rgba(252, 0, 0, 0.507);
+    }
+    .cardMesaDisabled {
+        border: 1px solid gray;
+        border-radius: 5px;
+        text-align: center;
+        width: 7.5vw;
+        height: 5vw;
+        max-height: 5vw;
+        color: gray;
+    }
+    .padding0 {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .mesaGeneral {
+        cursor: pointer;
+    }
+    .enUso {
+        background-color: rgba(12, 255, 4, 0.507);
     }
 </style>

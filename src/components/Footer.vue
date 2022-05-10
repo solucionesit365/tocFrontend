@@ -146,7 +146,7 @@
         <button
           class="btn btn-secondary w-100 botonesPrincipales menusColorIvan mb-1">
           <span style="font-size: 14px;">
-          {{ nombreTrabajador }}
+            {{ cesta.nombreCesta && cesta.nombreCesta.split(' ')[0] === 'Trabajador' ? nombreTrabajador : cesta.nombreCesta }}
           </span>
         </button>
         <button
@@ -276,6 +276,7 @@ export default {
     const nombreTienda = ref('');
     const store = useStore();
     const cesta = computed(() => store.state.Cesta.cesta);
+    const nombreCesta = computed(() => store.state.Cesta.cesta.nombreCesta);
     const activo = computed(() => store.state.Cesta.activo);
     const notificaciones = computed(() => store.state.Notificaciones.cantidad);
     const conCliente = null;
@@ -549,19 +550,20 @@ export default {
       }
 
       /* INICIALIZACIÓN DE CESTA */
-      // axios.post('/cestas/getCestaByID', { idCesta: store.getters['Cesta/getCestaId'] }).then((res) => {
-      //   if (res.data.error == false) {
-      //     store.dispatch('Cesta/setCestaAction', res.data.info);
-      //   } else {
-      //       toast.error(res.data.mensaje);
-      //   }
-      // });
-      // axios.post('/trabajadores/getCurrentTrabajador').then((res) => {
-      //   nombreTrabajador.value = res.data.trabajador.nombre;
+      axios.post('/cestas/getCestaByID', { idCesta: store.getters['Cesta/getCestaId'] }).then((res) => {
+        if (!res.data.error) {
+          console.log('hjdfgshjfk', res.data.info)
+          store.dispatch('Cesta/setCestaAction', res.data.info);
+        } else {
+            toast.error(res.data.mensaje);
+        }
+      });
+      axios.post('/trabajadores/getCurrentTrabajador').then((res) => {
+        
+        nombreTrabajador.value = res.data.trabajador.nombre;
 
-      //   store.dispatch('Trabajadores/setTrabajadorActivo', res.data.trabajador.idTrabajador);
-      // });
-
+        store.dispatch('Trabajadores/setTrabajadorActivo', res.data.trabajador.idTrabajador);
+      });
       
     });
 
@@ -687,7 +689,8 @@ export default {
       checkSuplementoActivo,
       addSuplemento,
       nombreTrabajador,
-      getClock
+      getClock,
+      nombreCesta,
     };
   },
   components: {

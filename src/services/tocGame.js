@@ -90,16 +90,16 @@ class tocGameV3 {
                             if (infoTrabajador.data.error == false) {
                                 store.dispatch('Trabajadores/setTrabajadorActivo', infoTrabajador.data.trabajador.idTrabajador);
                                 store.dispatch('Trabajadores/setNombreTrabajadorActivo', infoTrabajador.data.trabajador.nombre);
-                                axios.post('cestas/getCestaByTrabajadorId', { idTrabajador: infoTrabajador.data.trabajador.idTrabajador }).then((resCesta) => {
-                                    if (resCesta.data.error === false && resCesta.data.info != null) {
-                                        store.dispatch('Cesta/setCestaAction', resCesta.data.info);
-                                    } else {                                        
-                                        console.log(resCesta.data.mensaje);
-                                    }
-                                }).catch((err) => {
-                                    console.log(err);
-                                    console.log('Error catch cestas/getCestasByTrabajadorId');
-                                })
+                                // axios.post('cestas/getCestaByTrabajadorId', { idTrabajador: infoTrabajador.data.trabajador.idTrabajador }).then((resCesta) => {
+                                //     if (resCesta.data.error === false && resCesta.data.info != null) {
+                                //         store.dispatch('Cesta/setCestaAction', resCesta.data.info);
+                                //     } else {                                        
+                                //         console.log(resCesta.data.mensaje);
+                                //     }
+                                // }).catch((err) => {
+                                //     console.log(err);
+                                //     console.log('Error catch cestas/getCestasByTrabajadorId');
+                                // })
                             } else {
                                 console.log(infoTrabajador.data.mensaje);
                                 // toast.error(infoTrabajador.data.mensaje);

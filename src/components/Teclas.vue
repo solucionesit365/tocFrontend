@@ -558,7 +558,6 @@ export default {
     function clickSubmenu(tag) {
       axios.post('/doble-menus/clickMenu', { tag }).then((res) => {
         if(!res.data.bloqueado) {
-          console.log(res)
           listaMenus.value = res.data.resultado;
           subMenuActivo = tag;
           clickMenuBloqueado = false;

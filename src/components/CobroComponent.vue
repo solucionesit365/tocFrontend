@@ -242,19 +242,16 @@ export default {
     const tipoDatafono = ref(null);
     const esperando = computed(() => store.state.esperandoDatafono); // ref(false);
 
-
-    axios.get('cestas/getCestaCurrentTrabajador').then((infoCesta) => {
-      if (infoCesta.data.error === false) {
-        total.value = infoCesta.data.info.tiposIva.importe1 + infoCesta.data.info.tiposIva.importe2 + infoCesta.data.info.tiposIva.importe3;
+    axios.post('/cestas/getCestaByID', { idCesta: store.getters['Cesta/getCestaId'] }).then((res) => {
+      if (!res.data.error) {
+        total.value = res.data.info.tiposIva.importe1 + res.data.info.tiposIva.importe2 + res.data.info.tiposIva.importe3;
       } else {
-        total.value = 0;
-        toast.error(infoCesta.data.error);
+        toast.error(res.data.mensaje);
       }
     }).catch((err) => {
       console.log(err);
       toast.error("No se ha podido cargar la cesta");
-    });  
-    
+    });
     function getCestaId() {
       return axios.get('cestas/getCestaCurrentTrabajador').then((res) => {
         if (!res.data.error) {
@@ -435,7 +432,7 @@ export default {
 
     async function cobrar() {
       if (!esperando.value && total.value > 0) {
-        let cestaId = await getCestaId();
+        let cestaId = store.getters['Cesta/getCestaId'];
         if (totalTkrs.value > 0 && await cestaId != -1) { /* Ticket restaurant activo */
           const data = {
             total: Number(total.value),
@@ -530,6 +527,7 @@ export default {
               emitSocket('iniciarTransaccion', { idClienteFinal: infoCliente });
             }              
           }
+          reset();
 
           // toc.crearTicket(this.metodoPagoActivo, Number(vueCesta.getTotalEstatico()),
           // {tkrs: false});
@@ -541,13 +539,7 @@ export default {
     }
 
     async function reset() {
-      const res = await axios.post('trabajadores/getCurrentTrabajador', {});
-      if (!res.data.error) {
-        store.dispatch('CestasActivas/deleteCestaActivaAction', res.data.trabajador.idTrabajador);
-      } else {
-        toast.error(res.data.mensaje);
-      }
-      
+      store.dispatch('CestasActivas/deleteCestaActivaAction', store.getters['Cesta/getCestaId']);
       store.dispatch('Cesta/setIdAction', -1);
       store.dispatch('setModoActual', 'NORMAL');
       store.dispatch('Clientes/resetClienteActivo');

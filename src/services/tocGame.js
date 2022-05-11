@@ -90,15 +90,12 @@ class tocGameV3 {
                             if (infoTrabajador.data.error == false) {
                                 store.dispatch('Trabajadores/setTrabajadorActivo', infoTrabajador.data.trabajador.idTrabajador);
                                 store.dispatch('Trabajadores/setNombreTrabajadorActivo', infoTrabajador.data.trabajador.nombre);
-                                axios.post('cestas/getCestaByTrabajadorId', { idTrabajador: infoTrabajador.data.trabajador.idTrabajador }).then((resCesta) => {
+                                  var idcesta = store.getters['Cesta/getCestaId']
+                                  axios.post('cestas/getCestaByTrabajadorId', { idTrabajador: idcesta }).then((resCesta) => {
+                                    console.log('Esto es lo que contiene resCEsta')  
+                                    console.log(resCesta.data.info)
                                     if (resCesta.data.error === false && resCesta.data.info != null) {
-                                        console.log('Abrir cajas ')
-                                        //var id = store.getters['Cesta/getCestaId']
-                                    
-                                      store.dispatch('Cesta/setCestaAction', resCesta.data.info);
-                                     // store.dispatch('Cesta/setCestaAction', id);
-                                    
-                                      console.log(store.getters['Cesta/getCestaId'])
+                                        store.dispatch('Cesta/setCestaAction', resCesta.data.info);
                                     } else {                                        
                                         console.log(resCesta.data.mensaje);
                                     }

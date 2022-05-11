@@ -22,43 +22,12 @@ export default {
             console.log(typeof activo, typeof x)
             return activo === x;
         }
-        function changeActivo(id) {
-
-             console.log(' changeActivo')
-                    axios.get('trabajadores/getCurrentTrabajadorNueva').then((infoTrabajador) => {
-                            if (infoTrabajador.data.error == false) {
-                                axios.post('cestas/cambiarCestaTrabajador', { id:infoTrabajador.data.trabajador.idTrabajador, id_cesta: id }).then((res) => {
-                        if (res.data.error == false) {
-                        router.push('/');
-                        } else {
-                            toast.error(res.data.mensaje);
-                        }
-                    }).catch((err) => {
-                        console.log(err);
-                        toast.error('Error, no se ha podido selecionar la cesta ');
-                    });
-                            } else {
-                                console.log(infoTrabajador.data.mensaje);
-                                // toast.error(infoTrabajador.data.mensaje);
-                            }
-                        }).catch((err) => {
-                            console.log(err);
-                            console.log('Error catch MesasComponents/getCurrentTrabajador');
-                            // toast.error('Error catch trabajador/getCurrentTrabajador');
-                        });
-
-
-
-
-
-
-
-            // store.dispatch('Cesta/setIdAction', id);
-      
-            // console.log('esto es en change activooo ')
-            // console.log(store.getters['Cesta/getCestaId'])
-            // router.push('/');
-
+           function changeActivo(id) {
+               console.log(id)
+                    store.dispatch('Cesta/setIdAction', id);
+                    router.push('/');
+            
+          
         }
         return {
             cestas,

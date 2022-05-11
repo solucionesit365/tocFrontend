@@ -508,6 +508,8 @@ export default {
         let infoClienteVip = store.getters['Clientes/getInfoClienteVip'];
         let idClienteFinal = store.getters['Clientes/getInfoCliente'];
         let idCesta = store.getters['Cesta/getCestaId'];
+        console.log('esto es lo que contiene id cesta del footer')
+        console.log(idCesta)
         
         /* Si se cumple que es VIP y no paga en tienda, se crea la deuda, sino, cobro normal */
         if ((pagaEnTienda == true && modoActual != 'DEVOLUCION' && modoActual != 'CONSUMO PERSONAL') || (modoActual == 'CLIENTE')) {

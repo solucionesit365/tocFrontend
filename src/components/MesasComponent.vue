@@ -52,7 +52,7 @@
         <div class="modal-footer mt-1 mx-auto">
             <button type="button" class="btn btn-danger btn-lg" @click="cerrarModal()">Cerrar</button>
             <button type="button" class="btn btn-secondary btn-lg" @click="borrarLetra()">Borrar</button>
-            <button type="button" class="btn btn-primary btn-lg" @click="crearCesta()">Crear</button>
+            <!-- <button type="button" class="btn btn-primary btn-lg" @click="crearCesta()">Crear</button> -->
         </div>
         </div>
     </div>
@@ -65,6 +65,7 @@
     import { useToast } from 'vue-toastification';
     import { useStore } from 'vuex';
     import { Modal } from 'bootstrap';
+
 
     export default {
         name: 'MesasComponent',
@@ -104,50 +105,48 @@
 
             }
 
-            function crearCesta() {
-                if (nuevaCestaString.value.length > 2) {
-                    axios.post('cestas/crearCesta', { nombreCesta: nuevaCestaString.value }).then((res) => {
-                        if (res.data.error == false) {
-                            nuevaCestaString.value = '';
-                            toast.success('Cesta creada');
-                            cerrarModal();
-                            cargarCestas();
-                        } else {
-                            toast.error(res.data.mensaje);
-                        }
-                    }).catch((err) => {
-                        console.log(err);
-                        toast.error('Error, no se ha podido crear la nueva cesta');
-                    });
-                } else {
-                    toast.error('3 letras mínimo');
-                }
-            }
+            // function crearCesta() {
+            //     if (nuevaCestaString.value.length > 2) {
+            //         axios.post('cestas/crearCesta', { nombreCesta: nuevaCestaString.value }).then((res) => {
+            //             if (res.data.error == false) {
+            //                 nuevaCestaString.value = '';
+            //                 toast.success('Cesta creada');
+            //                 cerrarModal();
+            //                 cargarCestas();
+            //             } else {
+            //                 toast.error(res.data.mensaje);
+            //             }
+            //         }).catch((err) => {
+            //             console.log(err);
+            //             toast.error('Error, no se ha podido crear la nueva cesta');
+            //         });
+            //     } else {
+            //         toast.error('3 letras mínimo');
+            //     }
+            // }
 
-            function seleccionarCesta(data) {
-                console.log('Selecionar una cesta ')
-                
-                            store.dispatch('Cesta/setIdAction', data.idMongo);
-                            store.dispatch('CestasActivas/deleteCestaActivaAction', data.idMongo);
-                            store.dispatch('CestasActivas/setCestasActivasAction', {idMongo: data.idMongo, nombre: data.nombre});
-                            volver();
-
-
-                
-               
             
-              
-              
-                
+                /**
+                 * Al selecionar una cesta esta se añade debajo del trabajador y crea la cesta 
+                 * @param {*} data 
+                 */
+         
+            function seleccionarCesta(data) {
+                console.log('Selecionar cesta ')
+                console.log(data.nombre)
+                store.dispatch('Cesta/setIdAction', data.idMongo);
+                //store.dispatch('CestasActivas/deleteCestaActivaAction', data.idMongo);
+                store.dispatch('CestasActivas/setCestasActivasAction', {idMongo: data.idMongo, nombre: data.nombre});
+                volver();
             }
 
             function findMesa(col, row) {
                 let nMesa = col;
                 if(row !== 1) nMesa = (row * 10) - (10 - col);
-                const data = arrayCestas.value.find(i => i.nombreCesta === `TaulaNom${nMesa}`);
+                const data = arrayCestas.value.find(i => i.nombreCesta === `Mesa ${nMesa}`);
                 const enUso = data && data.tiposIva.importe1 + data.tiposIva.importe2 + data.tiposIva.importe3 > 0 ? true : false;
                         if (data !== undefined){
-                    return  { idMongo: data._id, activada: true, nombre: `Taula ${nMesa}`, total: data.lista.reduce((total, o) =>  o.subtotal + total,0), enUso: enUso }
+                    return  { idMongo: data._id, activada: true, nombre: `Mesa ${nMesa}`, total: data.lista.reduce((total, o) =>  o.subtotal + total,0), enUso: enUso }
                         }else {
                             return { activada: false, nombre: '', total: '', enUso: enUso}
                         }
@@ -226,7 +225,7 @@
             });
 
             return {
-                crearCesta,
+          
                 borrarLetra,
                 nuevaCestaString,
                 addText,

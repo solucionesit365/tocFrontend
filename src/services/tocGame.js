@@ -4,7 +4,8 @@ import router from '../router/index';
 import { useToast } from "vue-toastification";
 const toast = useToast();
 
-const baseURL = 'http://localhost:3000/'; // BUILD PARA TPV
+// const baseURL = 'http://localhost:3000/'; // BUILD PARA TPV
+const baseURL = 'http://10.137.0.201:3000/'; // BUILD PARA TPV CON IP
 // const baseURL = 'http://54.195.159.7:3000'; // BUILD PARA SERVIDOR
 
 class tocGameV3 {

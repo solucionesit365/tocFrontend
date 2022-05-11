@@ -552,16 +552,13 @@ export default {
       /* INICIALIZACIÓN DE CESTA */
       axios.post('/cestas/getCestaByID', { idCesta: store.getters['Cesta/getCestaId'] }).then((res) => {
         if (!res.data.error) {
-          console.log('hjdfgshjfk', res.data.info)
           store.dispatch('Cesta/setCestaAction', res.data.info);
         } else {
-            toast.error(res.data.mensaje);
+          toast.error(res.data.mensaje);
         }
       });
       axios.post('/trabajadores/getCurrentTrabajador').then((res) => {
-        
         nombreTrabajador.value = res.data.trabajador.nombre;
-
         store.dispatch('Trabajadores/setTrabajadorActivo', res.data.trabajador.idTrabajador);
       });
       

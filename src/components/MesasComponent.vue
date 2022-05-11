@@ -91,9 +91,11 @@
                 let nMesa = col;
                 if(row !== 1) nMesa = (row * 10) - (10 - col);
                 const data = arrayCestas.value.find(i => i.idCestaSincro === `Taula ${nMesa}`);
-                // COMPROBAR SI FUNCIONA SIN EL ? true : false;
-                const enUso = data && data.tiposIva.importe1 + data.tiposIva.importe2 + data.tiposIva.importe3 > 0 ? true : false;
-                return data !== undefined ? { idMongo: data._id, activada: true, nombre: data.idCestaSincro, total: data.lista.reduce((total, o) =>  o.subtotal + total,0), enUso: enUso } : { activada: false, nombre: '', total: '', enUso: enUso};
+                const enUso = data && data.tiposIva.importe1 + data.tiposIva.importe2 + data.tiposIva.importe3 > 0;
+                return data !== undefined ? 
+                    { idMongo: data._id, activada: true, nombre: data.idCestaSincro, total: data.lista.reduce((total, o) =>  o.subtotal + total,0), enUso: enUso }
+                    :
+                    { activada: false, nombre: '', total: '', enUso: enUso};
             }
 
             function existePosicion(index) {

@@ -431,6 +431,7 @@ export default {
     }
 
     async function cobrar() {
+      console.log(metodoPagoActivo.value);
       if (!esperando.value && total.value > 0) {
         let cestaId = store.getters['Cesta/getCestaId'];
         if (totalTkrs.value > 0 && await cestaId != -1) { /* Ticket restaurant activo */

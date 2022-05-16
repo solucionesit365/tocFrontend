@@ -261,8 +261,24 @@ export default {
       toast.error("No se ha podido cargar la cesta");
     });  
     
-    function getCestaId() {
-      return axios.get('cestas/getCestaCurrentTrabajador').then((res) => {
+    // function getCestaId() {
+    //   return axios.get('cestas/getCestaCurrentTrabajador').then((res) => {
+    //     if (!res.data.error) {
+    //       return res.data.info._id;
+    //     } else {
+    //       console.log(res.data.mensaje);
+    //       return -1;
+    //     }
+    //   }).catch((err) => {
+    //     console.log(err);
+    //     toast.error(err.message);
+    //     return -1;
+    //   });
+    // }
+
+     function getCestaId() {
+      
+      return axios.post('cestas/getCestaCurrent', {idCesta:cesta}).then((res) => {
         if (!res.data.error) {
           return res.data.info._id;
         } else {
@@ -550,7 +566,8 @@ export default {
     async function reset() {
       const res = await axios.post('trabajadores/getCurrentTrabajador', {});
       if (!res.data.error) {
-        store.dispatch('CestasActivas/deleteCestaActivaAction', res.data.trabajador.idTrabajador);
+        
+        //store.dispatch('CestasActivas/deleteCestaActivaAction', res.data.trabajador.idTrabajador);
       } else {
         toast.error(res.data.mensaje);
       }

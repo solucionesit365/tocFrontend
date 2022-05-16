@@ -1,5 +1,6 @@
 const io = require('socket.io-client');
-const socket = io('http://localhost:3000'); // BUILD PARA TPV
+//const socket = io('http://localhost:3000');
+const socket = io('http://10.137.0.201:3000/');  // BUILD PARA ITERUM
 // const socket = io('http://54.195.159.7:3000'); // BUILD PARA SERVIDOR
 // const socket = io('http://34.78.247.153:3000'); // BUILD PARA SERVIDOR (?)
 import store from '../store/index';

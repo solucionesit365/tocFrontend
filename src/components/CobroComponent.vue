@@ -73,7 +73,7 @@
                               <a class="botonEze botonesCalculadora"
                                @click="agregarTecla('0')">0</a>
                               <a class="botonEze botonesCalculadora"
-                               @click="agregarComa('.')">,</a>
+                               @click="agregarComa()">,</a>
                           </div>
                       </div>
                   </div>
@@ -202,7 +202,8 @@
   </div>
 </template>
 
-<script>
+<script>// @ts-nocheck
+
 import axios from 'axios';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
@@ -550,7 +551,7 @@ export default {
               //   toast.error('Error POST iniciarTransaccion');
               // });
               setEsperando(true);
-              emitSocket('iniciarTransaccion', { idClienteFinal: infoCliente });
+              emitSocket('iniciarTransaccion', { idClienteFinal: infoCliente, idCesta: cesta });
             }              
           }
 
@@ -564,15 +565,16 @@ export default {
     }
 
     async function reset() {
+      console.log('Funcion reset')
       const res = await axios.post('trabajadores/getCurrentTrabajador', {});
       if (!res.data.error) {
         
-        //store.dispatch('CestasActivas/deleteCestaActivaAction', res.data.trabajador.idTrabajador);
+       // store.dispatch('CestasActivas/deleteCestaActivaAction', res.data.trabajador.idTrabajador);
       } else {
         toast.error(res.data.mensaje);
       }
       
-      store.dispatch('Cesta/setIdAction', -1);
+      //store.dispatch('Cesta/setIdAction', -1);
       store.dispatch('setModoActual', 'NORMAL');
       store.dispatch('Clientes/resetClienteActivo');
       store.dispatch('Footer/resetMenuActivo');

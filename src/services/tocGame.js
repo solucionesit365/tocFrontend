@@ -4,8 +4,8 @@ import router from '../router/index';
 import { useToast } from "vue-toastification";
 const toast = useToast();
 
-//const baseURL = 'http://localhost:3000/'; // BUILD PARA TPV
-const baseURL = 'http://10.137.0.201:3000/'; // BUILD PARA ITERUM
+const baseURL = 'http://localhost:3000/'; // BUILD PARA TPV
+//const baseURL = 'http://10.137.0.201:3000/'; // BUILD PARA ITERUM
 
 // const baseURL = 'http://54.195.159.7:3000'; // BUILD PARA SERVIDOR
 
@@ -93,9 +93,8 @@ class tocGameV3 {
                                 store.dispatch('Trabajadores/setTrabajadorActivo', infoTrabajador.data.trabajador.idTrabajador);
                                 store.dispatch('Trabajadores/setNombreTrabajadorActivo', infoTrabajador.data.trabajador.nombre);
                                   var idcesta = store.getters['Cesta/getCestaId']
-                                  axios.post('cestas/getCestaByTrabajadorId', { idTrabajador: idcesta }).then((resCesta) => {
-                                    console.log('Esto es lo que contiene resCEsta')  
-                                    console.log(resCesta.data.info)
+                                  axios.post('cestas/getCestaByTrabajadorId', { idCesta: idcesta }).then((resCesta) => {
+                                    console.log(resCesta.data)
                                     if (resCesta.data.error === false && resCesta.data.info != null) {
                                         store.dispatch('Cesta/setCestaAction', resCesta.data.info);
                                     } else {                                        

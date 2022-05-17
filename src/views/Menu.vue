@@ -65,7 +65,7 @@
         <!-- TRABAJADORES FICHADOS -->
         <Trabajador />
         <!-- CESTAS ACTIVAS -->
-        <!-- <Cesta /> -->
+         <Cesta /> 
       </div>
     </div>
     </div>
@@ -81,7 +81,7 @@ import axios from 'axios';
 import router from '../router/index';
 import { tocGame } from '../services/tocGame';
 import Trabajador from '@/components/Trabajador.vue'; // @ is an alias to /src
-// import Cesta from '@/components/Cesta.vue'; // @ is an alias to /src
+import Cesta from '@/components/Cesta.vue'; // @ is an alias to /src
 
 
 export default {
@@ -186,7 +186,7 @@ export default {
   },
   components: {
     Trabajador,
-    // Cesta,
+    Cesta,
   }
 };
 </script>

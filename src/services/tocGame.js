@@ -5,6 +5,8 @@ import { useToast } from "vue-toastification";
 const toast = useToast();
 
 const baseURL = 'http://localhost:3000/'; // BUILD PARA TPV
+//const baseURL = 'http://10.137.0.201:3000/'; // BUILD PARA ITERUM
+
 // const baseURL = 'http://54.195.159.7:3000'; // BUILD PARA SERVIDOR
 
 class tocGameV3 {
@@ -12,11 +14,13 @@ class tocGameV3 {
 
     constructor() {
         axios.post(baseURL + 'parametros/getParametros').then((res) => {
+            console.log(res.data)
             if (res.data.error === false) {
                 this.parametros = res.data.parametros;
             } else {
                 throw "Error en parametros/getParametros";
             }
+            
         }).catch((err) => {
             console.log(err);
         });
@@ -88,7 +92,9 @@ class tocGameV3 {
                             if (infoTrabajador.data.error == false) {
                                 store.dispatch('Trabajadores/setTrabajadorActivo', infoTrabajador.data.trabajador.idTrabajador);
                                 store.dispatch('Trabajadores/setNombreTrabajadorActivo', infoTrabajador.data.trabajador.nombre);
-                                axios.post('cestas/getCestaByTrabajadorId', { idTrabajador: infoTrabajador.data.trabajador.idTrabajador }).then((resCesta) => {
+                                  var idcesta = store.getters['Cesta/getCestaId']
+                                  axios.post('cestas/getCestaByTrabajadorId', { idCesta: idcesta }).then((resCesta) => {
+                                    console.log(resCesta.data)
                                     if (resCesta.data.error === false && resCesta.data.info != null) {
                                         store.dispatch('Cesta/setCestaAction', resCesta.data.info);
                                     } else {                                        

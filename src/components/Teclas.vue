@@ -54,14 +54,17 @@
               </button>
             </div>
             <div v-else>
+              <!-- Botones de los productos -->
               <button v-bind:id="listadoTeclas[(index-1)*6+(index2-1)].idBoton"
               class="btn btn-primary rounded-0 w-100 teclas"
               v-bind:class="[listadoTeclas[(index-1)*6+(index2-1)].color,
               {'invisible': listadoTeclas[(index-1)*6+(index2-1)].idArticle == -1 && !isEditarArticulos(listadoTeclas[(index-1)*6+(index2-1)].idArticle)},
               {'editarArticulos': isEditarArticulos(listadoTeclas[(index-1)*6+(index2-1)].idArticle)}]"
+              @touchstart='mousedown'
+              @touchend='mouseup(listadoTeclas[(index-1)*6+(index2-1)].idArticle)'
               @click="clickTecla(listadoTeclas[(index-1)*6+(index2-1)]);
               mostrarInfoVisor(listadoTeclas[(index-1)*6+(index2-1)]);"
-              v-on:contextmenu="abrirFicha(listadoTeclas[(index-1)*6+(index2-1)].idArticle)"
+             
               style="background-color: #dee3e9;">
               {{listadoTeclas[(index-1)*6+(index2-1)].nombreArticulo.nombre}}
               </button>
@@ -126,6 +129,8 @@ export default {
   setup() {
     const toast = useToast();
     const store = useStore();
+    let inicioMagic = null;
+    let finalMagic = null;
     const cesta = computed(() => store.state.Cesta.cesta);
     const cajaAbierta = computed(() => store.state.Caja.cajaAbierta);
     const listaMenus = ref([{ nomMenu: '' }]);
@@ -160,7 +165,10 @@ export default {
       if(borrarItem) {
         axios.post('/cestas/borrarItemCesta', { _id: cesta.value._id, idArticulo, idArticulo }).then((res) => {
           if (res.data.okey) {
+            console.log('tecals borrar item ')
+            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res.data.cestaNueva);
+            console.log(store.getters['Cesta/getCestaId'])
           } else {
             console.log(res.data.okey);
           }
@@ -168,6 +176,23 @@ export default {
       }
       modalSuplementos.hide();
     }
+
+      function mouseup(producto){
+      
+       
+      finalMagic = new Date();
+      const diffTime = Math.abs(finalMagic - inicioMagic);
+      if (diffTime < 2000) {  
+    
+      } else {      
+      store.dispatch('Alergenos/abrirModal', { codiBotiga:tocGame.getParametros().codigoTienda,producto });
+      }
+    }
+        function mousedown(){
+         
+      inicioMagic = new Date();
+    }
+ 
     // function test() {
     //   emitSocket('test', { destino: 'La concha de tu hermana' });
     //   // socket.emit('test', { destino: 'La concha de tu hermana' });
@@ -536,7 +561,6 @@ export default {
     function clickSubmenu(tag) {
       axios.post('/doble-menus/clickMenu', { tag }).then((res) => {
         if(!res.data.bloqueado) {
-          console.log(res)
           listaMenus.value = res.data.resultado;
           subMenuActivo = tag;
           clickMenuBloqueado = false;
@@ -588,6 +612,9 @@ export default {
         }
         return;
       }
+
+      console.log('click tecla ')
+      console.log(cesta.value)
       axios.post('cestas/clickTeclaArticulo', {
         idArticulo: objListadoTeclas.idArticle,
         idBoton: objListadoTeclas.idBoton,
@@ -602,7 +629,10 @@ export default {
             modalSuplementos.show();
           } else {
             store.dispatch('resetUnidades');
+            console.log('click teclas articulos ')
+            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res2.data.cesta);
+            console.log(store.getters['Cesta/getCestaId'])
           }
         } else {
           console.log('Error en clickTeclaArticulo');
@@ -630,7 +660,10 @@ export default {
       axios.post('cestas/addSuplemento', { idCesta: cesta.value._id, suplementos: suplementosSeleccionados.value, idArticulo, posArticulo: -100 }).then((res) => {
         if(!res.data.error && !res.data.bloqueado) {
           store.dispatch('resetUnidades');
+          console.log('añadir suplemento ')
+          console.log(store.getters['Cesta/getCestaId'])
           store.dispatch('Cesta/setCestaAction', res.data.cesta);
+          console.log(store.getters['Cesta/getCestaId'])
           suplementosSeleccionados.value = [];
           idArticulo = null;
           cerrarModal();
@@ -657,6 +690,7 @@ export default {
       axios.post('/doble-menus/getMenus').then((res) => {
         if(!res.data.bloqueado) {
           if(res.data.resultado.length > 0) {
+
             listaSubmenus.value = res.data.resultado;
             if(!backButton) clickSubmenu(res.data.resultado[0].tag);
             else dobleMenu.value = true;
@@ -707,6 +741,8 @@ export default {
     });
 
     return {
+      mousedown,
+      mouseup,
       edadState,
       listaMenus,
       menuActivo,

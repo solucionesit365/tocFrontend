@@ -26,6 +26,8 @@ import Caja from './modules/Caja';
 
 import ModalEditarProducto from './modules/ModalEditarProducto';
 
+import Alergenos from './modules/Alergenos';
+
 import socket from '../sockets/socket';
 import axios from 'axios';
 
@@ -101,6 +103,7 @@ export default createStore({
     }
   },
   modules: {
+
     InstallWizard,
     ModalPeso,
     Cesta,
@@ -114,5 +117,6 @@ export default createStore({
     Footer,
     CestasActivas,
     ModalEditarProducto,
+    Alergenos,
   },
 });

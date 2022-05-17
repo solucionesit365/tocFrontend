@@ -1,14 +1,14 @@
 <template>
-   <div class="modal" id="ModalMostrarAlergenos" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document" style="max-width: 600px">
+   <div class="modal" id="modalMostrarAlergenos" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" style="max-width: 600px  ">
       <div class="modal-content">
         
-        <div class="modal-body">
+        <div class="modal-body" style="height: 20em">
        
-         <iframe :src="url" style='position: absolute; height: 90%; width: 100%; border: none'></iframe>
+         <iframe :src="url" style='position: absolute; height: 90%; width: 90%; border: none'></iframe>
   
         </div>
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
           <button type="button"
           class="btn btn-success mr-0"
           @click="cambiarPosicion()">Cambiar posición
@@ -17,7 +17,7 @@
           class="btn btn-primary mr-0"
           @click="confirmar()">OK
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -25,14 +25,28 @@
 <script>
 
 import { useRoute } from 'vue-router';
-import { ref } from 'vue';
+import {  onMounted, ref, watch } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
     setup() {
+      const store = useStore();
         const route = useRoute();
-        const { codiBotiga } = route.params.codiBotiga;
-        const { producto } = route.params.producto;
-        const url = ref(`http://silema.hiterp.com/Facturacion/ElForn/gestion/FichaTecnicaHtml.asp?codi=${producto}&Llic=${codiBotiga}`);
+        const codiBotiga = ref(0);
+        const producto = ref(0);
+       const url = ref('');
+        //const url = ref(`http://silema.hiterp.com/Facturacion/ElForn/gestion/FichaTecnicaHtml.asp?codi=3&Llic=00842  `);     
+    onMounted(() => {
+        store.dispatch('Alergenos/setModal');
+    });
+
+
+        watch(() => store.getters['Alergenos/getProducto'], () => {
+        producto.value = store.state.Alergenos.producto;
+        codiBotiga.value = store.state.Alergenos.codiBotiga;
+        url.value = `http://silema.hiterp.com/Facturacion/ElForn/gestion/FichaTecnicaHtml.asp?codi=${producto.value}&Llic=${codiBotiga.value}`;
+    })
+        
         return {
             url,
         };

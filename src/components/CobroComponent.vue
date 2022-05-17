@@ -73,7 +73,7 @@
                               <a class="botonEze botonesCalculadora"
                                @click="agregarTecla('0')">0</a>
                               <a class="botonEze botonesCalculadora"
-                               @click="agregarComa('.')">,</a>
+                               @click="agregarComa()">,</a>
                           </div>
                       </div>
                   </div>
@@ -202,7 +202,8 @@
   </div>
 </template>
 
-<script>
+<script>// @ts-nocheck
+
 import axios from 'axios';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
@@ -238,12 +239,18 @@ export default {
     const metodoPagoActivo = ref('TARJETA');
     const totalTkrs = ref(0);
     const cuenta = ref(0);
+    const cesta =store.getters['Cesta/getCestaId'];
     const arrayFichados = ref([]);
     const tipoDatafono = ref(null);
     const esperando = computed(() => store.state.esperandoDatafono); // ref(false);
 
 
-    axios.get('cestas/getCestaCurrentTrabajador').then((infoCesta) => {
+    axios.post('cestas/getCestaCurrent',{
+ idCesta: cesta
+    } ).then((infoCesta) => {
+      console.log('cobro component')
+      console.log()
+      console.log(infoCesta.data)
       if (infoCesta.data.error === false) {
         total.value = infoCesta.data.info.tiposIva.importe1 + infoCesta.data.info.tiposIva.importe2 + infoCesta.data.info.tiposIva.importe3;
       } else {
@@ -255,8 +262,24 @@ export default {
       toast.error("No se ha podido cargar la cesta");
     });  
     
-    function getCestaId() {
-      return axios.get('cestas/getCestaCurrentTrabajador').then((res) => {
+    // function getCestaId() {
+    //   return axios.get('cestas/getCestaCurrentTrabajador').then((res) => {
+    //     if (!res.data.error) {
+    //       return res.data.info._id;
+    //     } else {
+    //       console.log(res.data.mensaje);
+    //       return -1;
+    //     }
+    //   }).catch((err) => {
+    //     console.log(err);
+    //     toast.error(err.message);
+    //     return -1;
+    //   });
+    // }
+
+     function getCestaId() {
+      
+      return axios.post('cestas/getCestaCurrent', {idCesta:cesta}).then((res) => {
         if (!res.data.error) {
           return res.data.info._id;
         } else {
@@ -434,6 +457,7 @@ export default {
     }
 
     async function cobrar() {
+      console.log('funcion cobrar')
       if (!esperando.value && total.value > 0) {
         let cestaId = await getCestaId();
         if (totalTkrs.value > 0 && await cestaId != -1) { /* Ticket restaurant activo */
@@ -527,7 +551,7 @@ export default {
               //   toast.error('Error POST iniciarTransaccion');
               // });
               setEsperando(true);
-              emitSocket('iniciarTransaccion', { idClienteFinal: infoCliente });
+              emitSocket('iniciarTransaccion', { idClienteFinal: infoCliente, idCesta: cesta });
             }              
           }
 
@@ -541,14 +565,16 @@ export default {
     }
 
     async function reset() {
+      console.log('Funcion reset')
       const res = await axios.post('trabajadores/getCurrentTrabajador', {});
       if (!res.data.error) {
-        store.dispatch('CestasActivas/deleteCestaActivaAction', res.data.trabajador.idTrabajador);
+        
+       // store.dispatch('CestasActivas/deleteCestaActivaAction', res.data.trabajador.idTrabajador);
       } else {
         toast.error(res.data.mensaje);
       }
       
-      store.dispatch('Cesta/setIdAction', -1);
+      //store.dispatch('Cesta/setIdAction', -1);
       store.dispatch('setModoActual', 'NORMAL');
       store.dispatch('Clientes/resetClienteActivo');
       store.dispatch('Footer/resetMenuActivo');

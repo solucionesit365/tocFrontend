@@ -136,6 +136,8 @@
                 console.log(data.nombre)
                 console.log(data.idMongo)
                 store.dispatch('Cesta/setIdAction', data.idMongo);
+                store.dispatch('Cesta/setNameAction', data.nombre);
+
                 //store.dispatch('CestasActivas/deleteCestaActivaAction', data.idMongo);
                 store.dispatch('CestasActivas/setCestasActivasAction', {idMongo: data.idMongo, nombre: data.nombre});
                 volver();

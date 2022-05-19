@@ -28,7 +28,10 @@
         to='/mesas'>
         
           <i class="bi bi-cart-plus-fill display-6"></i>
+          <br>
+             {{mesa}}
          </router-link>
+      
       </div>
 
       <div class="row mt-1 ms-2" style="max-width: 220px">
@@ -291,6 +294,8 @@ export default {
     const UBER = store.getters['Clientes/getUber'];
     const TOO_GOOD_TO_GO = store.getters['Clientes/getTooGoodToGo'];
     const getClock = ref('');
+    const mesa =store.getters['Cesta/getName'];;
+    
 
   function actualizarHora() {
     const d = new Date();
@@ -677,6 +682,7 @@ export default {
     }
 
     return {
+      
       tocVersion,
       nombreTienda,
       regalar,
@@ -715,7 +721,9 @@ export default {
       checkSuplementoActivo,
       addSuplemento,
       nombreTrabajador,
-      getClock
+      getClock,
+      mesa
+      
     };
   },
   components: {

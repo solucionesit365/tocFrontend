@@ -568,7 +568,8 @@ export default {
       console.log('Funcion reset')
       const res = await axios.post('trabajadores/getCurrentTrabajador', {});
       if (!res.data.error) {
-        
+        console.log(res)
+        //store.dispatch('Cesta/setIdAction', res);
        // store.dispatch('CestasActivas/deleteCestaActivaAction', res.data.trabajador.idTrabajador);
       } else {
         toast.error(res.data.mensaje);

@@ -40,7 +40,17 @@
                 <i class="bi bi-printer-fill iconosBootstrap"></i>
             </button>
         </div>
+        
       </div>
+      <br>
+        <div class="col">
+            <button
+            @click="esborraTicket()"
+            type="button" class="btn btn-secondary
+            botonesPrincipales w-100 btn-block botonesWidth">
+                <i class="bi bi-trash iconosBootstrap"></i>
+            </button>
+        </div>
     </div>
 </template>
 <script>
@@ -83,6 +93,21 @@ export default {
       }
     }
 
+      function esborraTicket() {
+      if (activo.value != null) {
+        console.log(activo.value)
+
+        //get ticket hago una copia del ticket e insrto uno nuevo en negativo
+       axios.post('tickets/getTickets', { ticketID: activo.value }).then((ticket) =>{
+        console.log(ticket.data)
+       });
+        //goTo('/');
+      } else {
+        console.log('Primero selecciona un ticket');
+      }
+    }
+    
+
     onMounted(() => {
       axios.post('tickets/getTicketsIntervalo').then((arrayTickets) => {
         total.value = 0;
@@ -102,6 +127,7 @@ export default {
       moment,
       ticketInfo,
       imprimirTicket,
+      esborraTicket,
     };
     /* FINAL SETUP */
   },

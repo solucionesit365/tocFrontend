@@ -212,14 +212,14 @@ export default {
 
             //La peticion que solo tiene que hacer silema 
           if (mostrarTurnos.value){
-              console.log("silema")
-          }
-            // actualizarTurnos().then(() => {
+              // actualizarTurnos().then(() => {
             //     modalFichajes.show();
             // }).catch((err) => {
             //     console.log(err);
             //     modalFichajes.show();
-            // });            
+            // }); 
+          }
+                      
         }
         function abrirModalPassword() {
             modalPassword.show();

@@ -248,9 +248,6 @@ export default {
     axios.post('cestas/getCestaCurrent',{
  idCesta: cesta
     } ).then((infoCesta) => {
-      console.log('cobro component')
-      console.log()
-      console.log(infoCesta.data)
       if (infoCesta.data.error === false) {
         total.value = infoCesta.data.info.tiposIva.importe1 + infoCesta.data.info.tiposIva.importe2 + infoCesta.data.info.tiposIva.importe3;
       } else {

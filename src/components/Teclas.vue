@@ -166,9 +166,9 @@ export default {
         axios.post('/cestas/borrarItemCesta', { _id: cesta.value._id, idArticulo, idArticulo }).then((res) => {
           if (res.data.okey) {
             console.log('tecals borrar item ')
-            console.log(store.getters['Cesta/getCestaId'])
+           
             store.dispatch('Cesta/setCestaAction', res.data.cestaNueva);
-            console.log(store.getters['Cesta/getCestaId'])
+            
           } else {
             console.log(res.data.okey);
           }
@@ -614,7 +614,7 @@ export default {
       }
 
       console.log('click tecla ')
-      console.log(cesta.value)
+   
       axios.post('cestas/clickTeclaArticulo', {
         idArticulo: objListadoTeclas.idArticle,
         idBoton: objListadoTeclas.idBoton,
@@ -629,10 +629,10 @@ export default {
             modalSuplementos.show();
           } else {
             store.dispatch('resetUnidades');
-            console.log('click teclas articulos ')
-            console.log(store.getters['Cesta/getCestaId'])
+           
+           
             store.dispatch('Cesta/setCestaAction', res2.data.cesta);
-            console.log(store.getters['Cesta/getCestaId'])
+        
           }
         } else {
           console.log('Error en clickTeclaArticulo');
@@ -661,9 +661,9 @@ export default {
         if(!res.data.error && !res.data.bloqueado) {
           store.dispatch('resetUnidades');
           console.log('añadir suplemento ')
-          console.log(store.getters['Cesta/getCestaId'])
+      
           store.dispatch('Cesta/setCestaAction', res.data.cesta);
-          console.log(store.getters['Cesta/getCestaId'])
+         
           suplementosSeleccionados.value = [];
           idArticulo = null;
           cerrarModal();

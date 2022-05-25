@@ -63,8 +63,9 @@ import moment from 'moment';
 import { useStore } from 'vuex';
 import router from '../router/index';
 import { useToast } from 'vue-toastification';
-
+const toast = useToast();
 export default {
+  
   name: 'Caja',
   setup() {
     const activo = ref(null);
@@ -95,17 +96,22 @@ export default {
 
       function esborraTicket() {
       if (activo.value != null) {
-        console.log(activo.value)
-
-        //get ticket hago una copia del ticket e insrto uno nuevo en negativo
-       axios.post('tickets/getTickets', { ticketID: activo.value }).then((ticket) =>{
-        console.log(ticket.data)
-       });
-        //goTo('/');
+            axios.post('tickets/rectificativa', { ticketID: activo.value }).then((ticket) =>{
+                            
+                    if(!ticket.data.error){
+                      toast.success(ticket.data.mensaje)
+                      goTo('/');
+                    } else{
+                    toast.error(ticket.data.mensaje)
+                    } 
+            
+          })
+ //goTo('/');
       } else {
         console.log('Primero selecciona un ticket');
       }
     }
+
     
 
     onMounted(() => {

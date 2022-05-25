@@ -22,10 +22,12 @@ export default {
         }
         function changeActivo(id) {
             console.log('Cambiode trabajadores ')
+            
             axios.post('trabajadores/setActivo', { id }).then((res) => {
                 if (!res.data.error) {
                     store.dispatch('Trabajadores/setTrabajadorActivo', id);
                     // store.dispatch('Cesta/setIdAction', id.toString());
+                    store.dispatch('Cesta/setNameAction', '');
                     store.dispatch('Cesta/setIdAction', id);
                     getFichados();
                     router.push('/');

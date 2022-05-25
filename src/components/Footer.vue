@@ -294,10 +294,11 @@ export default {
     const UBER = store.getters['Clientes/getUber'];
     const TOO_GOOD_TO_GO = store.getters['Clientes/getTooGoodToGo'];
     const getClock = ref('');
-    const mesa =store.getters['Cesta/getName'];;
+    let mesa = store.getters['Cesta/getName'];
     
 
   function actualizarHora() {
+
     const d = new Date();
     const s = d.getSeconds();
     const m = d.getMinutes();
@@ -342,9 +343,9 @@ export default {
       axios.post('cestas/regalarProducto', { idCesta: store.getters['Cesta/getCestaId'], index: (index - (cesta.value.lista.length -1))*-1 }).then((res) => {
         if (res.data.error == false) {
           console.log('regalar')
-          console.log(store.getters['Cesta/getCestaId'])
+         
           store.dispatch('Cesta/setCestaAction', res.data.cesta);
-          console.log(store.getters['Cesta/getCestaId'])
+         
         } else {
           toast.error(res.data.mensaje);
         }
@@ -427,10 +428,9 @@ export default {
         }).then((res) => {
           if (!res.data.error) {
             axios.post('/cestas/getCesta').then((res) => {
-              console.log('crear tickets')
-              console.log(store.getters['Cesta/getCestaId'])
+              
               store.dispatch('Cesta/setCestaAction', res.data);
-              console.log(store.getters['Cesta/getCestaId'])
+             
             });
             /* Ejemplo de como limpiar el estado al completo */
             store.dispatch('setModoActual', 'NORMAL');
@@ -459,9 +459,7 @@ export default {
           });
           axios.post('/cestas/getCesta').then((res) => {
             console.log('cerar devolucion ')
-            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res.data);
-            console.log(store.getters['Cesta/getCestaId'])
           });
           store.dispatch('setModoActual', 'NORMAL');
           store.dispatch('Clientes/resetClienteActivo');
@@ -483,9 +481,9 @@ export default {
         if (!res.data.error) {
           axios.post('/cestas/getCesta').then((res) => {
             console.log('consumo personal ')
-            console.log(store.getters['Cesta/getCestaId'])
+           
             store.dispatch('Cesta/setCestaAction', res.data);
-            console.log(store.getters['Cesta/getCestaId'])
+     
           });
           store.dispatch('setModoActual', 'NORMAL');
           store.dispatch('Clientes/resetClienteActivo');
@@ -513,8 +511,7 @@ export default {
         let infoClienteVip = store.getters['Clientes/getInfoClienteVip'];
         let idClienteFinal = store.getters['Clientes/getInfoCliente'];
         let idCesta = store.getters['Cesta/getCestaId'];
-        console.log('esto es lo que contiene id cesta del footer')
-        console.log(idCesta)
+        
         
         /* Si se cumple que es VIP y no paga en tienda, se crea la deuda, sino, cobro normal */
         if ((pagaEnTienda == true && modoActual != 'DEVOLUCION' && modoActual != 'CONSUMO PERSONAL') || (modoActual == 'CLIENTE')) {
@@ -551,9 +548,12 @@ export default {
 
     onMounted(() => {
       axios.get('getInfo/tocGame').then((res) => {
+     
         if (res.data != undefined && res.data != null) {
           tocVersion.value = res.data.version;
           nombreTienda.value = res.data.nombreTienda;
+       
+          
         }
       }).catch((err) => {
         console.log(err);
@@ -624,9 +624,9 @@ export default {
         if(!res.data.error && !res.data.bloqueado) {
           store.dispatch('resetUnidades');
           console.log('suplemento')
-          console.log(store.getters['Cesta/getCestaId'])
+    
           store.dispatch('Cesta/setCestaAction', res.data.cesta);
-          console.log(store.getters['Cesta/getCestaId'])
+      
           suplementosSeleccionados.value = [];
           cerrarModal();
         } else {
@@ -648,9 +648,9 @@ export default {
         axios.post('/cestas/borrarArticulosCesta', { idCesta: cesta.value._id }).then((res) => {
           if (res.data.error == false) {
             console.log('suplemento')
-            console.log(store.getters['Cesta/getCestaId'])
+          
             store.dispatch('Cesta/setCestaAction', res.data.info);
-            console.log(store.getters['Cesta/getCestaId'])
+          
           } else {
             toast.error(res.data.mensaje);
           }
@@ -665,9 +665,9 @@ export default {
         axios.post('/cestas/borrarItemCesta', { _id: store.state.Cesta.cesta._id, idArticulo: store.getters['Cesta/getItem'] }).then((res) => {
           if (res.data.okey) {
             console.log('borra cesta ')
-            console.log(store.getters['Cesta/getCestaId'])
+           
             store.dispatch('Cesta/setCestaAction', res.data.cestaNueva);
-            console.log(store.getters['Cesta/getCestaId'])
+            
           } else {
             console.log(res.data.okey);
           }

@@ -335,11 +335,9 @@ export default {
 
     function regalar(index) {
       axios.post('cestas/regalarProducto', { idCesta: store.getters['Cesta/getCestaId'], index: (index - (cesta.value.lista.length -1))*-1 }).then((res) => {
-        if (res.data.error == false) {
-          console.log('regalar')
-          console.log(store.getters['Cesta/getCestaId'])
+        if (res.data.error == false) {   
           store.dispatch('Cesta/setCestaAction', res.data.cesta);
-          console.log(store.getters['Cesta/getCestaId'])
+          store.dispatch('Cesta/setHayRegaloEnCestaAction', true)
         } else {
           toast.error(res.data.mensaje);
         }
@@ -501,7 +499,7 @@ export default {
         router.push('/');
         return;
       }
-      if (getTotal.value != 0) {
+      if (cesta.value.lista.length > 0) {
       if (trabajadorActivo.value != '') {
         let pagaEnTienda = store.getters['Clientes/getClientePagaEnTienda'];
         let modoActual = store.getters['getModoActual'];
@@ -527,8 +525,8 @@ export default {
       } else {
         toast.info('¡ Es necesario un trabajador/a activ@ !');
       }
-      }else{
-        toast.error('¡Seleciona un artículo para cobrar!')
+      } else {
+        toast.error('¡Seleciona un artículo para cobrar!');
       }
     }
 

@@ -458,36 +458,38 @@ export default {
 
     async function cobrar() {
       console.log('funcion cobrar')
-      if (!esperando.value && total.value > 0) {
+      if (!esperando.value) {
         let cestaId = await getCestaId();
         if (totalTkrs.value > 0 && await cestaId != -1) { /* Ticket restaurant activo */
-          const data = {
-            total: Number(total.value),
-            totalTkrs: totalTkrs.value,
-            idCesta: cestaId,
-            idCliente: infoCliente,
-          }
-         
-          axios.post('tickets/crearTicketTKRS', data).then((res) => {
-            if(!res.data.error) {
-              
-              reset();
-              try {
-                axios.post('impresora/abrirCajon');
-              } catch (err) {
-                toast.error('No se ha podido abrir el cajón.');
-              }
-              toast.success('Ticket OK');
-              router.push('/');
-              } else {
-              toast.error('Error al insertar el ticket.');
+          if (total.value > 0) {
+            const data = {
+              total: Number(total.value),
+              totalTkrs: totalTkrs.value,
+              idCesta: cestaId,
+              idCliente: infoCliente,
             }
-          }).catch((err) => {
-            console.log(err);
-            toast.error('Error');
-          });
-          // toc.crearTicket(this.metodoPagoActivo, Number(vueCesta.getTotalEstatico()),
-          // {tkrs: true, totalTkrs: this.totalTkrs, tipoPago: this.metodoPagoActivo});
+          
+            axios.post('tickets/crearTicketTKRS', data).then((res) => {
+              if(!res.data.error) {                
+                reset();
+                try {
+                  axios.post('impresora/abrirCajon');
+                } catch (err) {
+                  toast.error('No se ha podido abrir el cajón.');
+                }
+                toast.success('Ticket OK');
+                router.push('/');
+                } else {
+                toast.error('Error al insertar el ticket.');
+              }
+            }).catch((err) => {
+              console.log(err);
+              toast.error('Error');
+            });
+          } else {
+            toast.warning('No puedes cerrar una venta de 0€ con ticket restaurante');
+          }
+
         } else { // Sin ticket restaurant (normal)
           if (metodoPagoActivo.value === 'EFECTIVO') {
             axios.post('tickets/crearTicketEfectivo', {
@@ -515,52 +517,58 @@ export default {
           }
 
           if (metodoPagoActivo.value === 'TARJETA 3G') {
-            axios.post('tickets/crearTicketDatafono3G', {
-              total: Number(total),
-              idCesta: cestaId,
-              idCliente: infoCliente
-            }).then((res) => {
-              if (!res.data.error) {
-                reset();
-                router.push({ name: 'Home', params: { tipoToast: 'success', mensajeToast: 'Ticket creado' } });
-              } else {
-                toast.error('Error al insertar el ticket');
-              }
-            }).catch((err) => {
-              console.log(err);
-              toast.error('Error');
-            });
+            if (total.value > 0) {
+              axios.post('tickets/crearTicketDatafono3G', {
+                total: Number(total),
+                idCesta: cestaId,
+                idCliente: infoCliente
+              }).then((res) => {
+                if (!res.data.error) {
+                  reset();
+                  router.push({ name: 'Home', params: { tipoToast: 'success', mensajeToast: 'Ticket creado' } });
+                } else {
+                  toast.error('Error al insertar el ticket');
+                }
+              }).catch((err) => {
+                console.log(err);
+                toast.error('Error');
+              });
+            } else {
+              toast.warning('No puedes cerrar una venta de 0€ con datáfono');
+            }
           }
 
           if (metodoPagoActivo.value === 'TARJETA') {
-            if (tipoDatafono.value == 'CLEARONE') {
-              emitSocket('enviarAlDatafono', { total: Number(total), idCesta: cestaId, idClienteFinal: infoCliente });
-              setEsperando(true);
-            } else if (tipoDatafono.value == 'PAYTEF') {
-              // axios.post('paytef/iniciarTransaccion', { idClienteFinal: infoCliente }).then((resPaytef) => {
-              //   if (resPaytef.data.error == true) {
-              //     toast.error(resPaytef.data.mensaje);
-              //   } else {
-              //     setEsperando(true);
-              //     console.log();
-              //     // consultarPaytef();
-              //     // emitSocket('polling');
-              //   }
-              // }).catch((err) => {
-              //   console.log(err);
-              //   toast.error('Error POST iniciarTransaccion');
-              // });
-              setEsperando(true);
-              emitSocket('iniciarTransaccion', { idClienteFinal: infoCliente, idCesta: cesta });
-            }              
+            if (total.value > 0) {
+              if (tipoDatafono.value == 'CLEARONE') {
+                emitSocket('enviarAlDatafono', { total: Number(total), idCesta: cestaId, idClienteFinal: infoCliente });
+                setEsperando(true);
+              } else if (tipoDatafono.value == 'PAYTEF') {
+                // axios.post('paytef/iniciarTransaccion', { idClienteFinal: infoCliente }).then((resPaytef) => {
+                //   if (resPaytef.data.error == true) {
+                //     toast.error(resPaytef.data.mensaje);
+                //   } else {
+                //     setEsperando(true);
+                //     console.log();
+                //     // consultarPaytef();
+                //     // emitSocket('polling');
+                //   }
+                // }).catch((err) => {
+                //   console.log(err);
+                //   toast.error('Error POST iniciarTransaccion');
+                // });
+                setEsperando(true);
+                emitSocket('iniciarTransaccion', { idClienteFinal: infoCliente, idCesta: cesta });
+              } 
+            } else {
+              toast.warning('No puedes cerrar una venta de 0€ con datáfono');
+            }             
           }
 
           // toc.crearTicket(this.metodoPagoActivo, Number(vueCesta.getTotalEstatico()),
           // {tkrs: false});
         }
         // console.log('el total es: ', Number(vueCesta.getTotalEstatico()));
-      } else if(total.value === 0) {
-        toast.error("El valor de la cesta es 0");
       }
     }
 

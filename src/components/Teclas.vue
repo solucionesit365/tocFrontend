@@ -96,11 +96,15 @@
         <div class="modal-body">
             <div class="row">
                 <div v-for='(item, index) of suplementos' :key='index' class='col mb-3'>
+                <template v-if="index!=null">
                   <button class='btn w-100 h-100 colorIvan1 btnSuplemento' @click="selectSuplemento(item._id)" v-bind:class="[{'suplementoActivo': checkSuplementoActivo(item._id)}]">
-                    {{item.nombre}}
-                    <br />
-                    {{item.precioConIva}} €
-                  </button>
+                                    {{item.nombre}}
+                                    <br />
+                                    {{item.precioConIva}} €
+                                  </button>
+                </template>
+                
+
                 </div>
             </div>
         </div>

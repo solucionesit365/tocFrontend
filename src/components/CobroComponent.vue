@@ -249,6 +249,7 @@ export default {
  idCesta: cesta
     } ).then((infoCesta) => {
       if (infoCesta.data.error === false) {
+        console.log(infoCesta.data.info.tiposIva)
         total.value = infoCesta.data.info.tiposIva.importe1 + infoCesta.data.info.tiposIva.importe2 + infoCesta.data.info.tiposIva.importe3;
       } else {
         total.value = 0;
@@ -278,6 +279,8 @@ export default {
       
       return axios.post('cestas/getCestaCurrent', {idCesta:cesta}).then((res) => {
         if (!res.data.error) {
+
+          console.log(res.data.info)
           return res.data.info._id;
         } else {
           console.log(res.data.mensaje);
@@ -366,6 +369,7 @@ export default {
     }
 
     const cobrarVariable = computed(() => {
+      console.log(total.value)
       if (total.value - totalTkrs.value <= 0) return 0;
       return (total.value - totalTkrs.value).toFixed(2).replace('.', ',');
     });

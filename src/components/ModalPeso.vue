@@ -86,7 +86,8 @@ export default {
     }
 
     function confirmar() {
-      store.dispatch('ModalPeso/cerrarModal');
+      if(unidades.value != 0){
+ store.dispatch('ModalPeso/cerrarModal');
       axios.post('cestas/clickTeclaArticulo', {
         idArticulo: infoArticulo.value.idArticulo,
         idBoton: infoArticulo.value.idBoton,
@@ -108,6 +109,8 @@ export default {
         toast.error('Error. Comprobar consola');
       });
       unidades.value = '0';
+      }
+      store.dispatch('ModalPeso/cerrarModal');
     }
 
     onMounted(() => {

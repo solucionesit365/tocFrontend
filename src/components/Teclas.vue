@@ -103,8 +103,6 @@
                                     {{item.precioConIva}} €
                                   </button>
                 </template>
-                
-
                 </div>
             </div>
         </div>

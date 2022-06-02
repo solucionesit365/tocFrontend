@@ -7,12 +7,16 @@
         class="btn btn-secondary btn-sm botonesPrincipales menusColorIvan" @click="showMenu">
           <i class="bi bi-list display-6"></i>
         </button>
-        <button
-        style="max-width: 106px"
-          class="btn btn-secondary ms-1 btn-block sizeMenus btn-sm botonesPrincipales
-          me-2 menusColorIvan"
-          @click="buscarProducto()"><i class="bi bi-search display-6"></i>
-        </button>
+         <button v-if="prohibirBuscarArticulos === true"
+              style="max-width: 106px"
+              class="btn btn-secondary btn-sm botonesPrincipales menusColorIvan" @click="imprimirTicket()">
+              <i class="bi bi-printer-fill display-6"></i>
+            </button>
+            <button v-else
+              style="max-width: 106px"
+              class="btn btn-secondary btn-sm botonesPrincipales menusColorIvan" @click="buscarProducto()">
+              <i class="bi bi-search display-6"></i>
+            </button>
       </div>
 
       <div class="row mt-1 ms-2" style="max-width: 220px">
@@ -295,6 +299,8 @@ export default {
     const TOO_GOOD_TO_GO = store.getters['Clientes/getTooGoodToGo'];
     const getClock = ref('');
     let mesa = store.getters['Cesta/getName'];
+    const prohibirBuscarArticulos = ref(false);
+	   
     
 
   function actualizarHora() {
@@ -413,6 +419,21 @@ export default {
     function buscarProducto() {
       toast.info('Deshabilitado temporalmente');
     }
+
+    function imprimirTicket() {
+      if (activo.value != null) {
+        axios.post('impresora/imprimirTicket', { idTicket: activo.value });
+        goTo('/');
+      } else {
+        console.log('Primero selecciona un ticket');
+      }
+    }
+
+      axios.post('parametros/getParametros').then((res) => {
+        if(res.data.parametros.prohibirBuscarArticulos == 'Si'){
+              prohibirBuscarArticulos.value = true;
+            }
+      })
 
     const thisIsCatalunya = computed(() => {
       return getTotal.value.replace('.', ',');
@@ -722,7 +743,9 @@ export default {
       addSuplemento,
       nombreTrabajador,
       getClock,
-      mesa
+      mesa,
+      prohibirBuscarArticulos,
+      imprimirTicket
       
     };
   },

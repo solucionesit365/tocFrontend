@@ -421,19 +421,23 @@ export default {
     }
 
     function imprimirTicket() {
-      if (activo.value != null) {
-        axios.post('impresora/imprimirTicket', { idTicket: activo.value });
-        goTo('/');
-      } else {
-        console.log('Primero selecciona un ticket');
-      }
+
+  axios.post('tickets/getTicketsIntervalo').then((arrayTickets) => {
+       axios.post('impresora/imprimirTicket', { idTicket: arrayTickets.data.length });
+      });
+
+
+
+
+      // if (activo.value != null) {
+      //   axios.post('impresora/imprimirTicket', { idTicket: activo.value });
+      //   goTo('/');
+      // } else {
+      //   console.log('Primero selecciona un ticket');
+      // }
     }
 
-      axios.post('parametros/getParametros').then((res) => {
-        if(res.data.parametros.prohibirBuscarArticulos == 'Si'){
-              prohibirBuscarArticulos.value = true;
-            }
-      })
+    
 
     const thisIsCatalunya = computed(() => {
       return getTotal.value.replace('.', ',');
@@ -580,7 +584,11 @@ export default {
         console.log(err);
         toast.error('Error en getVersion CATCH');
       })
-
+  axios.post('parametros/getParametros').then((res) => {
+        if(res.data.parametros.prohibirBuscarArticulos == 'Si'){
+              prohibirBuscarArticulos.value = true;
+            }
+      })
       modalSuplementos = new Modal(document.getElementById('modalSuplementosModificar'), {
         keyboard: false,
         backdrop: 'static',

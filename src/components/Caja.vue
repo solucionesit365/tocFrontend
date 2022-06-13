@@ -22,13 +22,23 @@
           Salida de dinero
         </router-link>
       </div>
+
       <div class="col">
-        <router-link to="/menu/caja/entrada" class="btn btn-secondary
+        <template v-if='NoEntradaDiners'>
+        <router-link to="" class="btn btn-secondary
+          botonesPrincipales w-100 btn-block botonesWidth">
+          <!-- <i class="bi bi-box-arrow-in-right iconosBootstrap"></i> -->
+        </router-link>
+        </template>
+        <template v-else>
+          <router-link to="/menu/caja/entrada" class="btn btn-secondary
           botonesPrincipales w-100 btn-block botonesWidth">
           <!-- <i class="bi bi-box-arrow-in-right iconosBootstrap"></i> -->
           Entrada de dinero
-        </router-link>
+          </router-link>
+        </template>
       </div>
+
       <div class="col">
         <router-link to="/menu/caja/cerrar-caja" class="btn btn-secondary
           botonesPrincipales w-100 h-100 btn-block botonesWidth">
@@ -62,6 +72,7 @@ export default {
     const listaTickets = ref([]);
     const ticketInfo = ref(null);
     const store = useStore();
+    const NoEntradaDiners = ref(false);
 
     // function setTicketActivo(ticket, mounted = false) {
     //   if(mounted) ticket = listaTickets.value[listaTickets.value.length-1];
@@ -82,12 +93,19 @@ export default {
       }
     }
 
+
     onMounted(() => {
       axios.post('tickets/getTicketsIntervalo').then((arrayTickets) => {
         total.value = 0;
         for (let i = 0; i < arrayTickets.data.length; i += 1) {
           total.value += arrayTickets.data[i].total;
         }
+        axios.post('parametros/getParametros').then((res) => {
+        if(res.data.parametros.NoEntradaDiners == 'Si'){
+              NoEntradaDiners.value = true;
+
+            }
+        })
         listaTickets.value = arrayTickets.data;
         // setTicketActivo('', true);
       });
@@ -100,6 +118,7 @@ export default {
       moment,
       ticketInfo,
       imprimirTicket,
+      NoEntradaDiners
     };
     /* FINAL SETUP */
   },

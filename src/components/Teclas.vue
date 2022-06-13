@@ -6,7 +6,8 @@
         </button>
       </div>
   </div>
-  <div class="row" id="menusColores" v-bind:class="[{'mb-3': showBackButton === true, 'p-2': showBackButton === false}]">
+ 
+ <div class="row" id="menusColores" v-bind:class="[{'mb-3': showBackButton === true, 'p-2': showBackButton === false}]">
       <template v-if="listaMenus.length <= 11">
         <template v-if='showBackButton'>
           <div v-for="(item, index) of listaMenus" :key="item.nomMenu" @click="clickMenu(index)" class="col colJuntitasMenus subMenus" style="padding-left: 4px;">
@@ -35,6 +36,7 @@
         </div>
       </template>
   </div>
+
   <div>
     <div class="row" v-for="index in 6" :key="index">
         <div class="col colJuntitas" v-for="index2 in 6" :key="index2">

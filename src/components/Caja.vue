@@ -100,12 +100,20 @@ export default {
         for (let i = 0; i < arrayTickets.data.length; i += 1) {
           total.value += arrayTickets.data[i].total;
         }
-        axios.post('parametros/getParametros').then((res) => {
-        if(res.data.parametros.NoEntradaDiners == 'Si'){
-              NoEntradaDiners.value = true;
 
+
+        axios.post('parametros/getParametros').then((res) => {
+          if(res.data.parametros.NoEntradaDiners != undefined){
+            if(res.data.parametros.NoEntradaDiners == 'Si'){
+              NoEntradaDiners.value = true;
             }
+          }else{
+              NoEntradaDiners.value = false;
+          }
         })
+
+
+        
         listaTickets.value = arrayTickets.data;
         // setTicketActivo('', true);
       });

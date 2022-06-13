@@ -7,7 +7,7 @@
         class="btn btn-secondary btn-sm botonesPrincipales menusColorIvan" @click="showMenu">
           <i class="bi bi-list display-6"></i>
         </button>
-         <button v-if="prohibirBuscarArticulos === true"
+         <button v-if="ProhibirCercaArticles === true"
               style="max-width: 106px"
               class="btn btn-secondary btn-sm botonesPrincipales menusColorIvan" @click="imprimirTicket()">
               <i class="bi bi-printer-fill display-6"></i>
@@ -299,7 +299,7 @@ export default {
     const TOO_GOOD_TO_GO = store.getters['Clientes/getTooGoodToGo'];
     const getClock = ref('');
     let mesa = store.getters['Cesta/getName'];
-    const prohibirBuscarArticulos = ref(false);
+    const ProhibirCercaArticles = ref(false);
 	   
     
 
@@ -585,9 +585,14 @@ export default {
         toast.error('Error en getVersion CATCH');
       })
   axios.post('parametros/getParametros').then((res) => {
-        if(res.data.parametros.prohibirBuscarArticulos == 'Si'){
-              prohibirBuscarArticulos.value = true;
-            }
+        if(res.data.parametros.ProhibirCercaArticles != undefined){
+          if(res.data.parametros.ProhibirCercaArticles == 'Si'){
+            ProhibirCercaArticles.value = true;
+          }
+        }
+          else{
+            ProhibirCercaArticles.value = false;
+          }
       })
       modalSuplementos = new Modal(document.getElementById('modalSuplementosModificar'), {
         keyboard: false,
@@ -752,7 +757,7 @@ export default {
       nombreTrabajador,
       getClock,
       mesa,
-      prohibirBuscarArticulos,
+      ProhibirCercaArticles,
       imprimirTicket
       
     };

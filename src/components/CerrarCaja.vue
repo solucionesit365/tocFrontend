@@ -330,6 +330,7 @@ export default {
 
     function cerrarModalConfirmacion() {
       modalConfirmacionClausura.toggle();
+      
     }
 
     onMounted(() => {

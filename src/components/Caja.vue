@@ -28,6 +28,7 @@
         <router-link to="" class="btn btn-secondary
           botonesPrincipales w-100 btn-block botonesWidth">
           <!-- <i class="bi bi-box-arrow-in-right iconosBootstrap"></i> -->
+          Opcion no disponible
         </router-link>
         </template>
         <template v-else>

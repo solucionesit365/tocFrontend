@@ -173,15 +173,7 @@ import axios from 'axios';
 import router from '../router/index';
 import { useStore } from 'vuex';
 import { useToast } from 'vue-toastification';
-
-export default {
-  name: 'AbrirCajaComponent',
-  setup() {
-    const toast = useToast();
-    const store = useStore();
-    const cajaAbierta = computed(() => store.state.Caja.cajaAbierta);
-    const valor3G = ref(0);
-    const infoDinero = ref([
+  const infoDinero = ref([
       { valor: 0, style: '' },
       { valor: 0, style: '' },
       { valor: 0, style: '' },
@@ -198,6 +190,14 @@ export default {
       { valor: 0, style: '' },
       { valor: 0, style: '' },
     ]);
+export default {
+  name: 'AbrirCajaComponent',
+    setup() {
+    const toast = useToast();
+    const store = useStore();
+    const cajaAbierta = computed(() => store.state.Caja.cajaAbierta);
+    const valor3G = ref(0);
+  
     const activo = ref(0);
     const totalClearOne = 0;
     const sizeBilletes = '160';
@@ -221,7 +221,7 @@ export default {
       total += infoDinero.value[12].valor * 100;
       total += infoDinero.value[13].valor * 200;
       total += infoDinero.value[14].valor * 500;
-      return total;
+     return total; 
     });
 
     const getDetalle = computed(() => {
@@ -354,7 +354,7 @@ export default {
       cantidad3G,
       cerrarCaja,
       abrirModalConfirmacion,
-      cerrarModalConfirmacion,
+      cerrarModalConfirmacion
     };
   },
 };

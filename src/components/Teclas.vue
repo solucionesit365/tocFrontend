@@ -602,7 +602,10 @@ export default {
             })
             return;
           }
-          alert('Has tocado una tecla vacía.')
+            //alert('Has tocado una tecla vacía.')
+                const idTecla = parseInt(objListadoTeclas.idBoton.replace('tecla', ''));
+                store.dispatch('ModalCrearProducto/abrirModal', {posicion: idTecla});
+
         } else {
           axios.post('articulos/getArticulo', { idArticulo }).then(({ data }) => {
             if(!data.error) {

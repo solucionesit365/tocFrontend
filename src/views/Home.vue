@@ -5,6 +5,7 @@
     <ModalEditarProducto />
     <Footer/>
     <ModalMostrarAlergenos/> 
+    <ModalCrearProducto/>
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import ModalEditarProducto from '@/components/ModalEditarProducto.vue'; // @ is 
 import Footer from '@/components/Footer.vue'; // @ is an alias to /src
 import { useStore } from 'vuex';
 import { useToast } from "vue-toastification";
+import ModalCrearProducto from '../components/ModalCrearProducto.vue';
 
 export default {
   name: 'Home',
@@ -39,12 +41,12 @@ export default {
     return {};
   },
   components: {
-   
     Teclas,
     ModalPeso,
     ModalEditarProducto,
     ModalMostrarAlergenos,
     Footer,
-  },
+    ModalCrearProducto
+},
 };
 </script>

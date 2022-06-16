@@ -26,6 +26,9 @@ import Caja from './modules/Caja';
 
 import ModalEditarProducto from './modules/ModalEditarProducto';
 
+
+import ModalCrearProducto from './modules/ModalCrearProducto';
+
 import Alergenos from './modules/Alergenos';
 
 import socket from '../sockets/socket';
@@ -118,5 +121,6 @@ export default createStore({
     CestasActivas,
     ModalEditarProducto,
     Alergenos,
+    ModalCrearProducto
   },
 });

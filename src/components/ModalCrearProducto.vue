@@ -91,6 +91,7 @@ export default {
         precioBase.value = store.state.ModalCrearProducto.precioBase;
         esSumable.value = store.state.ModalCrearProducto.esSumable;
         posicion.value = store.state.ModalCrearProducto.posicion;
+        menus.value = store.state.ModalCrearProducto.menus;
         tipoIva.value = store.state.ModalCrearProducto.tipoIva == 1 ? '1.04' : store.state.ModalCrearProducto.tipoIva == 2 ? '1.10' : '1.21';
     })
     return {
@@ -101,6 +102,7 @@ export default {
         confirmar,
         menus,
         esSumable,
+        posicion,
     };
     /* FINAL SETUP */
   },

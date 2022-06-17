@@ -80,9 +80,9 @@ export default {
        
         axios.post('teclado/anadirProducto', {nombreArticulo: nombreArticulo.value, precioConIva: precioConIva.value, esSumable: esSumable.value, precioBase: parseFloat(precioBase.value),  tipoIva: (parseFloat(tipoIva.value)), menus: menus.value,  posicion: posicion.value}).then((data) => {
             nombreArticulo.value= '';
-            precioBase.value= 0
-            precioConIva.value =0
-            esSumable.vlaue = false
+            precioBase.value= 0;
+            precioConIva.value = 0;
+            esSumable.value = false;
             store.dispatch('ModalCrearProducto/cerrarModal');
         })
     }

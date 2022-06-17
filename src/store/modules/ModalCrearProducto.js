@@ -9,12 +9,14 @@ export default {
     nombre: '',
     tipoIva: 0,
     posicion: 0,
+    menu: '',
   },
   mutations: {
     abrirModalMutation(state, payload) {
-        state.modal.show();
+     
         state.posicion = payload.posicion;
-        console.log(payload.posicion)
+        state.menu = payload.menu;
+        state.modal.show();
     },
     setModalMutation(state) {
       const modalElement = document.getElementById('modalCrearProducto');
@@ -28,7 +30,8 @@ export default {
   },
   getters: {
     // eslint-disable-next-line no-underscore-dangle
-    getNombre: (state) => state.nombre,
+  getPosicion: (state) => { state.posicion},
+  getMenu: (state) => { state.menu},
   },
   actions: {
     abrirModal({ commit }, data) {

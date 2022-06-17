@@ -8,6 +8,7 @@ export default {
     precioConIva: 0,
     nombre: '',
     tipoIva: 0,
+   
   },
   mutations: {
     abrirModalMutation(state, payload) {
@@ -15,6 +16,7 @@ export default {
         state.precioConIva = payload.precioConIva;
         state.nombre = payload.nombre;
         state.tipoIva = payload.tipoIva;
+      
         state.modal.show();
     },
     setModalMutation(state) {

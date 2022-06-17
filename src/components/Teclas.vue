@@ -604,7 +604,7 @@ export default {
           }
             //alert('Has tocado una tecla vacía.')
                 const idTecla = parseInt(objListadoTeclas.idBoton.replace('tecla', ''));
-                store.dispatch('ModalCrearProducto/abrirModal', {posicion: idTecla});
+                store.dispatch('ModalCrearProducto/abrirModal', {posicion: idTecla, menu : listaMenus.value[menuActivo].nomMenu});
 
         } else {
           axios.post('articulos/getArticulo', { idArticulo }).then(({ data }) => {

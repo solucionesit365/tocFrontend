@@ -53,10 +53,10 @@ export default {
     const store = useStore();
     const precioBase = ref(0);
     const precioConIva = ref(0);
-    const esSumable = ref('');
-    const tipoIva = ref(0);
+    const esSumable = ref('false');
+    const tipoIva = ref(3);
     const nombreArticulo = ref('');
-    const menus = ref([]);
+    const menus = ref('');
     const posicion = ref(0);
 
     function confirmar() {
@@ -74,9 +74,15 @@ export default {
         default:
           break;
       }
-      
-        axios.post('teclado/anadirProducto', {nombreArticulo: nombreArticulo.value, precioConIva: precioConIva.value, esSumable: esSumable.value ,precioBase: parseFloat(precioBase.value),  tipoIva: (parseFloat(tipoIva.value)), menus: menus.value,  posicion: posicion.value}).then((data) => {
-            console.log(data);
+            
+        posicion.value = store.state.ModalCrearProducto.posicion;
+        menus.value = store.state.ModalCrearProducto.menu;
+       
+        axios.post('teclado/anadirProducto', {nombreArticulo: nombreArticulo.value, precioConIva: precioConIva.value, esSumable: esSumable.value, precioBase: parseFloat(precioBase.value),  tipoIva: (parseFloat(tipoIva.value)), menus: menus.value,  posicion: posicion.value}).then((data) => {
+            nombreArticulo.value= '';
+            precioBase.value= 0
+            precioConIva.value =0
+            esSumable.vlaue = false
             store.dispatch('ModalCrearProducto/cerrarModal');
         })
     }
@@ -85,15 +91,7 @@ export default {
         store.dispatch('ModalCrearProducto/setModal');
     });
 
-    watch(() => store.getters['ModalCrearProducto/getNombre'], () => {
-        nombreArticulo.value = store.state.ModalCrearProducto.nombreArticulo;
-        precioConIva.value = store.state.ModalCrearProducto.precioConIva;
-        precioBase.value = store.state.ModalCrearProducto.precioBase;
-        esSumable.value = store.state.ModalCrearProducto.esSumable;
-        posicion.value = store.state.ModalCrearProducto.posicion;
-        menus.value = store.state.ModalCrearProducto.menus;
-        tipoIva.value = store.state.ModalCrearProducto.tipoIva == 1 ? '1.04' : store.state.ModalCrearProducto.tipoIva == 2 ? '1.10' : '1.21';
-    })
+
     return {
         nombreArticulo,
         precioBase,

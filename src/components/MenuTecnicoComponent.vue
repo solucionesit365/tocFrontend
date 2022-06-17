@@ -45,6 +45,11 @@
             <button class="btn btn-primary buttonSizeTecnico" data-bs-toggle="modal" data-bs-target="#modalListadoVentas">Listado de ventas</button>
           </div>
       </div>
+      <div class="row text-center mt-2">
+          <div class="col">
+            <button class="btn btn-primary buttonSizeTecnico" @click="actualitzarParametros()">Actualizar parametros GDT</button>
+          </div>
+      </div>
   </div>
   <div class="position-fixed bottom-0 start-0 ms-2 mb-2">
       <button class="btn btn-warning buttonSizeTecnico" @click="volver()">Volver</button>

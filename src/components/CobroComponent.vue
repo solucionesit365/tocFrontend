@@ -239,7 +239,7 @@ export default {
     const metodoPagoActivo = ref('TARJETA');
     const totalTkrs = ref(0);
     const cuenta = ref(0);
-    const cesta =store.getters['Cesta/getCestaId'];
+    const cesta = store.getters['Cesta/getCestaId'];
     const arrayFichados = ref([]);
     const tipoDatafono = ref(null);
     const esperando = computed(() => store.state.esperandoDatafono); // ref(false);

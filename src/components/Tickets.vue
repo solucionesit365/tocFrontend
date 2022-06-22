@@ -10,6 +10,7 @@
               <th scope="col">Hora</th>
               <th scope="col">Forma de pago</th>
               <th scope="col">Total</th>
+              <th scope="col">Estado</th>
             </tr>
           </thead>
           <tbody>
@@ -23,6 +24,7 @@
                   </td>
                 <td>{{item.tipoPago}}</td>
                 <td>{{item.total.toFixed(2)}} €</td>
+                <td>{{(item.anulado) ? ('ANULADO') : ('OK')}}</td>
             </tr>
           </tbody>
         </table>

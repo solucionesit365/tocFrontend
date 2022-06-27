@@ -12,7 +12,7 @@
         <template v-if='showBackButton'>
           <div v-for="(item, index) of listaMenus" :key="item.nomMenu" @click="clickMenu(index)" class="col colJuntitasMenus subMenus" style="padding-left: 4px;">
             <button class="btn btn-secondary w-100 subMenus menusColorIvan colorMenus" v-bind:class="[{'activo': esActivo(index)}]">
-              {{item.nomMenu}}
+              {{item.nomMenu.replace(item.tag,"")}}
             </button>
           </div>
         </template>
@@ -566,6 +566,8 @@ export default {
       axios.post('/doble-menus/clickMenu', { tag }).then((res) => {
         if(!res.data.bloqueado) {
           listaMenus.value = res.data.resultado;
+         
+        
           subMenuActivo = tag;
           clickMenuBloqueado = false;
           clickMenu(0);
@@ -699,6 +701,8 @@ export default {
           if(res.data.resultado.length > 0) {
 
             listaSubmenus.value = res.data.resultado;
+
+           
             if(!backButton) clickSubmenu(res.data.resultado[0].tag);
             else dobleMenu.value = true;
             showBackButton.value = true;

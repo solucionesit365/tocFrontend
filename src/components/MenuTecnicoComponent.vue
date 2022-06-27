@@ -171,13 +171,13 @@ export default {
         function actualitzarParametros(){
                   axios.post('parametros/actualizarParametros').then((res) => {
                 if (res.data.error == false) {
-                    toast.success('Clientes descargados OK');
+                    toast.success('Parametros Actualizados OK');
                 } else {
                     toast.error(res.data.mensaje);
                 }
             }).catch((err) => {
                 console.log(err);
-                toast.error('Error descargarClientesFinales CATCH');
+                toast.error('Error al actualizar parametros CATCH');
             });
         }
 

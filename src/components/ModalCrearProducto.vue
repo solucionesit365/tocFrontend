@@ -11,9 +11,9 @@
 
             <label for='tipoIva'>Tipo de IVA</label>
             <select name="tipoIva" id="tipoIva" v-model='tipoIva'  class='form-control'>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
+              <option value="1">4%</option>
+              <option value="2">10%</option>
+              <option value="3">21%</option>
             </select>
 
             <label for='esSumable'>Es sumable?</label>

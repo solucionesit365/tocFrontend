@@ -12,9 +12,15 @@ import { ref } from 'vue';
 export default {
     setup() {
         const route = useRoute();
-        const { codiBotiga } = route.params;
-        const url = ref(`http://silema.hiterp.com/TpvWebReposicion.asp?modo=MENU&codiBotiga=${codiBotiga}`);
-        return {
+        console.log(route.params)
+        const { codiBotiga, database } = route.params;
+        
+        //const url = ref(`http://silema.hiterp.com/TpvWebReposicion.asp?modo=MENU&codiBotiga=${codiBotiga}`);
+       const url = ref(`http://silema.hiterp.com/TpvWeb.asp?Empresa=${database}&codiBotiga=${codiBotiga}`);
+       
+      
+       
+       return {
             url,
         };
     },

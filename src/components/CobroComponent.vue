@@ -475,6 +475,7 @@ export default {
               reset();
               try {
                 axios.post('impresora/abrirCajon');
+                axio.post('impresora/despedida')
               } catch (err) {
                 toast.error('No se ha podido abrir el cajón.');
               }
@@ -491,6 +492,7 @@ export default {
           // {tkrs: true, totalTkrs: this.totalTkrs, tipoPago: this.metodoPagoActivo});
         } else { // Sin ticket restaurant (normal)
           if (metodoPagoActivo.value === 'EFECTIVO') {
+            axios.post('impresora/despedida')
             axios.post('tickets/crearTicketEfectivo', {
               total: Number(total.value),
               idCesta: cestaId,
@@ -503,6 +505,7 @@ export default {
                 } catch(err) {
                   toast.error('No se ha podido abrir el cajón');
                 }
+                 
                 toast.success('Ticket OK');
                 router.push('/');
               } else {
@@ -516,6 +519,7 @@ export default {
           }
 
           if (metodoPagoActivo.value === 'TARJETA 3G') {
+            axios.post('impresora/despedida')
             axios.post('tickets/crearTicketDatafono3G', {
               total: Number(total),
               idCesta: cestaId,
@@ -524,6 +528,7 @@ export default {
               if (!res.data.error) {
                 reset();
                 router.push({ name: 'Home', params: { tipoToast: 'success', mensajeToast: 'Ticket creado' } });
+                
               } else {
                 toast.error('Error al insertar el ticket');
               }
@@ -534,10 +539,12 @@ export default {
           }
 
           if (metodoPagoActivo.value === 'TARJETA') {
+            axios.post('impresora/despedida')
             if (tipoDatafono.value == 'CLEARONE') {
               emitSocket('enviarAlDatafono', { total: Number(total), idCesta: cestaId, idClienteFinal: infoCliente });
               setEsperando(true);
             } else if (tipoDatafono.value == 'PAYTEF') {
+             
               // axios.post('paytef/iniciarTransaccion', { idClienteFinal: infoCliente }).then((resPaytef) => {
               //   if (resPaytef.data.error == true) {
               //     toast.error(resPaytef.data.mensaje);
@@ -553,6 +560,7 @@ export default {
               // });
               setEsperando(true);
               emitSocket('iniciarTransaccion', { idClienteFinal: infoCliente, idCesta: cesta });
+             
             }              
           }
 

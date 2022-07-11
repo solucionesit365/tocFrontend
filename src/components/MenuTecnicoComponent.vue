@@ -22,7 +22,7 @@
       </div>
       <div class="row text-center mt-2">
           <div class="col">
-            <button class="btn btn-primary buttonSizeTecnico" data-bs-toggle="modal" data-bs-target="#modalConfigImpresora">Config. VID y PID impresora</button>
+            <button class="btn btn-primary buttonSizeTecnico" data-bs-toggle="modal" data-bs-target="#modalConfigImpresora">Config. VID y PID impresora, Visor</button>
           </div>
       </div>
       <div class="row text-center mt-2">
@@ -60,7 +60,7 @@
 <div class="modal-dialog">
     <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Configuración VID y PID impresora</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Configuración VID y PID impresora, Visor</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
@@ -71,6 +71,10 @@
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">PID</span>
             <input type="text" class="form-control" placeholder="0x202" v-model="pid">
+        </div>
+         <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Visor</span>
+            <input type="text" class="form-control" placeholder="COM0" v-model="com">
         </div>
     </div>
     <div class="modal-footer">
@@ -152,6 +156,7 @@ export default {
         const store = useStore();
         const vid = ref('');
         const pid = ref('');
+        const com = ref('')
         const ipPaytef = ref('');
         const enviarDatos = ref(true);
         const fechaInicio = ref();
@@ -203,7 +208,8 @@ export default {
         }
 
         function guardarCambiosImpresora() {
-            axios.post('parametros/vidAndPid', { vid: vid.value, pid: pid.value }).then((res) => {
+            
+            axios.post('parametros/vidAndPid', { vid: vid.value, pid: pid.value, com: com.value }).then((res) => {
                 if (res.data.error == false) {
                     toast.success('Cambios guardados');
                 } else {
@@ -383,6 +389,7 @@ export default {
             imprimirTest,
             guardarCambiosImpresora,
             vid,
+            com,
             pid,
             descargarTicketInfo,
             volver,

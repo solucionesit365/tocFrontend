@@ -117,6 +117,7 @@
                                     <tr>
                                         <th scope="col">Nombre</th>
                                         <th scope="col">Fichar/Desfichar</th>
+                                        <th scope="col">Descanso</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -124,6 +125,8 @@
                                         <td>{{trabajador.nombre}}</td>
                                         <td v-if="trabajador.fichado === false || trabajador.fichado == undefined"><a href="#" style="width: 150px" class="btn btn-outline-primary btn_fc" @click="fichar(trabajador, index)">FICHAR</a></td>
                                          <td v-else><a href="#" style="width: 150px" class="btn btn-success">Fichada/o</a></td>
+                                         <td v-if="trabajador.descanso === false || trabajador.descanso == undefined"><a href="#" style="width: 150px" class="btn btn-outline-primary btn_fc" @click="fichar(trabajador, index)">DESCANSO</a></td>
+                                         <td v-else><a href="#" style="width: 150px" class="btn btn-warning ms-2">Fin Descanso</a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -266,7 +269,25 @@ export default {
             });
         }
 
+        function descanso(trabajador, index) {
+            axios.post('trabajadores/descanso', { idTrabajador: trabajador.idTrabajador, idPlan: idPlanificacion.value }).then((res) => {
+                if (!res.data.error) {
+                    store.dispatch('Cesta/setIdAction', trabajador.idTrabajador);
+                    arrayTrabajadores.value[index].fichado = true;
+                   // actualizarTurnos();
+                    idPlanificacion.value = 'SIN_TURNO';
+                } else {
+                    console.log(res.data.mensaje);
+                    arrayTrabajadores.value[index].fichado = false;
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+
+
         function fichar(trabajador, index) {
+            console.log(trabajador)
             ficharReal(trabajador, index);
             // if (idPlanificacion.value == 'SIN_TURNO') {
             //     if (confirm("No has seleccionado turno. ¿CONTINUAR?")) {
@@ -385,6 +406,7 @@ export default {
             apagarEquipo,
             nombre,
             id,
+            descanso
         };
     },
     watch: {

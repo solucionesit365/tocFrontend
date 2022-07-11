@@ -14,7 +14,7 @@ class tocGameV3 {
 
     constructor() {
         axios.post(baseURL + 'parametros/getParametros').then((res) => {
-            console.log(res.data)
+            
             if (res.data.error === false) {
                 this.parametros = res.data.parametros;
             } else {
@@ -94,7 +94,7 @@ class tocGameV3 {
                                 store.dispatch('Trabajadores/setNombreTrabajadorActivo', infoTrabajador.data.trabajador.nombre);
                                   var idcesta = store.getters['Cesta/getCestaId']
                                   axios.post('cestas/getCestaByTrabajadorId', { idCesta: idcesta }).then((resCesta) => {
-                                    console.log(resCesta.data)
+                                    
                                     if (resCesta.data.error === false && resCesta.data.info != null) {
                                         store.dispatch('Cesta/setCestaAction', resCesta.data.info);
                                     } else {                                        

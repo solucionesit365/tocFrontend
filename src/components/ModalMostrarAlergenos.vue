@@ -1,9 +1,9 @@
 <template>
    <div class="modal" id="modalMostrarAlergenos" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document" style="max-width: 600px  ">
+    <div class="modal-dialog" role="document" style="max-width: 1000px ">
       <div class="modal-content">
         
-        <div class="modal-body" style="height: 20em">
+        <div class="modal-body" style="height: 30em">
        
          <iframe :src="url" style='position: absolute; height: 90%; width: 90%; border: none'></iframe>
   
@@ -43,6 +43,7 @@ export default {
 
         watch(() => store.getters['Alergenos/getProducto'], () => {
         producto.value = store.state.Alergenos.producto;
+        console.log(producto)
         codiBotiga.value = store.state.Alergenos.codiBotiga;
         url.value = `http://silema.hiterp.com/Facturacion/ElForn/gestion/FichaTecnicaHtml.asp?codi=${producto.value}&Llic=${codiBotiga.value}`;
     })

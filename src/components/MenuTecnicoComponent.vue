@@ -163,6 +163,18 @@ export default {
                 toast.error('Error descargarClientesFinales CATCH');
             });
         }
+        function actualitzarParametros(){
+                  axios.post('parametros/actualizarParametros').then((res) => {
+                if (res.data.error == false) {
+                    toast.success('Parametros Actualizados OK');
+                } else {
+                    toast.error(res.data.mensaje);
+                }
+            }).catch((err) => {
+                console.log(err);
+                toast.error('Error al actualizar parametros CATCH');
+            });
+        }
 
         function volver() {
             router.push('/menu/caja');
@@ -375,6 +387,7 @@ export default {
             cambiarPrecio,
             fechaInicio,
             fechaFinal,
+            actualitzarParametros
         };     
     },
 }

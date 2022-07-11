@@ -75,7 +75,7 @@ const routes = [
         component: () => import('../components/Fichajes.vue'),
       },
       {
-        path: 'pedidos/:codiBotiga',
+        path: 'pedidos/:codiBotiga/:database',
         component: () => import('../components/Pedidos.vue'),
       },
       {

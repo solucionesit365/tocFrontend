@@ -102,7 +102,7 @@ export default {
 
     axios.get('parametros/getParametrosBonito').then((res) => {
       if (res.data.error == false) {
-        url.value = `/menu/pedidos/${res.data.parametros.codigoTienda}`;
+        url.value = `/menu/pedidos/${res.data.parametros.codigoTienda}/${res.data.parametros.database}`;
       } else {
         console.log("Error en parametros/getParametrosBonito");
       }

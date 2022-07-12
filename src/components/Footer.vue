@@ -529,6 +529,7 @@ export default {
         router.push('/');
         return;
       }
+         axios.post('impresora/despedida')
       if (getTotal.value != 0) {
       if (trabajadorActivo.value != '') {
         let pagaEnTienda = store.getters['Clientes/getClientePagaEnTienda'];

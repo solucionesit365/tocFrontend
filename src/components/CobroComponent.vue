@@ -458,7 +458,7 @@ export default {
     }
 
     async function cobrar() {
-      console.log('funcion cobrar')
+   
       if (!esperando.value && total.value > 0) {
         let cestaId = await getCestaId();
         if (totalTkrs.value > 0 && await cestaId != -1) { /* Ticket restaurant activo */
@@ -475,7 +475,7 @@ export default {
               reset();
               try {
                 axios.post('impresora/abrirCajon');
-                axio.post('impresora/despedida')
+                
               } catch (err) {
                 toast.error('No se ha podido abrir el cajón.');
               }
@@ -492,7 +492,7 @@ export default {
           // {tkrs: true, totalTkrs: this.totalTkrs, tipoPago: this.metodoPagoActivo});
         } else { // Sin ticket restaurant (normal)
           if (metodoPagoActivo.value === 'EFECTIVO') {
-            axios.post('impresora/despedida')
+           
             axios.post('tickets/crearTicketEfectivo', {
               total: Number(total.value),
               idCesta: cestaId,
@@ -519,7 +519,7 @@ export default {
           }
 
           if (metodoPagoActivo.value === 'TARJETA 3G') {
-            axios.post('impresora/despedida')
+           
             axios.post('tickets/crearTicketDatafono3G', {
               total: Number(total),
               idCesta: cestaId,
@@ -539,7 +539,6 @@ export default {
           }
 
           if (metodoPagoActivo.value === 'TARJETA') {
-            axios.post('impresora/despedida')
             if (tipoDatafono.value == 'CLEARONE') {
               emitSocket('enviarAlDatafono', { total: Number(total), idCesta: cestaId, idClienteFinal: infoCliente });
               setEsperando(true);

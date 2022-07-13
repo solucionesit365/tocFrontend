@@ -125,7 +125,7 @@
                                         <td>{{trabajador.nombre}}</td>
                                         <td v-if="trabajador.fichado === false || trabajador.fichado == undefined"><a href="#" style="width: 150px" class="btn btn-outline-primary btn_fc" @click="fichar(trabajador, index)">FICHAR</a></td>
                                          <td v-else><a href="#" style="width: 150px" class="btn btn-success">Fichada/o</a></td>
-                                         <td v-if="trabajador.descanso === false || trabajador.descanso == undefined"><a href="#" style="width: 150px" class="btn btn-outline-primary btn_fc" @click="">DESCANSO</a></td>
+                                         <td v-if="trabajador.descanso === false || trabajador.descanso == undefined"><a href="#" style="width: 150px" class="btn btn-outline-primary btn_fc" @click="descanso(trabajador,index)">DESCANSO</a></td>
                                          <td v-else><a href="#" style="width: 150px" class="btn btn-warning ms-2">Fin Descanso</a></td>
                                     </tr>
                                 </tbody>
@@ -268,21 +268,20 @@ export default {
                 console.log(err);
             });
         }
-
         function descanso(trabajador, index) {
-            axios.post('trabajadores/descanso', { idTrabajador: trabajador.idTrabajador, idPlan: idPlanificacion.value }).then((res) => {
-                if (!res.data.error) {
-                    store.dispatch('Cesta/setIdAction', trabajador.idTrabajador);
-                    arrayTrabajadores.value[index].fichado = true;
-                   // actualizarTurnos();
-                    idPlanificacion.value = 'SIN_TURNO';
-                } else {
-                    console.log(res.data.mensaje);
-                    arrayTrabajadores.value[index].fichado = false;
-                }
-            }).catch((err) => {
-                console.log(err);
-            });
+            // axios.post('trabajadores/descanso', { idTrabajador: trabajador.idTrabajador, idPlan: idPlanificacion.value }).then((res) => {
+            //     if (!res.data.error) {
+            //         store.dispatch('Cesta/setIdAction', trabajador.idTrabajador);
+            //         arrayTrabajadores.value[index].fichado = true;
+            //        // actualizarTurnos();
+            //         idPlanificacion.value = 'SIN_TURNO';
+            //     } else {
+            //         console.log(res.data.mensaje);
+            //         arrayTrabajadores.value[index].fichado = false;
+            //     }
+            // }).catch((err) => {
+            //     console.log(err);
+            // });
         }
 
 

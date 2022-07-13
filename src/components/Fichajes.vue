@@ -125,7 +125,7 @@
                                         <td>{{trabajador.nombre}}</td>
                                         <td v-if="trabajador.fichado === false || trabajador.fichado == undefined"><a href="#" style="width: 150px" class="btn btn-outline-primary btn_fc" @click="fichar(trabajador, index)">FICHAR</a></td>
                                          <td v-else><a href="#" style="width: 150px" class="btn btn-success">Fichada/o</a></td>
-                                         <td v-if="trabajador.descanso === false || trabajador.descanso == undefined"><a href="#" style="width: 150px" class="btn btn-outline-primary btn_fc" @click="fichar(trabajador, index)">DESCANSO</a></td>
+                                         <td v-if="trabajador.descanso === false || trabajador.descanso == undefined"><a href="#" style="width: 150px" class="btn btn-outline-primary btn_fc" @click="">DESCANSO</a></td>
                                          <td v-else><a href="#" style="width: 150px" class="btn btn-warning ms-2">Fin Descanso</a></td>
                                     </tr>
                                 </tbody>

@@ -269,6 +269,7 @@ export default {
             });
         }
         function descanso(trabajador, index) {
+     toast.error('Esta deshabilitado ')
             // axios.post('trabajadores/descanso', { idTrabajador: trabajador.idTrabajador, idPlan: idPlanificacion.value }).then((res) => {
             //     if (!res.data.error) {
             //         store.dispatch('Cesta/setIdAction', trabajador.idTrabajador);

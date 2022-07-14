@@ -10,7 +10,6 @@
               <th scope="col">Hora</th>
               <th scope="col">Forma de pago</th>
               <th scope="col">Total</th>
-              <th scope="col">Estado</th>
             </tr>
           </thead>
           <tbody>
@@ -24,7 +23,6 @@
                   </td>
                 <td>{{item.tipoPago}}</td>
                 <td>{{item.total.toFixed(2)}} €</td>
-                <td>{{(item.anulado) ? ('ANULADO') : ('OK')}}</td>
             </tr>
           </tbody>
         </table>
@@ -42,7 +40,17 @@
                 <i class="bi bi-printer-fill iconosBootstrap"></i>
             </button>
         </div>
+        
       </div>
+      <br>
+        <div class="col">
+            <button
+            @click="esborraTicket()"
+            type="button" class="btn btn-secondary
+            botonesPrincipales w-100 btn-block botonesWidth">
+                <i class="bi bi-trash iconosBootstrap"></i>
+            </button>
+        </div>
     </div>
 </template>
 <script>
@@ -55,8 +63,9 @@ import moment from 'moment';
 import { useStore } from 'vuex';
 import router from '../router/index';
 import { useToast } from 'vue-toastification';
-
+const toast = useToast();
 export default {
+  
   name: 'Caja',
   setup() {
     const activo = ref(null);
@@ -64,27 +73,41 @@ export default {
     const listaTickets = ref([]);
     const ticketInfo = ref(null);
     const store = useStore();
-
     function setTicketActivo(ticket, mounted = false) {
     
       if(mounted) ticket = listaTickets.value[listaTickets.value.length-1];
       ticketInfo.value = ticket;
       if (listaTickets.value.length > 0) activo.value = ticket._id;
     }
-
     function goTo(url) {
       router.push(url);
     }
-
     function imprimirTicket() {
       if (activo.value != null) {
         axios.post('impresora/imprimirTicket', { idTicket: activo.value });
         goTo('/');
       } else {
-        toast.error('Primero selecciona un ticket');
+        console.log('Primero selecciona un ticket');
       }
     }
-
+      function esborraTicket() {
+      if (activo.value != null) {
+            axios.post('tickets/rectificativa', { ticketID: activo.value }).then((ticket) =>{
+                            
+                    if(!ticket.data.error){
+                      toast.success(ticket.data.mensaje)
+                      goTo('/');
+                    } else{
+                    toast.error(ticket.data.mensaje)
+                    } 
+            
+          })
+ //goTo('/');
+      } else {
+        console.log('Primero selecciona un ticket');
+      }
+    }
+    
     onMounted(() => {
       axios.post('tickets/getTicketsIntervalo').then((arrayTickets) => {
         total.value = 0;
@@ -104,6 +127,7 @@ export default {
       moment,
       ticketInfo,
       imprimirTicket,
+      esborraTicket,
     };
     /* FINAL SETUP */
   },
@@ -126,7 +150,6 @@ export default {
     width: 5vw;
     border: solid black 1px;
   }
-
   .botonesPrincipales{
     background-color: #fff5e9;
     color: #c95907;

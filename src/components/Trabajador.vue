@@ -21,7 +21,6 @@ export default {
             return trabajadorActivo.value === x;
         }
         function changeActivo(id) {
-            console.log('Cambiode trabajadores ')
             axios.post('trabajadores/setActivo', { id }).then((res) => {
                 if (!res.data.error) {
                     store.dispatch('Trabajadores/setTrabajadorActivo', id);
@@ -30,12 +29,12 @@ export default {
                     getFichados();
                     router.push('/');
                 } else {
-                    console.log('Error al cambiar trabajador activo');
+                    toast.error('Error al cambiar trabajador activo');
                 }
             });
         }
-        function getFichados() {
-            
+
+        function getFichados() {            
             axios.post('trabajadores/getTrabajadoresFichados').then((info) => {
                 if(!info.data.error) {
                     if (info.data.res.length > 0) {
@@ -43,11 +42,10 @@ export default {
                         arrayTrabajadores.value = info.data.res;
                         axios.post('trabajadores/getCurrentTrabajador').then((infoTrabajador) => {
                         if (!infoTrabajador.data.error) {
-                            console.log(infoTrabajador.data)
                             trabajadorActivo.value = infoTrabajador.data.trabajador.idTrabajador;
                             store.dispatch('Trabajadores/setTrabajadorActivo', infoTrabajador.data.trabajador.idTrabajador);
                         } else {
-                            console.log('Error en getCurrentTrabajador');
+                            tosat.error('Error en getCurrentTrabajador');
                         }
                         }).catch((err) => {
                             console.log(err);
@@ -56,7 +54,7 @@ export default {
                         // ENVIAR DIRECTAMENTE A FICHAR TRABAJADOR !!!
                     }
                 } else {
-                    console.log('Error en getTrabajadoresFichados');
+                    toast.error('Error en getTrabajadoresFichados');
                 }
             }).catch((err) => {
                 console.log(err);

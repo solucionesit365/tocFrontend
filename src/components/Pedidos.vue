@@ -12,7 +12,6 @@ import { ref } from 'vue';
 export default {
     setup() {
         const route = useRoute();
-        console.log(route.params)
         const { codiBotiga, database } = route.params;
         
         //const url = ref(`http://silema.hiterp.com/TpvWebReposicion.asp?modo=MENU&codiBotiga=${codiBotiga}`);

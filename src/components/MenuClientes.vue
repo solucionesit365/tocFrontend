@@ -145,7 +145,6 @@ export default {
       }); 
     }
     function selectUber() {
-       console.log("UBER: ", DELIVEROO);
       axios.post('clientes/getClienteByID', { idCliente: UBER }).then((res) => {
          if (!res.data.error) {
             selectCliente(res.data.infoCliente);
@@ -223,8 +222,7 @@ export default {
             modalClientes.hide();
             toast.success('Cliente seleccionado');
          } else {
-            console.log(res.data.mensaje);
-            toast.error('Error. Comprobar consola');
+            toast.error('Error. Comprobar consola ' + res.data.mensaje);
          }
       }).catch((err) => {
          console.log(err);
@@ -235,7 +233,6 @@ export default {
     function buscar() {
        axios.post('clientes/buscar', { busqueda: inputBusqueda.value }).then((res) => {
          arrayClientes.value = res.data;
-         console.log(res.data);
        }).catch((err) => {
           console.log(err);
        });

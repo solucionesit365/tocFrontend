@@ -316,10 +316,7 @@ export default {
     function touchEnd() {
     	finalMagic = new Date();
       const diffTime = Math.abs(finalMagic - inicioMagic);
-      if (diffTime < 2000) {
-        console.log('Pulsación rápida');
-      } else {
-        console.log('Pulsación lenta');
+      if (diffTime >= 2000) {
         store.dispatch('setModoActual', 'NORMAL');
         store.dispatch('Clientes/resetClienteActivo');
         store.dispatch('Footer/resetMenuActivo');
@@ -327,7 +324,7 @@ export default {
           modalClientes.hide();
           toast.info('Reset OK. Estado de cobro: NORMAL');
         }).catch((err) => {
-          console.log(err);
+          toast.error(err.message);
         });
         router.go('/');
       }
@@ -397,7 +394,7 @@ export default {
         if (!res.data.error) {
           store.dispatch('Trabajadores/setTrabajadorActivo', trabajadorActivo.value);
         } else {
-          console.log('Error al cambiar trabajador activo');
+          toast.error('Error al cambiar trabajador activo');
         }
       });
     }
@@ -420,10 +417,7 @@ export default {
         }).then((res) => {
           if (!res.data.error) {
             axios.post('/cestas/getCesta').then((res) => {
-              console.log('crear tickets')
-              console.log(store.getters['Cesta/getCestaId'])
               store.dispatch('Cesta/setCestaAction', res.data);
-              console.log(store.getters['Cesta/getCestaId'])
             });
             /* Ejemplo de como limpiar el estado al completo */
             store.dispatch('setModoActual', 'NORMAL');
@@ -431,13 +425,11 @@ export default {
             store.dispatch('Footer/resetMenuActivo');
             /* Final del ejemplo */
             toast.success('¡Ticket en modo DEUDA creado!');
-
           } else {
             toast.error('Error al insertar el ticket');
           }
         }).catch((err) => {
-          console.log(err);
-          toast.error('Error al insertar el ticket');
+          toast.error(err.message);
         });
       } else {
         toast.info('¡ Es necesario un trabajador/a activ@ !');
@@ -451,10 +443,7 @@ export default {
             estadoPromociones: true
           });
           axios.post('/cestas/getCesta').then((res) => {
-            console.log('cerar devolucion ')
-            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res.data);
-            console.log(store.getters['Cesta/getCestaId'])
           });
           store.dispatch('setModoActual', 'NORMAL');
           store.dispatch('Clientes/resetClienteActivo');
@@ -464,8 +453,7 @@ export default {
           toast.error(res.data.mensaje);
         }
       }).catch((err) => {
-        console.log(err);
-        toast.error('Error, no se ha podido crear la devolución');
+        toast.error(err.message);
       });
     }
 
@@ -475,10 +463,7 @@ export default {
       }).then((res) => {
         if (!res.data.error) {
           axios.post('/cestas/getCesta').then((res) => {
-            console.log('consumo personal ')
-            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res.data);
-            console.log(store.getters['Cesta/getCestaId'])
           });
           store.dispatch('setModoActual', 'NORMAL');
           store.dispatch('Clientes/resetClienteActivo');
@@ -488,8 +473,7 @@ export default {
           toast.error('Error al insertar el ticket');
         }
       }).catch((err) => {
-        console.log(err);
-        toast.error('Error al insertar el ticket');
+        toast.error(err.message);
       });
     }
 
@@ -506,8 +490,6 @@ export default {
         let infoClienteVip = store.getters['Clientes/getInfoClienteVip'];
         let idClienteFinal = store.getters['Clientes/getInfoCliente'];
         let idCesta = store.getters['Cesta/getCestaId'];
-        console.log('esto es lo que contiene id cesta del footer')
-        console.log(idCesta)
         
         /* Si se cumple que es VIP y no paga en tienda, se crea la deuda, sino, cobro normal */
         if ((pagaEnTienda == true && modoActual != 'DEVOLUCION' && modoActual != 'CONSUMO PERSONAL') || (modoActual == 'CLIENTE')) {
@@ -574,8 +556,6 @@ export default {
       //   }
       // });
       axios.post('/trabajadores/getCurrentTrabajador').then((res) => {
-        nombreTrabajador.value = res.data.trabajador.nombre;
-
         store.dispatch('Trabajadores/setTrabajadorActivo', res.data.trabajador.idTrabajador);
       });
 
@@ -587,7 +567,6 @@ export default {
         axios.post('/cestas/modificarSuplementos', { cestaId: store.getters['Cesta/getCestaId'], idArticulo: store.getters['Cesta/getItem'], posArticulo: index }).then((res) => {
           if(res.data.suplementos) {
             suplementos.value = res.data.suplementosData;
-            console.log("🚀 ~ file: Footer.vue ~ line 516 ~ axios.post ~ suplementos.value", suplementos.value)
             for(let i = 0; i < res.data.suplementosSeleccionados.length; i++) {
               selectSuplemento(res.data.suplementosSeleccionados[i]);
             }
@@ -616,18 +595,14 @@ export default {
       axios.post('cestas/addSuplemento', { idCesta: store.getters['Cesta/getCestaId'], suplementos: suplementosSeleccionados.value, idArticulo: store.getters['Cesta/getItem'], posArticulo: activo.value }).then((res) => {
         if(!res.data.error && !res.data.bloqueado) {
           store.dispatch('resetUnidades');
-          console.log('suplemento')
-          console.log(store.getters['Cesta/getCestaId'])
           store.dispatch('Cesta/setCestaAction', res.data.cesta);
-          console.log(store.getters['Cesta/getCestaId'])
           suplementosSeleccionados.value = [];
           cerrarModal();
         } else {
-          console.log('Error en clickSuplemento');
+          toast.error('Error en clickSuplemento');
         }
       }).catch((err) => {
-        console.log(err);
-        toast.error('Error. Comprobar consola.');
+        toast.error('Error. Comprobar consola: ' + err.message);
       });
     }
     
@@ -640,10 +615,7 @@ export default {
         /* eslint no-underscore-dangle: 0 */
         axios.post('/cestas/borrarArticulosCesta', { idCesta: cesta.value._id }).then((res) => {
           if (res.data.error == false) {
-            console.log('suplemento')
-            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res.data.info);
-            console.log(store.getters['Cesta/getCestaId'])
           } else {
             toast.error(res.data.mensaje);
           }
@@ -657,10 +629,7 @@ export default {
         // cio: "", total: toc.getCesta().tiposIva.importe2, dependienta: ""});
         axios.post('/cestas/borrarItemCesta', { _id: store.state.Cesta.cesta._id, idArticulo: store.getters['Cesta/getItem'] }).then((res) => {
           if (res.data.okey) {
-            console.log('borra cesta ')
-            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res.data.cestaNueva);
-            console.log(store.getters['Cesta/getCestaId'])
           } else {
             console.log(res.data.okey);
           }

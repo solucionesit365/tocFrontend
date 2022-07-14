@@ -248,9 +248,6 @@ export default {
     axios.post('cestas/getCestaCurrent',{
  idCesta: cesta
     } ).then((infoCesta) => {
-      console.log('cobro component')
-      console.log()
-      console.log(infoCesta.data)
       if (infoCesta.data.error === false) {
         total.value = infoCesta.data.info.tiposIva.importe1 + infoCesta.data.info.tiposIva.importe2 + infoCesta.data.info.tiposIva.importe3;
       } else {
@@ -283,11 +280,10 @@ export default {
         if (!res.data.error) {
           return res.data.info._id;
         } else {
-          console.log(res.data.mensaje);
+          toast.error(res.data.mensaje);
           return -1;
         }
       }).catch((err) => {
-        console.log(err);
         toast.error(err.message);
         return -1;
       });
@@ -337,7 +333,7 @@ export default {
       if (cantidadLimpia > 0) {
         setTotalTkrs(cantidadLimpia);
       } else {
-        console.log('Importe ticket restaurant incorrecto');
+        toast.error('Importe ticket restaurant incorrecto');
       }
     }
 
@@ -457,7 +453,6 @@ export default {
     }
 
     async function cobrar() {
-      console.log('funcion cobrar')
       if (!esperando.value) {
         let cestaId = await getCestaId();
         if (totalTkrs.value > 0 && await cestaId != -1) { /* Ticket restaurant activo */
@@ -507,12 +502,11 @@ export default {
                 toast.success('Ticket OK');
                 router.push('/');
               } else {
-                console.log(res.data.mensaje);
-                toast.error('Error al insertar el ticket');
+                toast.error(res.data.mensaje);
               }
             }).catch((err) => {
               console.log(err);
-              toast.error('Error');
+              toast.error(err.message);
             });
           }
 
@@ -573,7 +567,6 @@ export default {
     }
 
     async function reset() {
-      console.log('Funcion reset')
       const res = await axios.post('trabajadores/getCurrentTrabajador', {});
       if (!res.data.error) {
         
@@ -614,10 +607,10 @@ export default {
       axios.post('/trabajadores/getTrabajadoresFichados').then((res) => {
         if (!res.data.error) {
           if (res.data.res.length === 0) {
-            console.log('No hay trabajadores fichados');
+            toast.error('No hay trabajadores fichados');
           }
         } else {
-          console.log('Error!');
+          toast.error(res.data.mensaje);
         }
       }).catch((err) => {
           console.log(err);

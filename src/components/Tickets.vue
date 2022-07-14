@@ -81,7 +81,7 @@ export default {
         axios.post('impresora/imprimirTicket', { idTicket: activo.value });
         goTo('/');
       } else {
-        console.log('Primero selecciona un ticket');
+        toast.error('Primero selecciona un ticket');
       }
     }
 

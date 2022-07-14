@@ -17,18 +17,16 @@ export default {
         const store = useStore();
         const { cestas } = store.state.CestasActivas;
         const activo = store.state.Cesta.cesta._id;
-        console.log(cestas)
+
         function esActivo(x) {
-            console.log(typeof activo, typeof x)
             return activo === x;
         }
-           function changeActivo(id) {
-               console.log(id)
-                    store.dispatch('Cesta/setIdAction', id);
-                    router.push('/');
-            
-          
+
+        function changeActivo(id) {
+            store.dispatch('Cesta/setIdAction', id);
+            router.push('/');
         }
+
         return {
             cestas,
             esActivo,

@@ -97,16 +97,12 @@ export default {
         idCesta: cesta.value._id
       }).then((res2) => {
         if (res2.data.error === false && res2.data.bloqueado === false) {
-          console.log('modal peso ')
-          console.log(store.getters['Cesta/getCestaId'])
           store.dispatch('Cesta/setCestaAction', res2.data.cesta);
-          console.log(store.getters['Cesta/getCestaId'])
         } else {
           toast.error(res2.data.error);
         }
       }).catch((err) => {
-        console.log(err);
-        toast.error('Error. Comprobar consola');
+        toast.error('Error. Comprobar consola: ' + err.message);
       });
       unidades.value = '0';
     }

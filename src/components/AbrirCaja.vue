@@ -279,12 +279,10 @@ export default {
         // infoDinero: infoDinero.value,
       }).then((res) => {
         if (!res.data.error) {
-          console.log('Abrir caja OK');
           modalConfirmacionApertura.hide();
           store.dispatch('Caja/setEstadoCaja', true);
           toast.success('Abrir caja OK');
         } else {
-          console.log('Apertura ERROR');
           toast.error('Error de apertura');
         }
       }).catch((err) => {

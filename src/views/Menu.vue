@@ -82,7 +82,7 @@ import router from '../router/index';
 import { tocGame } from '../services/tocGame';
 import Trabajador from '@/components/Trabajador.vue'; // @ is an alias to /src
 import Cesta from '@/components/Cesta.vue'; // @ is an alias to /src
-
+import { useToast } from 'vue-toastification';
 
 export default {
   name: 'Menu',
@@ -95,6 +95,7 @@ export default {
     }
   },
   setup(props) {
+    const toast = useToast();
     const store = useStore();
     const isHidden = computed(() => store.state.Menu.hidden);
     const params = tocGame.getParametros();
@@ -104,17 +105,12 @@ export default {
       if (res.data.error == false) {
         url.value = `/menu/pedidos/${res.data.parametros.codigoTienda}/${res.data.parametros.database}`;
       } else {
-        console.log("Error en parametros/getParametrosBonito");
+        toast.error("Error en parametros/getParametrosBonito");
       }
     });
-
-    console.log(params);
     
-    // const url = `/menu/pedidos/884`;
-
     if (props.tipoToast != undefined && props.mensajeToast != undefined) {
       toast(props.mensajeToast, { type: props.tipoToast })
-      console.log('Deberían abrirse la ptm');
     } else {
       console.log('No están definidos. INFO TOAST');
       console.log(props.tipoToast, props.mensajeToast);
@@ -139,7 +135,6 @@ export default {
     
     function menuPedidos() {
       goTo(url.value);
-      console.log(url.value);
     }
 
     /* Establece el modo y redirige a la home */

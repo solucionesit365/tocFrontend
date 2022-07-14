@@ -98,19 +98,17 @@ class tocGameV3 {
                                     if (resCesta.data.error === false && resCesta.data.info != null) {
                                         store.dispatch('Cesta/setCestaAction', resCesta.data.info);
                                     } else {                                        
-                                        console.log(resCesta.data.mensaje);
+                                        toast.error(resCesta.data.mensaje);
                                     }
                                 }).catch((err) => {
                                     console.log(err);
-                                    console.log('Error catch cestas/getCestasByTrabajadorId');
                                 })
                             } else {
-                                console.log(infoTrabajador.data.mensaje);
+                                toast.error(infoTrabajador.data.mensaje);
                                 // toast.error(infoTrabajador.data.mensaje);
                             }
                         }).catch((err) => {
-                            console.log(err);
-                            console.log('Error catch trabajador/getCurrentTrabajador');
+                            toast.error(err.message);
                             // toast.error('Error catch trabajador/getCurrentTrabajador');
                         });
                     }
@@ -118,7 +116,6 @@ class tocGameV3 {
                     console.log(err);
                   });
                 } else {
-                  console.log('No hay fichados');
                   router.push('/menu/fichajes');
                 }
               }).catch((err) => {

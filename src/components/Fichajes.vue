@@ -261,7 +261,7 @@ export default {
                    // actualizarTurnos();
                     idPlanificacion.value = 'SIN_TURNO';
                 } else {
-                    console.log(res.data.mensaje);
+                    toast.error(res.data.mensaje);
                     arrayTrabajadores.value[index].fichado = false;
                 }
             }).catch((err) => {
@@ -277,7 +277,7 @@ export default {
                    // actualizarTurnos();
                     idPlanificacion.value = 'SIN_TURNO';
                 } else {
-                    console.log(res.data.mensaje);
+                    toast.error(res.data.mensaje);
                     arrayTrabajadores.value[index].fichado = false;
                 }
             }).catch((err) => {
@@ -287,7 +287,6 @@ export default {
 
 
         function fichar(trabajador, index) {
-            console.log(trabajador)
             ficharReal(trabajador, index);
             // if (idPlanificacion.value == 'SIN_TURNO') {
             //     if (confirm("No has seleccionado turno. ¿CONTINUAR?")) {
@@ -325,14 +324,13 @@ export default {
                         });
                         router.push('/')
                     }).catch((err)=>{
-                        console.log(err);
-                    })
-
+                        toast.error(err.message);
+                    });
                 } else {
-                    console.log('Error al desfichar');
+                    toast.error('Error al desfichar');
                 }
             }).catch((err) => {
-                console.log(err);
+                toast.error(err.message);
             });
           
             
@@ -347,19 +345,11 @@ export default {
         function goTo(x) {
             router.push(x);
         }
+        
         function apagarEquipo(){
             
-              axios.get('apagarEquipo').then((res) => {
-                 console.log(res.data)
-                if (res.data.error == false) {
-          
-                  console.log(res.data.mensaje)
-                } else {
-                   
-                }
-            }).catch((err) => {
-                console.log(err);
-                toast.error('Error frontend catch: axios apagar/apagar');
+              axios.get('apagarEquipo').catch((err) => {
+                toast.error(err.message);
             });
         }
 

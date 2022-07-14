@@ -165,10 +165,7 @@ export default {
       if(borrarItem) {
         axios.post('/cestas/borrarItemCesta', { _id: cesta.value._id, idArticulo, idArticulo }).then((res) => {
           if (res.data.okey) {
-            console.log('tecals borrar item ')
-            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res.data.cestaNueva);
-            console.log(store.getters['Cesta/getCestaId'])
           } else {
             console.log(res.data.okey);
           }
@@ -554,7 +551,7 @@ export default {
           });
         }
       } else {
-        console.log('Estoy bloqueado');
+        toast.error('Estoy bloqueado');
       }
     }
 
@@ -568,8 +565,6 @@ export default {
           clickMenuBloqueado = false;
           clickMenu(0);
           dobleMenu.value = false;
-        } else {
-          console.log('Kachau');
         }
       })
     }
@@ -592,8 +587,7 @@ export default {
                 toast.success('Tecla cambiada de posición');
                 return;
               }
-              toast.error('Error al cambiar la tecla de posición');
-              console.log(res.data.mensaje);       
+              toast.error('Error al cambiar la tecla de posición');     
             }).catch((err) => {
               toast.error('Error general');
               console.log(err)
@@ -615,8 +609,6 @@ export default {
         return;
       }
 
-      console.log('click tecla ')
-      console.log(cesta.value)
       axios.post('cestas/clickTeclaArticulo', {
         idArticulo: objListadoTeclas.idArticle,
         idBoton: objListadoTeclas.idBoton,
@@ -631,13 +623,8 @@ export default {
             modalSuplementos.show();
           } else {
             store.dispatch('resetUnidades');
-            console.log('click teclas articulos ')
-            console.log(store.getters['Cesta/getCestaId'])
             store.dispatch('Cesta/setCestaAction', res2.data.cesta);
-            console.log(store.getters['Cesta/getCestaId'])
           }
-        } else {
-          console.log('Error en clickTeclaArticulo');
         }
         document.activeElement.blur();
       }).catch((err) => {
@@ -662,15 +649,12 @@ export default {
       axios.post('cestas/addSuplemento', { idCesta: cesta.value._id, suplementos: suplementosSeleccionados.value, idArticulo, posArticulo: -100 }).then((res) => {
         if(!res.data.error && !res.data.bloqueado) {
           store.dispatch('resetUnidades');
-          console.log('añadir suplemento ')
-          console.log(store.getters['Cesta/getCestaId'])
+
           store.dispatch('Cesta/setCestaAction', res.data.cesta);
-          console.log(store.getters['Cesta/getCestaId'])
+
           suplementosSeleccionados.value = [];
           idArticulo = null;
           cerrarModal();
-        } else {
-          console.log('Error en clickSuplemento');
         }
       }).catch((err) => {
         console.log(err);
@@ -705,8 +689,6 @@ export default {
                   listaMenus.value = res2.data.resultado;
                   clickMenuBloqueado = false;
                   clickMenu(0);
-                } else {
-                  console.log('F TECLADO');
                 }
               });
             } 

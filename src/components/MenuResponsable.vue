@@ -287,7 +287,6 @@ export default {
             keyboard: false,
         });
         axios.get('trabajadores/getTrabajaronAyer').then((res) => {
-            console.log(res.data);
             arrayTrabajadores.value = res.data;
         }).catch((err) => {
             console.log(err);

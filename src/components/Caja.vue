@@ -62,6 +62,7 @@ export default {
     const listaTickets = ref([]);
     const ticketInfo = ref(null);
     const store = useStore();
+    const toast = useToast();
 
     // function setTicketActivo(ticket, mounted = false) {
     //   if(mounted) ticket = listaTickets.value[listaTickets.value.length-1];
@@ -78,7 +79,7 @@ export default {
         axios.post('impresora/imprimirTicket', { idTicket: activo.value });
         goTo('/');
       } else {
-        console.log('Primero selecciona un ticket');
+        toast.error('Primero selecciona un ticket')
       }
     }
 

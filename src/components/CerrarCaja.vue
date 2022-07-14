@@ -198,6 +198,7 @@ export default {
       { valor: 0, style: '' },
       { valor: 0, style: '' },
     ]);
+
     const activo = ref(0);
     const totalClearOne = 0;
     const sizeBilletes = '160';
@@ -258,6 +259,7 @@ export default {
       infoDinero.value[activo.value].valor = Number(
         infoDinero.value[activo.value].valor.toString() + x,
       );
+      localStorage.setItem("infoDinero", JSON.stringify(infoDinero.value));
     }
 
     function resetTodo() {
@@ -279,6 +281,7 @@ export default {
         { valor: 0, style: '' },
       ];
       cantidad3G.value = 0;
+      localStorage.setItem("infoDinero", JSON.stringify(infoDinero.value));
     }
 
     function sistemaIngles(x) {
@@ -321,6 +324,7 @@ export default {
       infoDinero.value[activo.value].valor = Number(
         infoDinero.value[activo.value].valor.toString().slice(0, -1),
       );
+      localStorage.setItem("infoDinero", JSON.stringify(infoDinero.value));
     }
 
     function abrirModalConfirmacion() {
@@ -335,6 +339,13 @@ export default {
       modalConfirmacionClausura = new Modal(document.getElementById('modalConfirmacionClausura'), {
         keyboard: false,
       });
+
+      let infoTemporal = JSON.parse(localStorage.getItem("infoDinero"));
+      console.log(infoTemporal);
+      if (infoTemporal) {
+        infoDinero.value = infoTemporal;
+      }
+
     });
 
     return {

@@ -60,12 +60,16 @@
     </div>
     <div class="modal-body">
         <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">VID</span>
+            <span class="input-group-text">VID</span>
             <input type="text" class="form-control" placeholder="0x4B8" v-model="vid">
         </div>
         <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">PID</span>
+            <span class="input-group-text">PID</span>
             <input type="text" class="form-control" placeholder="0x202" v-model="pid">
+        </div>
+         <div class="input-group mb-3">
+            <span class="input-group-text">Visor</span>
+            <input type="text" class="form-control" placeholder="COM0" v-model="com">
         </div>
     </div>
     <div class="modal-footer">
@@ -147,6 +151,7 @@ export default {
         const store = useStore();
         const vid = ref('');
         const pid = ref('');
+        const com = ref('');
         const ipPaytef = ref('');
         const enviarDatos = ref(true);
         const fechaInicio = ref();
@@ -198,7 +203,7 @@ export default {
         }
 
         function guardarCambiosImpresora() {
-            axios.post('parametros/vidAndPid', { vid: vid.value, pid: pid.value }).then((res) => {
+            axios.post('parametros/vidAndPid', { vid: vid.value, pid: pid.value, com: com.value }).then((res) => {
                 if (res.data.error == false) {
                     toast.success('Cambios guardados');
                 } else {
@@ -372,6 +377,7 @@ export default {
         });
 
         return {
+            com,
             guardarCambiosPaytef,
             ipPaytef,
             actualizarTrabajadores,

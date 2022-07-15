@@ -525,6 +525,7 @@ export default {
     }
 
     onMounted(() => {
+      axios.post('impresora/despedida');
       axios.get('getInfo/tocGame').then((res) => {
         if (res.data != undefined && res.data != null) {
           tocVersion.value = res.data.version;

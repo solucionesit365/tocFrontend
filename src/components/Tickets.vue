@@ -40,14 +40,13 @@
                 <i class="bi bi-printer-fill iconosBootstrap"></i>
             </button>
         </div>
-        
       </div>
       <br>
-        <div class="col">
+        <div class="col mt-5">
             <button
             @click="esborraTicket()"
-            type="button" class="btn btn-secondary
-            botonesPrincipales w-100 btn-block botonesWidth">
+            type="button" class="btn btn-danger
+            w-100 btn-block botonesWidth">
                 <i class="bi bi-trash iconosBootstrap"></i>
             </button>
         </div>
@@ -90,21 +89,23 @@ export default {
         console.log('Primero selecciona un ticket');
       }
     }
-      function esborraTicket() {
+
+    function esborraTicket() {
       if (activo.value != null) {
-            axios.post('tickets/rectificativa', { ticketID: activo.value }).then((ticket) =>{
-                            
-                    if(!ticket.data.error){
-                      toast.success(ticket.data.mensaje)
-                      goTo('/');
-                    } else{
-                    toast.error(ticket.data.mensaje)
-                    } 
-            
-          })
- //goTo('/');
+        if (confirm("¿Confirma ANULACIÓN de ticket?")) {
+          axios.post('tickets/rectificativa', { ticketID: activo.value }).then((ticket) => {
+            if (!ticket.data.error) {
+              toast.success(ticket.data.mensaje);
+              goTo('/');
+            } else {
+              toast.error(ticket.data.mensaje);
+            }
+          }).catch((err) => {
+            toast.error(err.message);
+          });
+        }
       } else {
-        console.log('Primero selecciona un ticket');
+        toast.error('Primero selecciona un ticket');
       }
     }
     

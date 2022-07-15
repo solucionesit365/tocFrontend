@@ -6,6 +6,8 @@ const toast = useToast();
 
 const baseURL = 'http://localhost:3000/'; // BUILD PARA TPV
 //const baseURL = 'http://10.137.0.201:3000/'; // BUILD PARA ITERUM
+//const baseURL = 'http://10.137.0.243:3000/'; // BUILD PARA ITERUM windows
+
 
 // const baseURL = 'http://54.195.159.7:3000'; // BUILD PARA SERVIDOR
 

@@ -296,6 +296,7 @@ export default {
         cantidad3G: cantidad3G.value
       }).then((res) => {
         if (!res.data.error) {
+          resetTodo();
           modalConfirmacionClausura.hide();
           store.dispatch('Caja/setEstadoCaja', false);
     

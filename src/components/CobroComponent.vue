@@ -155,10 +155,10 @@
         <button type="button"
         @click="volver()"
         class="btn btn-warning ms-4 botonesPrincipales">Volver</button>
-        <button type="button"
+        <!-- <button type="button"
           @click="reset()"
           class="btn btn-danger ms-4 botonesPrincipales">Reset
-        </button>
+        </button> -->
         </div>
       </div>
   </div>

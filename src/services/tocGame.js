@@ -94,7 +94,14 @@ class tocGameV3 {
                             if (infoTrabajador.data.error == false) {
                                 store.dispatch('Trabajadores/setTrabajadorActivo', infoTrabajador.data.trabajador.idTrabajador);
                                 store.dispatch('Trabajadores/setNombreTrabajadorActivo', infoTrabajador.data.trabajador.nombre);
-                                  var idcesta = store.getters['Cesta/getCestaId']
+                                let idcesta
+                                if (store.getters['Cesta/getCestaId'] == -1){
+                                     idcesta =  infoTrabajador.data.trabajador._id
+                                }else{
+                                    idcesta = store.getters['Cesta/getCestaId']
+                                }
+                             
+                              
                                   axios.post('cestas/getCestaByTrabajadorId', { idCesta: idcesta }).then((resCesta) => {
                                     
                                     if (resCesta.data.error === false && resCesta.data.info != null) {

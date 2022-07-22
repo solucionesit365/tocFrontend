@@ -324,7 +324,13 @@ export default {
         function desfichar() {
             axios.post('trabajadores/desfichar', { idTrabajador: store.state.Trabajadores.trabajadorActivo }).then((res) => {
                 if (!res.data.error) {
+                    let cesta = store.getters['Cesta/getCestaId'];
                   //  arrayTrabajadores.value[index].fichado = false;
+                    axios.post('cestas/borrarCestaTrabajador',{id: store.state.Trabajadores.trabajadorActivo }).then((data)=>{
+                        if(!data.data.okey){
+                            toast.error(data.data.error)
+                        }
+                    })
                     store.dispatch('CestasActivas/deleteCestaActivaAction',store.state.Trabajadores.trabajadorActivo);
                     axios.post('cestas/getCestaDiferente', { id_cesta: store.state.Trabajadores.trabajadorActivo }).then((data) => {
                         store.dispatch('Cesta/setIdAction', data.data._id);

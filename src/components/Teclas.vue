@@ -621,8 +621,6 @@ export default {
         }
         return;
       }
-
-      console.log('click tecla ')
    
       axios.post('cestas/clickTeclaArticulo', {
         idArticulo: objListadoTeclas.idArticle,

@@ -301,7 +301,7 @@ export default {
     let mesa = store.getters['Cesta/getName'];
     const ProhibirCercaArticles = ref(false);
 	   
-    
+  
 
   function actualizarHora() {
 
@@ -616,8 +616,7 @@ export default {
       //   }
       // });
       axios.post('/trabajadores/getCurrentTrabajador').then((res) => {
-        nombreTrabajador.value = res.data.trabajador.nombre;
-
+        store.dispatch('Trabajadores/setNombreTrabajadorActivo', res.data.trabajador.nombre);
         store.dispatch('Trabajadores/setTrabajadorActivo', res.data.trabajador.idTrabajador);
       });
 

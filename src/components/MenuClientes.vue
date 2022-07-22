@@ -222,6 +222,7 @@ export default {
             modalClientes.hide();
             toast.success('Cliente seleccionado');
          } else {
+            // Error aquí
             toast.error('Error. Comprobar consola ' + res.data.mensaje);
          }
       }).catch((err) => {
@@ -243,7 +244,40 @@ export default {
       // socket.emit('consultarPuntos', { idClienteFinal: id });
     }
 
+    let barcode = '';
+
+    function onKeyPressed(e) {
+      let keyCode = e.keyCode;
+
+      if (keyCode == 13) {
+         axios.post('clientes/buscar', { busqueda: barcode }).then((res) => {
+            if (res.data) {
+               if (res.data.length > 0) {
+                  axios.post('clientes/getClienteByID', { idCliente: res.data[0].id }).then((resCliente) => {
+                     if (!resCliente.data.error) {
+                        selectCliente(resCliente.data.infoCliente);
+                     } else {
+                        toast.error(resCliente.data.mensaje);
+                     }
+                  }).catch((err) => {
+                     console.log(err);
+                     toast.error(err.message);
+                  });                  
+               }
+            }
+         })
+         // alert(barcode);
+
+        barcode = '';
+      } else {
+         if (keyCode != 16) {
+            barcode = barcode + e.key;
+         }
+      }
+    }
+
     onMounted(() => {
+      document.addEventListener("keydown", onKeyPressed, false);
       modalClientes = new Modal(document.getElementById('modalClientes'), {
         keyboard: false,
       });

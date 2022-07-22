@@ -6,7 +6,8 @@
         </button>
       </div>
   </div>
-  <div class="row" id="menusColores" v-bind:class="[{'mb-3': showBackButton === true, 'p-2': showBackButton === false}]">
+ 
+ <div class="row" id="menusColores" v-bind:class="[{'mb-3': showBackButton === true, 'p-2': showBackButton === false}]">
       <template v-if="listaMenus.length <= 11">
         <template v-if='showBackButton'>
           <div v-for="(item, index) of listaMenus" :key="item.nomMenu" @click="clickMenu(index)" class="col colJuntitasMenus subMenus" style="padding-left: 4px;">
@@ -35,6 +36,7 @@
         </div>
       </template>
   </div>
+
   <div>
     <div class="row" v-for="index in 6" :key="index">
         <div class="col colJuntitas" v-for="index2 in 6" :key="index2">
@@ -96,11 +98,13 @@
         <div class="modal-body">
             <div class="row">
                 <div v-for='(item, index) of suplementos' :key='index' class='col mb-3'>
+                <template v-if="item != null">
                   <button class='btn w-100 h-100 colorIvan1 btnSuplemento' @click="selectSuplemento(item._id)" v-bind:class="[{'suplementoActivo': checkSuplementoActivo(item._id)}]">
-                    {{item.nombre}}
-                    <br />
-                    {{item.precioConIva}} €
-                  </button>
+                                    {{item.nombre}}
+                                    <br />
+                                    {{item.precioConIva}} €
+                                  </button>
+                </template>
                 </div>
             </div>
         </div>
@@ -165,7 +169,10 @@ export default {
       if(borrarItem) {
         axios.post('/cestas/borrarItemCesta', { _id: cesta.value._id, idArticulo, idArticulo }).then((res) => {
           if (res.data.okey) {
+            console.log('tecals borrar item ')
+           
             store.dispatch('Cesta/setCestaAction', res.data.cestaNueva);
+            
           } else {
             console.log(res.data.okey);
           }
@@ -551,7 +558,7 @@ export default {
           });
         }
       } else {
-        toast.error('Estoy bloqueado');
+        console.log('Estoy bloqueado');
       }
     }
 
@@ -565,6 +572,8 @@ export default {
           clickMenuBloqueado = false;
           clickMenu(0);
           dobleMenu.value = false;
+        } else {
+          console.log('Kachau');
         }
       })
     }
@@ -587,14 +596,18 @@ export default {
                 toast.success('Tecla cambiada de posición');
                 return;
               }
-              toast.error('Error al cambiar la tecla de posición');     
+              toast.error('Error al cambiar la tecla de posición');
+              console.log(res.data.mensaje);       
             }).catch((err) => {
               toast.error('Error general');
               console.log(err)
             })
             return;
           }
-          alert('Has tocado una tecla vacía.')
+            //alert('Has tocado una tecla vacía.')
+                const idTecla = parseInt(objListadoTeclas.idBoton.replace('tecla', ''));
+                store.dispatch('ModalCrearProducto/abrirModal', {posicion: idTecla, menu : listaMenus.value[menuActivo].nomMenu});
+
         } else {
           axios.post('articulos/getArticulo', { idArticulo }).then(({ data }) => {
             if(!data.error) {
@@ -608,7 +621,7 @@ export default {
         }
         return;
       }
-
+   
       axios.post('cestas/clickTeclaArticulo', {
         idArticulo: objListadoTeclas.idArticle,
         idBoton: objListadoTeclas.idBoton,
@@ -623,8 +636,13 @@ export default {
             modalSuplementos.show();
           } else {
             store.dispatch('resetUnidades');
+           
+           
             store.dispatch('Cesta/setCestaAction', res2.data.cesta);
+        
           }
+        } else {
+          console.log('Error en clickTeclaArticulo');
         }
         document.activeElement.blur();
       }).catch((err) => {
@@ -649,12 +667,15 @@ export default {
       axios.post('cestas/addSuplemento', { idCesta: cesta.value._id, suplementos: suplementosSeleccionados.value, idArticulo, posArticulo: -100 }).then((res) => {
         if(!res.data.error && !res.data.bloqueado) {
           store.dispatch('resetUnidades');
-
+          console.log('añadir suplemento ')
+      
           store.dispatch('Cesta/setCestaAction', res.data.cesta);
-
+         
           suplementosSeleccionados.value = [];
           idArticulo = null;
           cerrarModal();
+        } else {
+          console.log('Error en clickSuplemento');
         }
       }).catch((err) => {
         console.log(err);
@@ -689,6 +710,8 @@ export default {
                   listaMenus.value = res2.data.resultado;
                   clickMenuBloqueado = false;
                   clickMenu(0);
+                } else {
+                  console.log('F TECLADO');
                 }
               });
             } 
@@ -703,6 +726,7 @@ export default {
       return (modoActual.value === 'MODIFICAR_ARTICULO' || modoActual.value === 'MOVER_ARTICULO') && index === -1 ? true : false;
     }
     onMounted(() => {
+      axios.post('impresora/bienvenida')
       modalSuplementos = new Modal(document.getElementById('modalSuplementos'), {
         keyboard: false,
         backdrop: 'static',

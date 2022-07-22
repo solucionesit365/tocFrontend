@@ -20,6 +20,7 @@ import 'bootstrap';
 
 axios.defaults.baseURL = 'http://localhost:3000'; // BUILD PARA TPV
 //axios.defaults.baseURL = 'http://10.137.0.201:3000/'; // BUILD PARA ITERUM
+//axios.defaults.baseURL = 'http://10.137.0.243:3000/'; // BUILD PARA ITERUM windows
 
 // axios.defaults.baseURL = 'http://54.195.159.7:3000'; // BUILD PARA SERVIDOR 
 // axios.defaults.baseURL = 'http://34.78.247.153:3000'; // BUILD PARA SERVIDOR(?)

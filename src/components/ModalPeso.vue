@@ -10,7 +10,7 @@
             <div class="col-md-4">
               <span class="text-center" style="font-size: 40px">{{getUnidades}}<br>g.</span>
               <hr/>
-              <span class="text-center" style="font-size: 40px">{{getPrecio}} €</span>
+              <span class="text-center" style="font-size: 40px">{{Math.round(getPrecio * 100) / 100}} €</span>
             </div>
             <div class="col-md-8">
               <div class="btn-group-vertical" role="group">

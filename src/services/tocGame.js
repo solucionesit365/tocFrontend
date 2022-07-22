@@ -6,6 +6,8 @@ const toast = useToast();
 
 const baseURL = 'http://localhost:3000/'; // BUILD PARA TPV
 //const baseURL = 'http://10.137.0.201:3000/'; // BUILD PARA ITERUM
+//const baseURL = 'http://10.137.0.243:3000/'; // BUILD PARA ITERUM windows
+
 
 // const baseURL = 'http://54.195.159.7:3000'; // BUILD PARA SERVIDOR
 
@@ -92,7 +94,14 @@ class tocGameV3 {
                             if (infoTrabajador.data.error == false) {
                                 store.dispatch('Trabajadores/setTrabajadorActivo', infoTrabajador.data.trabajador.idTrabajador);
                                 store.dispatch('Trabajadores/setNombreTrabajadorActivo', infoTrabajador.data.trabajador.nombre);
-                                  var idcesta = store.getters['Cesta/getCestaId']
+                                let idcesta
+                                if (store.getters['Cesta/getCestaId'] == -1){
+                                     idcesta =  infoTrabajador.data.trabajador._id
+                                }else{
+                                    idcesta = store.getters['Cesta/getCestaId']
+                                }
+                             
+                              
                                   axios.post('cestas/getCestaByTrabajadorId', { idCesta: idcesta }).then((resCesta) => {
                                     
                                     if (resCesta.data.error === false && resCesta.data.info != null) {

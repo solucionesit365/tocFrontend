@@ -7,12 +7,16 @@
         class="btn btn-secondary btn-sm botonesPrincipales menusColorIvan" @click="showMenu">
           <i class="bi bi-list display-6"></i>
         </button>
-        <button
-        style="max-width: 106px"
-          class="btn btn-secondary ms-1 btn-block sizeMenus btn-sm botonesPrincipales
-          me-2 menusColorIvan"
-          @click="buscarProducto()"><i class="bi bi-search display-6"></i>
-        </button>
+         <button v-if="ProhibirCercaArticles === true"
+              style="max-width: 106px"
+              class="btn btn-secondary btn-sm botonesPrincipales menusColorIvan" @click="imprimirTicket()">
+              <i class="bi bi-printer-fill display-6"></i>
+            </button>
+            <button v-else
+              style="max-width: 106px"
+              class="btn btn-secondary btn-sm botonesPrincipales menusColorIvan" @click="buscarProducto()">
+              <i class="bi bi-search display-6"></i>
+            </button>
       </div>
 
       <div class="row mt-1 ms-2" style="max-width: 220px">
@@ -28,7 +32,10 @@
         to='/mesas'>
         
           <i class="bi bi-cart-plus-fill display-6"></i>
+          <br>
+             {{mesa}}
          </router-link>
+      
       </div>
 
       <div class="row mt-1 ms-2" style="max-width: 220px">
@@ -291,8 +298,13 @@ export default {
     const UBER = store.getters['Clientes/getUber'];
     const TOO_GOOD_TO_GO = store.getters['Clientes/getTooGoodToGo'];
     const getClock = ref('');
+    let mesa = store.getters['Cesta/getName'];
+    const ProhibirCercaArticles = ref(false);
+	   
+    
 
   function actualizarHora() {
+
     const d = new Date();
     const s = d.getSeconds();
     const m = d.getMinutes();
@@ -316,7 +328,10 @@ export default {
     function touchEnd() {
     	finalMagic = new Date();
       const diffTime = Math.abs(finalMagic - inicioMagic);
-      if (diffTime >= 2000) {
+      if (diffTime < 2000) {
+        console.log('Pulsación rápida');
+      } else {
+        console.log('Pulsación lenta');
         store.dispatch('setModoActual', 'NORMAL');
         store.dispatch('Clientes/resetClienteActivo');
         store.dispatch('Footer/resetMenuActivo');
@@ -324,7 +339,7 @@ export default {
           modalClientes.hide();
           toast.info('Reset OK. Estado de cobro: NORMAL');
         }).catch((err) => {
-          toast.error(err.message);
+          console.log(err);
         });
         router.go('/');
       }
@@ -332,9 +347,11 @@ export default {
 
     function regalar(index) {
       axios.post('cestas/regalarProducto', { idCesta: store.getters['Cesta/getCestaId'], index: (index - (cesta.value.lista.length -1))*-1 }).then((res) => {
-        if (res.data.error == false) {   
+        if (res.data.error == false) {
+          console.log('regalar')
+         
           store.dispatch('Cesta/setCestaAction', res.data.cesta);
-          store.dispatch('Cesta/setHayRegaloEnCestaAction', true)
+         
         } else {
           toast.error(res.data.mensaje);
         }
@@ -394,7 +411,7 @@ export default {
         if (!res.data.error) {
           store.dispatch('Trabajadores/setTrabajadorActivo', trabajadorActivo.value);
         } else {
-          toast.error('Error al cambiar trabajador activo');
+          console.log('Error al cambiar trabajador activo');
         }
       });
     }
@@ -402,6 +419,25 @@ export default {
     function buscarProducto() {
       toast.info('Deshabilitado temporalmente');
     }
+
+    function imprimirTicket() {
+
+  axios.post('tickets/getTicketsIntervalo').then((arrayTickets) => {
+       axios.post('impresora/imprimirTicket', { idTicket: arrayTickets.data.length });
+      });
+
+
+
+
+      // if (activo.value != null) {
+      //   axios.post('impresora/imprimirTicket', { idTicket: activo.value });
+      //   goTo('/');
+      // } else {
+      //   console.log('Primero selecciona un ticket');
+      // }
+    }
+
+    
 
     const thisIsCatalunya = computed(() => {
       return getTotal.value.replace('.', ',');
@@ -417,7 +453,9 @@ export default {
         }).then((res) => {
           if (!res.data.error) {
             axios.post('/cestas/getCesta').then((res) => {
+              
               store.dispatch('Cesta/setCestaAction', res.data);
+             
             });
             /* Ejemplo de como limpiar el estado al completo */
             store.dispatch('setModoActual', 'NORMAL');
@@ -425,11 +463,13 @@ export default {
             store.dispatch('Footer/resetMenuActivo');
             /* Final del ejemplo */
             toast.success('¡Ticket en modo DEUDA creado!');
+
           } else {
             toast.error('Error al insertar el ticket');
           }
         }).catch((err) => {
-          toast.error(err.message);
+          console.log(err);
+          toast.error('Error al insertar el ticket');
         });
       } else {
         toast.info('¡ Es necesario un trabajador/a activ@ !');
@@ -443,6 +483,7 @@ export default {
             estadoPromociones: true
           });
           axios.post('/cestas/getCesta').then((res) => {
+            console.log('cerar devolucion ')
             store.dispatch('Cesta/setCestaAction', res.data);
           });
           store.dispatch('setModoActual', 'NORMAL');
@@ -453,7 +494,8 @@ export default {
           toast.error(res.data.mensaje);
         }
       }).catch((err) => {
-        toast.error(err.message);
+        console.log(err);
+        toast.error('Error, no se ha podido crear la devolución');
       });
     }
 
@@ -463,7 +505,10 @@ export default {
       }).then((res) => {
         if (!res.data.error) {
           axios.post('/cestas/getCesta').then((res) => {
+            console.log('consumo personal ')
+           
             store.dispatch('Cesta/setCestaAction', res.data);
+     
           });
           store.dispatch('setModoActual', 'NORMAL');
           store.dispatch('Clientes/resetClienteActivo');
@@ -473,7 +518,8 @@ export default {
           toast.error('Error al insertar el ticket');
         }
       }).catch((err) => {
-        toast.error(err.message);
+        console.log(err);
+        toast.error('Error al insertar el ticket');
       });
     }
 
@@ -483,13 +529,15 @@ export default {
         router.push('/');
         return;
       }
-      if (cesta.value.lista.length > 0) {
+         axios.post('impresora/despedida')
+      if (getTotal.value != 0) {
       if (trabajadorActivo.value != '') {
         let pagaEnTienda = store.getters['Clientes/getClientePagaEnTienda'];
         let modoActual = store.getters['getModoActual'];
         let infoClienteVip = store.getters['Clientes/getInfoClienteVip'];
         let idClienteFinal = store.getters['Clientes/getInfoCliente'];
         let idCesta = store.getters['Cesta/getCestaId'];
+        
         
         /* Si se cumple que es VIP y no paga en tienda, se crea la deuda, sino, cobro normal */
         if ((pagaEnTienda == true && modoActual != 'DEVOLUCION' && modoActual != 'CONSUMO PERSONAL') || (modoActual == 'CLIENTE')) {
@@ -507,8 +555,8 @@ export default {
       } else {
         toast.info('¡ Es necesario un trabajador/a activ@ !');
       }
-      } else {
-        toast.error('¡Seleciona un artículo para cobrar!');
+      }else{
+        toast.error('¡Seleciona un artículo para cobrar!')
       }
     }
 
@@ -525,17 +573,28 @@ export default {
     }
 
     onMounted(() => {
-      axios.post('impresora/despedida');
       axios.get('getInfo/tocGame').then((res) => {
+     
         if (res.data != undefined && res.data != null) {
           tocVersion.value = res.data.version;
           nombreTienda.value = res.data.nombreTienda;
+       
+          
         }
       }).catch((err) => {
         console.log(err);
         toast.error('Error en getVersion CATCH');
       })
-
+  axios.post('parametros/getParametros').then((res) => {
+        if(res.data.parametros.ProhibirCercaArticles != undefined){
+          if(res.data.parametros.ProhibirCercaArticles == 'Si'){
+            ProhibirCercaArticles.value = true;
+          }
+        }
+          else{
+            ProhibirCercaArticles.value = false;
+          }
+      })
       modalSuplementos = new Modal(document.getElementById('modalSuplementosModificar'), {
         keyboard: false,
         backdrop: 'static',
@@ -557,6 +616,8 @@ export default {
       //   }
       // });
       axios.post('/trabajadores/getCurrentTrabajador').then((res) => {
+        nombreTrabajador.value = res.data.trabajador.nombre;
+
         store.dispatch('Trabajadores/setTrabajadorActivo', res.data.trabajador.idTrabajador);
       });
 
@@ -568,6 +629,7 @@ export default {
         axios.post('/cestas/modificarSuplementos', { cestaId: store.getters['Cesta/getCestaId'], idArticulo: store.getters['Cesta/getItem'], posArticulo: index }).then((res) => {
           if(res.data.suplementos) {
             suplementos.value = res.data.suplementosData;
+            console.log("🚀 ~ file: Footer.vue ~ line 516 ~ axios.post ~ suplementos.value", suplementos.value)
             for(let i = 0; i < res.data.suplementosSeleccionados.length; i++) {
               selectSuplemento(res.data.suplementosSeleccionados[i]);
             }
@@ -596,14 +658,18 @@ export default {
       axios.post('cestas/addSuplemento', { idCesta: store.getters['Cesta/getCestaId'], suplementos: suplementosSeleccionados.value, idArticulo: store.getters['Cesta/getItem'], posArticulo: activo.value }).then((res) => {
         if(!res.data.error && !res.data.bloqueado) {
           store.dispatch('resetUnidades');
+          console.log('suplemento')
+    
           store.dispatch('Cesta/setCestaAction', res.data.cesta);
+      
           suplementosSeleccionados.value = [];
           cerrarModal();
         } else {
-          toast.error('Error en clickSuplemento');
+          console.log('Error en clickSuplemento');
         }
       }).catch((err) => {
-        toast.error('Error. Comprobar consola: ' + err.message);
+        console.log(err);
+        toast.error('Error. Comprobar consola.');
       });
     }
     
@@ -616,7 +682,10 @@ export default {
         /* eslint no-underscore-dangle: 0 */
         axios.post('/cestas/borrarArticulosCesta', { idCesta: cesta.value._id }).then((res) => {
           if (res.data.error == false) {
+            console.log('suplemento')
+          
             store.dispatch('Cesta/setCestaAction', res.data.info);
+          
           } else {
             toast.error(res.data.mensaje);
           }
@@ -630,7 +699,10 @@ export default {
         // cio: "", total: toc.getCesta().tiposIva.importe2, dependienta: ""});
         axios.post('/cestas/borrarItemCesta', { _id: store.state.Cesta.cesta._id, idArticulo: store.getters['Cesta/getItem'] }).then((res) => {
           if (res.data.okey) {
+            console.log('borra cesta ')
+           
             store.dispatch('Cesta/setCestaAction', res.data.cestaNueva);
+            
           } else {
             console.log(res.data.okey);
           }
@@ -645,6 +717,7 @@ export default {
     }
 
     return {
+      
       tocVersion,
       nombreTienda,
       regalar,
@@ -683,7 +756,11 @@ export default {
       checkSuplementoActivo,
       addSuplemento,
       nombreTrabajador,
-      getClock
+      getClock,
+      mesa,
+      ProhibirCercaArticles,
+      imprimirTicket
+      
     };
   },
   components: {

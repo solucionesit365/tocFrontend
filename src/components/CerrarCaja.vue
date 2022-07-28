@@ -342,7 +342,6 @@ export default {
       });
 
       let infoTemporal = JSON.parse(localStorage.getItem("infoDinero"));
-      console.log(infoTemporal);
       if (infoTemporal) {
         infoDinero.value = infoTemporal;
       }

@@ -43,7 +43,6 @@ export default {
 
         watch(() => store.getters['Alergenos/getProducto'], () => {
         producto.value = store.state.Alergenos.producto;
-        console.log(producto)
         codiBotiga.value = store.state.Alergenos.codiBotiga;
         url.value = `http://silema.hiterp.com/Facturacion/ElForn/gestion/FichaTecnicaHtml.asp?codi=${producto.value}&Llic=${codiBotiga.value}`;
     })

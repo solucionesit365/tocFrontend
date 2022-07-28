@@ -1,22 +1,22 @@
 <template>
   <div class="row pt-1 align-items-center">
     <div v-if="menuActivo === 0" class="col text-center" style="max-width: 245px; max-height: 196px;">
-      <div class="row ms-2" style="max-width: 230px">
+      <div class="row ms-2" style="max-width: 220px">
         <button
         style="max-width: 106px"
-        class="btn btn-secondary btn-sm botonesPrincipales menusColorIvan" @click="showMenu">
+        class="btn btn-secondary botonesPrincipales btn-sm menusColorIvan" @click="showMenu">
           <i class="bi bi-list display-6"></i>
         </button>
          <button v-if="ProhibirCercaArticles === true"
               style="max-width: 106px"
-              class="btn btn-secondary btn-sm botonesPrincipales menusColorIvan" @click="imprimirTicket()">
+              class="btn btn-secondary botonesPrincipales btn-sm ms-1 menusColorIvan" @click="imprimirTicket()">
               <i class="bi bi-printer-fill display-6"></i>
-            </button>
-            <button v-else
+          </button>
+          <button v-else
               style="max-width: 106px"
-              class="btn btn-secondary btn-sm botonesPrincipales menusColorIvan" @click="buscarProducto()">
+              class="btn btn-secondary botonesPrincipales btn-sm ms-1 menusColorIvan" @click="buscarProducto()">
               <i class="bi bi-search display-6"></i>
-            </button>
+          </button>
       </div>
 
       <div class="row mt-1 ms-2" style="max-width: 220px">
@@ -26,15 +26,15 @@
           data-bs-toggle="modal" data-bs-target="#modalClientes">
           <i class="bi bi-person-fill display-6"></i>
         </button>
-        <router-link
+        <button
         style="max-width: 106px"
         class="btn btn-secondary botonesPrincipales btn-sm ms-1 menusColorIvan"
-        to='/mesas'>
+        @click="botonDeshabilitado()">
         
           <i class="bi bi-cart-plus-fill display-6"></i>
           <br>
              {{mesa}}
-         </router-link>
+         </button>
       
       </div>
 
@@ -328,10 +328,7 @@ export default {
     function touchEnd() {
     	finalMagic = new Date();
       const diffTime = Math.abs(finalMagic - inicioMagic);
-      if (diffTime < 2000) {
-        console.log('Pulsación rápida');
-      } else {
-        console.log('Pulsación lenta');
+      if (diffTime >= 2000) {
         store.dispatch('setModoActual', 'NORMAL');
         store.dispatch('Clientes/resetClienteActivo');
         store.dispatch('Footer/resetMenuActivo');
@@ -419,6 +416,9 @@ export default {
     function buscarProducto() {
       toast.info('Deshabilitado temporalmente');
     }
+    function botonDeshabilitado() {
+      toast.info('Deshabilitado temporalmente');
+    }
 
     function imprimirTicket() {
 
@@ -504,11 +504,8 @@ export default {
         idCesta: idCesta,
       }).then((res) => {
         if (!res.data.error) {
-          axios.post('/cestas/getCesta').then((res) => {
-            console.log('consumo personal ')
-           
+          axios.post('/cestas/getCesta').then((res) => {           
             store.dispatch('Cesta/setCestaAction', res.data);
-     
           });
           store.dispatch('setModoActual', 'NORMAL');
           store.dispatch('Clientes/resetClienteActivo');
@@ -697,11 +694,8 @@ export default {
         // ipcRenderer.send('mostrar-visor', {texto: "", pre
         // cio: "", total: toc.getCesta().tiposIva.importe2, dependienta: ""});
         axios.post('/cestas/borrarItemCesta', { _id: store.state.Cesta.cesta._id, idArticulo: store.getters['Cesta/getItem'] }).then((res) => {
-          if (res.data.okey) {
-            console.log('borra cesta ')
-           
+          if (res.data.okey) {           
             store.dispatch('Cesta/setCestaAction', res.data.cestaNueva);
-            
           } else {
             console.log(res.data.okey);
           }
@@ -716,7 +710,7 @@ export default {
     }
 
     return {
-      
+      botonDeshabilitado,
       tocVersion,
       nombreTienda,
       regalar,

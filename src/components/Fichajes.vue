@@ -300,15 +300,7 @@ export default {
         }
 
         function fichar(trabajador, index) {
-            console.log(trabajador)
             ficharReal(trabajador, index);
-            // if (idPlanificacion.value == 'SIN_TURNO') {
-            //     if (confirm("No has seleccionado turno. ¿CONTINUAR?")) {
-            //         ficharReal(trabajador, index);
-            //     }
-            // } else {
-            //     ficharReal(trabajador, index);
-            // }
         }
 
         function actualizarLista() {

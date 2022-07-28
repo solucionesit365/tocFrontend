@@ -111,9 +111,6 @@ export default {
     
     if (props.tipoToast != undefined && props.mensajeToast != undefined) {
       toast(props.mensajeToast, { type: props.tipoToast })
-    } else {
-      console.log('No están definidos. INFO TOAST');
-      console.log(props.tipoToast, props.mensajeToast);
     }
 
     function quitarActivoTicket() {

@@ -677,11 +677,8 @@ export default {
       if (activo.value === null) {
         /* eslint no-underscore-dangle: 0 */
         axios.post('/cestas/borrarArticulosCesta', { idCesta: cesta.value._id }).then((res) => {
-          if (res.data.error == false) {
-            console.log('suplemento')
-          
+          if (res.data.error == false) {         
             store.dispatch('Cesta/setCestaAction', res.data.info);
-          
           } else {
             toast.error(res.data.mensaje);
           }

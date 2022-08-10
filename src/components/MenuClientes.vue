@@ -79,6 +79,7 @@
          </div>
       </div>
    </div>
+   <div id="eventoLector"></div>
 </template>
 <script>
 import { computed, ref, onMounted } from 'vue';
@@ -117,20 +118,6 @@ export default {
          toast.error(res.data.mensaje);
       }); 
     }
-
-   //  function selectDeliveroo() {
-   //     console.log("DELIVEROO: ", DELIVEROO);
-   //    axios.post('clientes/getClienteByID', { idCliente: DELIVEROO }).then((res) => {
-   //       if (!res.data.error) {
-   //          selectCliente(res.data.infoCliente);
-   //       } else {
-   //          toast.error(res.data.mensaje);
-   //       }
-   //    }).catch((err) => {
-   //       console.log(err);
-   //       toast.error(res.data.mensaje);
-   //    }); 
-   //  }
 
     function selectToGoodToGo() {
       axios.post('clientes/getClienteByID', { idCliente: TOO_GOOD_TO_GO }).then((res) => {
@@ -275,9 +262,12 @@ export default {
          }
       }
     }
-
     onMounted(() => {
-      document.addEventListener("keydown", onKeyPressed, false);
+
+      document.addEventListener("keydown", function(event) {
+         onKeyPressed(event);
+         event.stopImmediatePropagation();
+      }, true);
       modalClientes = new Modal(document.getElementById('modalClientes'), {
         keyboard: false,
       });

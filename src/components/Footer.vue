@@ -18,26 +18,25 @@
               <i class="bi bi-search display-6"></i>
           </button>
       </div>
-      
- <div class="row mt-1 ms-2" style="max-width: 220px">
+
+      <div class="row mt-1 ms-2" style="max-width: 220px">
         <button
         style="max-width: 106px"
         class="btn btn-secondary botonesPrincipales btn-sm menusColorIvan"
           data-bs-toggle="modal" data-bs-target="#modalClientes">
           <i class="bi bi-person-fill display-6"></i>
         </button>
-        <router-link
+        <button
         style="max-width: 106px"
         class="btn btn-secondary botonesPrincipales btn-sm ms-1 menusColorIvan"
-        to='/mesas'>
+        @click="botonDeshabilitado()">
         
           <i class="bi bi-cart-plus-fill display-6"></i>
           <br>
              {{mesa}}
-         </router-link>
+         </button>
       
       </div>
-
 
       <div class="row mt-1 ms-2" style="max-width: 220px">
         <button
@@ -613,12 +612,8 @@ export default {
       //       toast.error(res.data.mensaje);
       //   }
       // });
-      // axios.post('/trabajadores/getCurrentTrabajador').then((res) => {
-      //   store.dispatch('Trabajadores/setNombreTrabajadorActivo', res.data.trabajador.nombre);
-      //   store.dispatch('Trabajadores/setTrabajadorActivo', res.data.trabajador.idTrabajador);
-      // });
       axios.post('/trabajadores/getCurrentTrabajador').then((res) => {
-        nombreTrabajador.value = res.data.trabajador.nombre;
+        store.dispatch('Trabajadores/setNombreTrabajadorActivo', res.data.trabajador.nombre);
         store.dispatch('Trabajadores/setTrabajadorActivo', res.data.trabajador.idTrabajador);
       });
 

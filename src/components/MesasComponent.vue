@@ -133,8 +133,6 @@
          
             function seleccionarCesta(data) {
                 store.dispatch('Cesta/setIdAction', data.idMongo);
-                store.dispatch('Cesta/setNameAction', data.nombre);
-
                 //store.dispatch('CestasActivas/deleteCestaActivaAction', data.idMongo);
                 store.dispatch('CestasActivas/setCestasActivasAction', {idMongo: data.idMongo, nombre: data.nombre});
                 volver();
@@ -146,7 +144,9 @@
                 const data = arrayCestas.value.find(i => i.nombreCesta === `Mesa ${nMesa}`);
                 const enUso = data && data.tiposIva.importe1 + data.tiposIva.importe2 + data.tiposIva.importe3 > 0 ? true : false;
                         if (data !== undefined){
-                            
+                            // console.log(`find mesas distinto undefined Mesa ${nMesa}`)
+                            // console.log(data)
+                            // console.log(data.lista.reduce((total, o) =>  o.subtotal + total,0))
                     return  { idMongo: data._id, activada: true, nombre: `Mesa ${nMesa}`, total: data.lista.reduce((total, o) =>  o.subtotal + total,0), enUso: enUso }
                         }else {
                             return { activada: false, nombre: '', total: '', enUso: enUso}

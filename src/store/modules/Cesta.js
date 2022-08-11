@@ -6,8 +6,7 @@ export default {
       lista: [],
     },
     activo: null,
-    hayRegaloEnCesta: false,
-    name:''
+    hayRegaloEnCesta: false
   },
   mutations: {
     setCestaMutation(state, payload) {
@@ -21,17 +20,13 @@ export default {
     },
     setHayRegaloEnCesta(state, payload) {
       state.hayRegaloEnCesta = payload;
-    },
-    setName(state, payload) {
-      state.name = payload;
     }
   },
   getters: {
     // eslint-disable-next-line no-underscore-dangle
     getItem: (state) => state.cesta.lista[state.activo]._id,
     getCestaId: (state) => state.cesta._id,
-    getHayRegaloEnCesta: (state) => state.hayRegaloEnCesta,
-    getName: (state) => state.name
+    getHayRegaloEnCesta: (state) => state.hayRegaloEnCesta
   },
   actions: {
     setCestaAction({ commit }, cesta) {
@@ -45,9 +40,6 @@ export default {
     },
     setHayRegaloEnCestaAction({ commit }, valor) {
       commit('setHayRegaloEnCesta', valor);
-    },
-    setNameAction({ commit }, cestaName) {
-      commit('setName', cestaName);
-    },
+    }
   },
 };

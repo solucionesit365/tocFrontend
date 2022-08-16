@@ -81,6 +81,7 @@ class tocGameV3 {
     }
 
     iniciarToc() {
+        console.log("INICIANDO TOC");
         tocGame.todoInstalado().then((hayLicencia) => {
             if (hayLicencia) { // Licencia OK
               tocGame.hayFichados().then((res) => {

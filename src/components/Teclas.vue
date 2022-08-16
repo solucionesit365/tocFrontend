@@ -651,6 +651,7 @@ export default {
         document.activeElement.blur();
       });
     }
+    
     function selectSuplemento(idSuplemento) {
       const supl = suplementosSeleccionados.value.findIndex(o => o.suplemento === idSuplemento);
       if(supl !== -1) {
@@ -659,10 +660,12 @@ export default {
       }
       suplementosSeleccionados.value.push({ suplemento: idSuplemento, activo: true });
     }
+
     function checkSuplementoActivo(idSuplemento) {
       const s = suplementosSeleccionados.value.findIndex(o => o.suplemento === idSuplemento)
       return s !== -1 ? true : false;
     }
+
     function addSuplemento() {
       axios.post('cestas/addSuplemento', { idCesta: cesta.value._id, suplementos: suplementosSeleccionados.value, idArticulo, posArticulo: -100 }).then((res) => {
         if(!res.data.error && !res.data.bloqueado) {

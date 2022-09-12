@@ -44,6 +44,11 @@ const routes = [
     component: () => import('../views/CerrarCaja.vue'),
   },
   {
+    path: '/verCaja',
+    name: 'Ver Caja',
+    component: () => import('../views/VerCaja.vue'),
+  },
+  {
     path: '/menu/',
     name: 'Menu',
     component: () => import('../views/Menu.vue'),

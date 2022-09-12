@@ -43,11 +43,7 @@ const routes = [
     name: 'Cerrar Caja',
     component: () => import('../views/CerrarCaja.vue'),
   },
-  {
-    path: '/verCaja',
-    name: 'Ver Caja',
-    component: () => import('../views/VerCaja.vue'),
-  },
+ 
   {
     path: '/menu/',
     name: 'Menu',
@@ -72,6 +68,11 @@ const routes = [
             path: 'entrada',
             name:'entradaDinero',
             component: () => import('../components/EntradaDinero.vue'),
+          },
+          {
+            path: 'ver-caja',
+            name: 'Ver Caja',
+            component: () => import('../components/VerCaja.vue'),
           },
           {
             path: 'cerrar-caja',

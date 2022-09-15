@@ -54,11 +54,11 @@
                                 <div class="card-body">
                                     <div class="row row-2 text-muted">
                                         <div class="col-4">Cantidad: </div>
-                                        <div class="col-6 text-start">{{ item.cantidad }}</div>
+                                        <div class="col-6 text-start">{{item.valor}}</div>
                                         <div class="col-4">Fecha: </div>
-                                        <div class="col-6 text-start">{{ item.fecha }}</div>
+                                        <div class="col-6 text-start">{{item.fecha}}</div>
                                         <div class="col-4">Concepto: </div>
-                                        <div class="col-6 text-start">{{ item.concepto }}</div>
+                                        <div class="col-6 text-start">{{item.concepto}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -90,17 +90,20 @@ export default {
     const store = useStore();
     const activo = ref(0);
 
-    const name = ref(0);
+    const name = ref('');
     const inicioTime = ref(0);
     const finalTime = ref(0);
     const calaixFetZ = ref(0);
     const descuadre = ref(0);
     const totalDatafono3G = ref(0);
     const nClientes = ref(0);
-    const moviments = ref([{cantidad: 10, fecha:19, concepto:"droga" }, {}]);
+    const moviments = ref([]);
     const cambioInicial = ref(0);
     const cambioFinal = ref(0);
     const recaudado = ref(0);
+    const fecha = ref(0);
+    const valor = ref(0);
+    const concepto = ref('');
   
 
     function setActivo(x) {
@@ -112,27 +115,39 @@ export default {
     }
 
 
-   
-
-
-
-
+  
 
     onMounted(() => {
       axios.post('/caja/getDatosUltimoCierre').then((arrayVerCajas) => {
-        console.log(arrayVerCajas.data.info);
-              name.value = arrayVerCajas.data.info.idDependienta;
-              inicioTime.value = new Date(arrayVerCajas.data.info.inicioTime);
-              finalTime.value = new Date(arrayVerCajas.data.info.finalTime);
-              calaixFetZ.value = arrayVerCajas.data.info.calaixFetZ;
-              totalDatafono3G.value = arrayVerCajas.data.info.totalDatafono3G;
-              descuadre.value = arrayVerCajas.data.info.descuadre;
-              nClientes.value = arrayVerCajas.data.info.nClientes;
-              recaudado.value = arrayVerCajas.data.info.recaudado;
-              cambioInicial.value = arrayVerCajas.data.info.infoExtra.cambioInicial;
-              cambioFinal.value = arrayVerCajas.data.info.infoExtra.cambioFinal;
+        console.log(arrayVerCajas.data.info[0]);
+          axios.post('/trabajadores/getTrabajadorByID',{id: arrayVerCajas.data.info[0].idDependienta }).then((trabajador)=>{
+              name.value = trabajador.data.trabajador.nombre
+          })
+             
+
+              const fechaInicio = new Date(arrayVerCajas.data.info[0].inicioTime);
+              const fechaFinal = new Date(arrayVerCajas.data.info[0].finalTime);
+
+              inicioTime.value = fechaInicio.getDate()+'-'+fechaInicio.getMonth()+'-'+fechaInicio.getFullYear()+'  '+fechaInicio.getHours()+':'+fechaInicio.getMinutes();
+              finalTime.value = fechaFinal.getDate()+'-'+fechaFinal.getMonth()+'-'+fechaFinal.getFullYear()+'  '+fechaFinal.getHours()+':'+fechaFinal.getMinutes();
+
+              calaixFetZ.value = arrayVerCajas.data.info[0].calaixFetZ;
+              totalDatafono3G.value = arrayVerCajas.data.info[0].totalDatafono3G;
+
+              descuadre.value = arrayVerCajas.data.info[0].descuadre;
+              nClientes.value = arrayVerCajas.data.info[0].nClientes;
+              recaudado.value = arrayVerCajas.data.info[0].recaudado;
+              cambioInicial.value = arrayVerCajas.data.info[0].infoExtra.cambioInicial;
+              cambioFinal.value = arrayVerCajas.data.info[0].infoExtra.cambioFinal;
         // setTicketActivo('', true);
       });
+
+      axios.post('/caja/getDatosMoviments').then((arrayMoviments) => {
+             moviments.value = arrayMoviments.data.info;
+
+        // setTicketActivo('', true);
+      });
+
     });
 
 
@@ -164,7 +179,10 @@ export default {
       nClientes,
       cambioInicial,
       cambioFinal,
-      moviments
+      moviments,
+      concepto,
+      valor,
+      fecha
     };
   },
 };

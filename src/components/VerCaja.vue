@@ -114,7 +114,21 @@ export default {
       router.push('/menu/caja');
     }
 
+function imprimirUltimoCierre(){
+    axios.post('/caja/getDatosUltimoCierre').then((arrayVerCajas) => {
+ axios.post('/trabajadores/getTrabajadorByID',{id: arrayVerCajas.data.info[0].idDependienta }).then((trabajador)=>{
+             arrayVerCajas.data.info[0].idDependienta = trabajador.data.trabajador.nombre
 
+ axios.post('/caja/getDatosMoviments', {fechaInicio: arrayVerCajas.data.info[0].inicioTime, fechaFinal: arrayVerCajas.data.info[0].finalTime}).then((arrayMoviments) => {
+ arrayVerCajas.data.info[0].movimientos = arrayMoviments.data.info;
+                axios.post('impresora/imprimircaja',{caja:arrayVerCajas.data.info[0]}).then((resultado)=>{
+
+      })
+          })
+ })
+   
+    })
+}
   
 
     onMounted(() => {
@@ -140,16 +154,30 @@ export default {
               cambioInicial.value = arrayVerCajas.data.info[0].infoExtra.cambioInicial;
               cambioFinal.value = arrayVerCajas.data.info[0].infoExtra.cambioFinal;
         // setTicketActivo('', true);
-      });
 
-      axios.post('/caja/getDatosMoviments').then((arrayMoviments) => {
-             moviments.value = arrayMoviments.data.info;
-
+              axios.post('/caja/getDatosMoviments', {fechaInicio: arrayVerCajas.data.info[0].inicioTime, fechaFinal: arrayVerCajas.data.info[0].finalTime}).then((arrayMoviments) => {
+               
+               arrayMoviments.data.info.forEach(element => {
+                console.log(element)
+                const fechamoviment= new Date( element._id);
+                const date = fechamoviment.getDate()+'-'+fechamoviment.getMonth()+'-'+fechamoviment.getFullYear()+'  '+fechamoviment.getHours()+':'+fechamoviment.getMinutes();
+                    moviments.value.push({
+                      "fecha": date,
+                      "concepto":  element.concepto,
+                      "valor" :  element.valor
+                    })
+               }); 
+         
+             
         // setTicketActivo('', true);
       });
 
     });
 
+
+      });
+
+   
 
 
 
@@ -182,7 +210,8 @@ export default {
       moviments,
       concepto,
       valor,
-      fecha
+      fecha,
+      imprimirUltimoCierre
     };
   },
 };

@@ -553,6 +553,7 @@ export default {
         toast.info('¡ Es necesario un trabajador/a activ@ !');
       }
       }else{
+        axios.post('impresora/abrirCajon');
         toast.error('¡Seleciona un artículo para cobrar!')
       }
     }

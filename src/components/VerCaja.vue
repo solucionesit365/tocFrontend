@@ -242,4 +242,20 @@ function imprimirUltimoCierre(){
   .total3GInput {
     font-size: 2rem;
   }
+
+  
+.card {
+    /* padding: 1.5em 0.5em 0.5em; */
+    border-radius: 1em;
+    border: 1em;
+    border-top-color: #57a791 !important;
+    box-shadow: 0 5px 17px rgba(0, 0, 0, 0.2);
+}
+
+.botonesPrincipales {
+    background-color: #fff5e9;
+    color: #c95907;
+    border-color: #bf5c18;
+    border-width: 3px;
+}
 </style>

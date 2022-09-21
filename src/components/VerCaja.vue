@@ -117,7 +117,7 @@ export default {
 function imprimirUltimoCierre(){
     axios.post('/caja/getDatosUltimoCierre').then((arrayVerCajas) => {
  axios.post('/trabajadores/getTrabajadorByID',{id: arrayVerCajas.data.info[0].idDependienta }).then((trabajador)=>{
-             arrayVerCajas.data.info[0].idDependienta = trabajador.data.trabajador.nombre
+             arrayVerCajas.data.info[0].idDependienta = trabajador.data.trabajador.nombre;
 
  axios.post('/caja/getDatosMoviments', {fechaInicio: arrayVerCajas.data.info[0].inicioTime, fechaFinal: arrayVerCajas.data.info[0].finalTime}).then((arrayMoviments) => {
  arrayVerCajas.data.info[0].movimientos = arrayMoviments.data.info;
@@ -135,7 +135,7 @@ function imprimirUltimoCierre(){
       axios.post('/caja/getDatosUltimoCierre').then((arrayVerCajas) => {
         console.log(arrayVerCajas.data.info[0]);
           axios.post('/trabajadores/getTrabajadorByID',{id: arrayVerCajas.data.info[0].idDependienta }).then((trabajador)=>{
-              name.value = trabajador.data.trabajador.nombre
+              name.value = trabajador.data.trabajador.nombre;
           })
              
 

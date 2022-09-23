@@ -117,11 +117,15 @@ export default {
 function imprimirUltimoCierre(){
     axios.post('/caja/getDatosUltimoCierre').then((arrayVerCajas) => {
  axios.post('/trabajadores/getTrabajadorByID',{id: arrayVerCajas.data.info[0].idDependienta }).then((trabajador)=>{
-             arrayVerCajas.data.info[0].idDependienta = trabajador.data.trabajador.nombre
+             arrayVerCajas.data.info[0].idDependienta = trabajador.data.trabajador.nombre;
 
  axios.post('/caja/getDatosMoviments', {fechaInicio: arrayVerCajas.data.info[0].inicioTime, fechaFinal: arrayVerCajas.data.info[0].finalTime}).then((arrayMoviments) => {
  arrayVerCajas.data.info[0].movimientos = arrayMoviments.data.info;
+<<<<<<< HEAD
                 axios.post('/impresora/imprimirCaja',{caja:arrayVerCajas.data.info[0]}).then((resultado)=>{
+=======
+                axios.post('impresora/imprimirCaja',{caja:arrayVerCajas.data.info[0]}).then((resultado)=>{
+>>>>>>> 0fc4e73a98ac3d6e6e146221e563cb4257a2cb63
 
       })
           })
@@ -135,7 +139,7 @@ function imprimirUltimoCierre(){
       axios.post('/caja/getDatosUltimoCierre').then((arrayVerCajas) => {
         console.log(arrayVerCajas.data.info[0]);
           axios.post('/trabajadores/getTrabajadorByID',{id: arrayVerCajas.data.info[0].idDependienta }).then((trabajador)=>{
-              name.value = trabajador.data.trabajador.nombre
+              name.value = trabajador.data.trabajador.nombre;
           })
              
 
@@ -242,4 +246,20 @@ function imprimirUltimoCierre(){
   .total3GInput {
     font-size: 2rem;
   }
+
+  
+.card {
+    /* padding: 1.5em 0.5em 0.5em; */
+    border-radius: 1em;
+    border: 1em;
+    border-top-color: #57a791 !important;
+    box-shadow: 0 5px 17px rgba(0, 0, 0, 0.2);
+}
+
+.botonesPrincipales {
+    background-color: #fff5e9;
+    color: #c95907;
+    border-color: #bf5c18;
+    border-width: 3px;
+}
 </style>

@@ -121,7 +121,7 @@ function imprimirUltimoCierre(){
 
  axios.post('/caja/getDatosMoviments', {fechaInicio: arrayVerCajas.data.info[0].inicioTime, fechaFinal: arrayVerCajas.data.info[0].finalTime}).then((arrayMoviments) => {
  arrayVerCajas.data.info[0].movimientos = arrayMoviments.data.info;
-                axios.post('impresora/imprimircaja',{caja:arrayVerCajas.data.info[0]}).then((resultado)=>{
+                axios.post('/impresora/imprimirCaja',{caja:arrayVerCajas.data.info[0]}).then((resultado)=>{
 
       })
           })

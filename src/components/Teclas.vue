@@ -741,11 +741,11 @@ export default {
         backdrop: 'static',
       })
       
-      modalVaris = new Modal(document.getElementById('modalVaris'), {
-        keyboard: false,
-      });
+      // modalVaris = new Modal(document.getElementById('modalVaris'), {
+      //   keyboard: false,
+      // });
       
-      ;
+      
       document.onselectstart = function(){ return false; }
       /* OBSERVAR SI LA CAJA ESTÁ ABIERTA */
       tocGame.iniciarToc();

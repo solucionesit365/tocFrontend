@@ -737,8 +737,18 @@ export default {
       modalSuplementos = new Modal(document.getElementById('modalSuplementos'), {
         keyboard: false,
         backdrop: 'static',
+<<<<<<< HEAD
       });
 
+=======
+      })
+      
+      // modalVaris = new Modal(document.getElementById('modalVaris'), {
+      //   keyboard: false,
+      // });
+      
+      
+>>>>>>> f74cdd341effcde70706e28484450f9b6fc18061
       document.onselectstart = function(){ return false; }
       /* OBSERVAR SI LA CAJA ESTÁ ABIERTA */
       tocGame.iniciarToc();

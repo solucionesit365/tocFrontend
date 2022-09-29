@@ -30,8 +30,33 @@
             </div>
         </div>
     </div>
+
+<div class="modal fade" id="modalConfirmacionClausura"
+    tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <label class="form-label">Seguro que quieres hacer una salida de mas de 500?</label>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <button type="button" class="btn btn-secondary w-100"
+              style="font-size: 40px"
+              data-bs-dismiss="modal">Cancelar</button>
+            <button type="button"
+              @click="confirmacionSalida()"
+              class="btn btn-success w-100 mt-2" style="font-size: 40px">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
 </template>
 <script>
+
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import { Modal } from 'bootstrap';
@@ -45,13 +70,14 @@ export default {
         const cantidad = ref(0);
         const concepto = ref('Entrega Diària');
         let modalSalidaDinero = null;
+        let modalConfirmacionClausura = null;
 
         function cerrarModal() {
             modalSalidaDinero.hide();
         }
 
         function confirmarSalida() {
-            if (cantidad.value <= 500 && cantidad.value > 0 ) {
+            if (cantidad.value <= 200 && cantidad.value > 0) {
                 axios.post('movimientos/nuevaSalida', {
                     cantidad: Number(cantidad.value),
                     concepto: concepto.value
@@ -68,19 +94,56 @@ export default {
                     toast.error('Error movimientos/nuevaSalida');
                 });
             } else {
-                toast.error('La cantidad debe ser un número entre 0 y 500');
+                if (cantidad.value >= 200 && cantidad.value > 0 ) {
+                    abrirModalConfirmacion();
+                }
             }
+        }
+
+        function confirmacionSalida(){
+            if (cantidad.value >= 200 && cantidad.value > 0) {
+                axios.post('movimientos/nuevaSalida', {
+                    cantidad: Number(cantidad.value),
+                    concepto: concepto.value
+                }).then((res) => {
+                    if (!res.data.error) {
+                        toast.success('Salida OK');
+                        cerrarModal();
+                    } else {
+                        toast.error(res.data.mensaje);
+                    }
+                    router.push('/');
+                }).catch((err) => {
+                    console.log(err);
+                    toast.error('Error movimientos/nuevaSalida');
+                });
+            }
+        }
+
+        function abrirModalConfirmacion() {
+        modalConfirmacionClausura.show();
+        }
+
+        function cerrarModalConfirmacion() {
+        modalConfirmacionClausura.toggle();
         }
 
         onMounted(() => {
             modalSalidaDinero = new Modal(document.getElementById('modalSalidaDinero'));
+
+            modalConfirmacionClausura = new Modal(document.getElementById('modalConfirmacionClausura'), {
+            keyboard: false,
+            });
         });
 
         return {
             cantidad,
             concepto,
             confirmarSalida,
+            abrirModalConfirmacion,
+            cerrarModalConfirmacion,
+            confirmacionSalida
         };
-    },
+    }
 };
 </script>

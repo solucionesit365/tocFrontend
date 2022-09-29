@@ -121,12 +121,7 @@ function imprimirUltimoCierre(){
 
  axios.post('/caja/getDatosMoviments', {fechaInicio: arrayVerCajas.data.info[0].inicioTime, fechaFinal: arrayVerCajas.data.info[0].finalTime}).then((arrayMoviments) => {
  arrayVerCajas.data.info[0].movimientos = arrayMoviments.data.info;
-<<<<<<< HEAD
                 axios.post('/impresora/imprimirCaja',{caja:arrayVerCajas.data.info[0]}).then((resultado)=>{
-=======
-                axios.post('impresora/imprimirCaja',{caja:arrayVerCajas.data.info[0]}).then((resultado)=>{
->>>>>>> 0fc4e73a98ac3d6e6e146221e563cb4257a2cb63
-
       })
           })
  })

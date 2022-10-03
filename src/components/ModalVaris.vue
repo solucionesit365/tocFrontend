@@ -16,10 +16,6 @@
         </div>
         <div class="modal-footer">
           <button type="button"
-          class="btn btn-success mr-0"
-          @click="cambiarPosicion()">Cambiar posición
-          </button>
-          <button type="button"
           class="btn btn-primary mr-0"
           @click="confirmar()">OK
           </button>
@@ -39,13 +35,14 @@ import { tocGame } from '../services/tocGame';
 import axios from 'axios';
 
 export default {
-  name: 'EditarProducto',
+  name: 'modalVaris',
   setup() {
     const toast = useToast();
     const store = useStore();
     const nombre = ref('');
 
     function confirmar() {
+<<<<<<< HEAD
     }
 
     function cambiarPosicion() {
@@ -54,8 +51,12 @@ export default {
     }
 
     onMounted(() => {
-        store.dispatch('ModalEditarProducto/setModal');
+        store.dispatch('modalVaris/setModal');
     });
+<<<<<<< HEAD
+=======
+
+>>>>>>> b0189f6258e36c235583de18c6cf88723129f160
     return {
         nombre,
         confirmar,

@@ -11,12 +11,13 @@ export default {
     },
     abrirModalMutation(state, payload) {
       console.log('modal varis js');
-      state.modal.show();
+        state.modal.show();
     },
     setModalMutation(state) {
+
       const modalElement = document.getElementById('modalVaris');
       if (modalElement != null) {
-        state.modal = new Modal(modalElement, { keyboard: false });
+        state.modal = new Modal(modalElement);
       }
     },
     cerrarModalMutation(state) {

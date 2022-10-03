@@ -32,16 +32,12 @@ export default {
   },
   actions: {
     abrirModal({ commit }, data) {
-
-      
-      
       commit('abrirModalMutation', data);
     },
     cerrarModal({ commit }) {
       commit('cerrarModalMutation');
     },
     setModal(context) {
-
       context.commit('setModalMutation');
     },
   },

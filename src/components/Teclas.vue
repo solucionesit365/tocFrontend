@@ -128,6 +128,7 @@ import { useToast } from 'vue-toastification';
 import { socket, emitSocket } from "../sockets/socket";
 import { tocGame } from '../services/tocGame';
 
+
 export default {
   name: 'Teclas',
   setup() {
@@ -588,7 +589,6 @@ export default {
       
       store.dispatch('modalVaris/abrirModal');
 
-
       idArticulo = objListadoTeclas.idArticle;
       // Eze, no le hagas caso a esto, de momento no sirve
       if(modoActual.value === 'MODIFICAR_ARTICULO' || modoActual.value === 'MOVER_ARTICULO') {
@@ -600,11 +600,6 @@ export default {
                 toast.success('Tecla cambiada de posición');
                 return;
               }
-
-             
-                // if (nombreArticulo.nombre.value === 'Varis R.') {
-                //   modalVaris.show();
-                // }
               toast.error('Error al cambiar la tecla de posición');
               console.log(res.data.mensaje);       
             }).catch((err) => {
@@ -743,12 +738,7 @@ export default {
         keyboard: false,
         backdrop: 'static',
       })
-      
-      // modalVaris = new Modal(document.getElementById('modalVaris'), {
-      //   keyboard: false,
-      // });
-      
-      
+
       document.onselectstart = function(){ return false; }
       /* OBSERVAR SI LA CAJA ESTÁ ABIERTA */
       tocGame.iniciarToc();
@@ -780,6 +770,7 @@ export default {
       clickMenu,
       clickTecla,
       mostrarInfoVisor,
+
       modalesSumable,
       dobleMenu,
       listaSubmenus,
@@ -794,7 +785,7 @@ export default {
       selectSuplemento,
       checkSuplementoActivo,
       isEditarArticulos,
-
+      
     };
     /* FINAL SETUP */
   },

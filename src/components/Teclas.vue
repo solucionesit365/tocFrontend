@@ -770,7 +770,6 @@ export default {
       clickMenu,
       clickTecla,
       mostrarInfoVisor,
-
       modalesSumable,
       dobleMenu,
       listaSubmenus,

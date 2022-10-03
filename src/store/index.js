@@ -28,6 +28,8 @@ import ModalEditarProducto from './modules/ModalEditarProducto';
 
 import Alergenos from './modules/Alergenos';
 
+import ModalVaris from './modules/ModalVaris';
+
 import socket from '../sockets/socket';
 import axios from 'axios';
 
@@ -118,5 +120,6 @@ export default createStore({
     CestasActivas,
     ModalEditarProducto,
     Alergenos,
+    ModalVaris,
   },
 });

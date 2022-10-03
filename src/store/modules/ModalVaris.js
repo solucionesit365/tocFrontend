@@ -6,18 +6,15 @@ export default {
     modal: null,
   },
   mutations: {
-  
-    abrirModalMutation(state) {
+    abrirModalMutation(state, payload) {
       console.log('modal varis js');
-      state.modal.show();
-      
+        state.modal.show();
     },
     setModalMutation(state) {
+
       const modalElement = document.getElementById('modalVaris');
-      console.log('modal varis');
       if (modalElement != null) {
-        state.modal = new Modal(modalElement, { keyboard: false });
-       
+        state.modal = new Modal(modalElement);
       }
     },
     cerrarModalMutation(state) {
@@ -25,12 +22,8 @@ export default {
     },
   },
   actions: {
-    testAction({ commit }) {
-      commit('testMutation', 30);
-    },
-    abrirModal({ commit }) {
-      console.log('modal log');
-      commit('abrirModalMutation');
+    abrirModal({ commit }, data) {
+      commit('abrirModalMutation', data);
     },
     cerrarModal({ commit }) {
       commit('cerrarModalMutation');

@@ -16,10 +16,6 @@
         </div>
         <div class="modal-footer">
           <button type="button"
-          class="btn btn-success mr-0"
-          @click="cambiarPosicion()">Cambiar posición
-          </button>
-          <button type="button"
           class="btn btn-primary mr-0"
           @click="confirmar()">OK
           </button>
@@ -39,48 +35,23 @@ import { tocGame } from '../services/tocGame';
 import axios from 'axios';
 
 export default {
-  name: 'EditarProducto',
+  name: 'modalVaris',
   setup() {
     const toast = useToast();
     const store = useStore();
-    const precioBase = ref(0);
-    const precioConIva = ref(0);
-    const tipoIva = ref(0);
     const nombre = ref('');
-    const id = ref(-1);
-    const menus = ref([]);
 
     function confirmar() {
-        axios.post('articulos/editarArticulo', { idArticulo: id.value, nombre: nombre.value, precioBase: (parseFloat(precioConIva.value)/parseFloat(tipoIva.value)), precioConIva: parseFloat(precioConIva.value) }).then((data) => {
-            console.log(data);
-            store.dispatch('ModalEditarProducto/cerrarModal');
-        })
-    }
-
-    function cambiarPosicion() {
-      store.dispatch('ModalEditarProducto/cerrarModal');
-      store.dispatch('setModoActual', 'MOVER_ARTICULO');
+        
     }
 
     onMounted(() => {
-        store.dispatch('ModalEditarProducto/setModal');
+        store.dispatch('modalVaris/setModal');
     });
 
-    watch(() => store.getters['ModalEditarProducto/getNombre'], () => {
-        nombre.value = store.state.ModalEditarProducto.nombre;
-        precioConIva.value = store.state.ModalEditarProducto.precioConIva;
-        id.value = store.state.ModalEditarProducto.idArticulo;
-        tipoIva.value = store.state.ModalEditarProducto.tipoIva == 1 ? '1.04' : store.state.ModalEditarProducto.tipoIva == 2 ? '1.10' : '1.21';
-    })
     return {
         nombre,
-        precioBase,
-        precioConIva,
-        id,
-        tipoIva,
         confirmar,
-        menus,
-        cambiarPosicion,
     };
     /* FINAL SETUP */
   },

@@ -587,7 +587,7 @@ export default {
 
     function clickTecla(objListadoTeclas) {
 
-      store.dispatch('ModalVaris/abrirModal');
+      store.dispatch('modalVaris/abrirModal');
 
       idArticulo = objListadoTeclas.idArticle;
       // Eze, no le hagas caso a esto, de momento no sirve
@@ -733,22 +733,12 @@ export default {
       return (modoActual.value === 'MODIFICAR_ARTICULO' || modoActual.value === 'MOVER_ARTICULO') && index === -1 ? true : false;
     }
     onMounted(() => {
-      axios.post('impresora/bienvenida')
+      axios.post('impresora/bienvenida');
+
       modalSuplementos = new Modal(document.getElementById('modalSuplementos'), {
         keyboard: false,
         backdrop: 'static',
-<<<<<<< HEAD
-      });
-
-=======
-      })
-      
-      // modalVaris = new Modal(document.getElementById('modalVaris'), {
-      //   keyboard: false,
-      // });
-      
-      
->>>>>>> f74cdd341effcde70706e28484450f9b6fc18061
+      });     
       document.onselectstart = function(){ return false; }
       /* OBSERVAR SI LA CAJA ESTÁ ABIERTA */
       tocGame.iniciarToc();
@@ -780,6 +770,7 @@ export default {
       clickMenu,
       clickTecla,
       mostrarInfoVisor,
+
       modalesSumable,
       dobleMenu,
       listaSubmenus,
@@ -794,6 +785,7 @@ export default {
       selectSuplemento,
       checkSuplementoActivo,
       isEditarArticulos,
+      
     };
     /* FINAL SETUP */
   },

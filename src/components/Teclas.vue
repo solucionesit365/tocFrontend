@@ -587,8 +587,10 @@ export default {
 
     function clickTecla(objListadoTeclas) {
 
-      store.dispatch('modalVaris/abrirModal');
-
+      if () {
+        store.dispatch('ModalVaris/abrirModal');
+      }
+      
       idArticulo = objListadoTeclas.idArticle;
       // Eze, no le hagas caso a esto, de momento no sirve
       if(modoActual.value === 'MODIFICAR_ARTICULO' || modoActual.value === 'MOVER_ARTICULO') {

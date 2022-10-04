@@ -1,5 +1,5 @@
 <template>
-   <div class="modal" id="modalVaris" tabindex="-1" role="dialog">
+   <div class="modal" id="ModalVaris" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document" style="max-width: 600px">
       <div class="modal-content">
         <div class="modal-header">
@@ -8,10 +8,6 @@
         <div class="modal-body">
           <div class="row">
             <label for='nombre'>Nombre producto <input id='nombre' type='text' class='form-control' v-model='nombre' /></label>
-            
-            <label for='precioIva'>Precio con {{parseInt(tipoIva.toString().split('.')[1])}}% de IVA 
-              <input id='precioIva' type='number' class='form-control' v-model='precioConIva' />
-            </label>
           </div>
         </div>
         <div class="modal-footer">
@@ -35,7 +31,7 @@ import { tocGame } from '../services/tocGame';
 import axios from 'axios';
 
 export default {
-  name: 'modalVaris',
+  name: 'ModalVaris',
   setup() {
     const toast = useToast();
     const store = useStore();
@@ -46,7 +42,7 @@ export default {
     }
 
     onMounted(() => {
-        store.dispatch('modalVaris/setModal');
+        store.dispatch('ModalVaris/setModal');
     });
 
     return {

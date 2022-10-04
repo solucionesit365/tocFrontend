@@ -12,7 +12,7 @@ export default {
     },
     setModalMutation(state) {
 
-      const modalElement = document.getElementById('modalVaris');
+      const modalElement = document.getElementById('ModalVaris');
       if (modalElement != null) {
         state.modal = new Modal(modalElement);
       }
@@ -22,8 +22,8 @@ export default {
     },
   },
   actions: {
-    abrirModal({ commit }, data) {
-      commit('abrirModalMutation', data);
+    abrirModal({ commit }) {
+      commit('abrirModalMutation');
     },
     cerrarModal({ commit }) {
       commit('cerrarModalMutation');

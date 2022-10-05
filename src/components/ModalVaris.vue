@@ -42,7 +42,7 @@ export default {
     const nombre = ref('');
 
     function confirmar() {
-<<<<<<< HEAD
+
     }
 
     function cambiarPosicion() {
@@ -53,10 +53,6 @@ export default {
     onMounted(() => {
         store.dispatch('modalVaris/setModal');
     });
-<<<<<<< HEAD
-=======
-
->>>>>>> b0189f6258e36c235583de18c6cf88723129f160
     return {
         nombre,
         confirmar,

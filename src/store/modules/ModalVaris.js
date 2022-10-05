@@ -4,30 +4,29 @@ export default {
   namespaced: true,
   state: {
     modal: null,
+    nombre: '',
   },
   mutations: {
-    testMutation(state, payload) {
-      state.edadState = payload;
-    },
     abrirModalMutation(state, payload) {
-      console.log('modal varis js');
-        state.modal.show();
+      state.nombre = payload.nombre;  
+      state.modal.show();
     },
     setModalMutation(state) {
-
-      const modalElement = document.getElementById('modalVaris');
+      const modalElement = document.getElementById('ModalVaris');
       if (modalElement != null) {
         state.modal = new Modal(modalElement);
       }
     },
+    
     cerrarModalMutation(state) {
       state.modal.hide();
     },
   },
+  getters: {
+    // eslint-disable-next-line no-underscore-dangle
+    getNombre: (state) => state.nombre,
+  },
   actions: {
-    testAction({ commit }) {
-      commit('testMutation', 30);
-    },
     abrirModal({ commit }, data) {
       commit('abrirModalMutation', data);
     },

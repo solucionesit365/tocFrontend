@@ -12,10 +12,6 @@ export default {
       state.modal.show();
     },
     setModalMutation(state) {
-<<<<<<< HEAD
-=======
-
->>>>>>> c7ebe300f949bb0bfb058ede626d0f8b5945c02f
       const modalElement = document.getElementById('ModalVaris');
       if (modalElement != null) {
         state.modal = new Modal(modalElement);

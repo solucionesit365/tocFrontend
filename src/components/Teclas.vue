@@ -586,15 +586,9 @@ export default {
 
 
     function clickTecla(objListadoTeclas) {
-<<<<<<< HEAD
      // console.log(objListadoTeclas.nombreArticulo)
       if (objListadoTeclas.nombreArticulo.nombre.includes('Varis')){
         store.dispatch('ModalVaris/abrirModal', { nombre: objListadoTeclas.nombreArticulo.nombre});
-=======
-
-      if () {
-        store.dispatch('ModalVaris/abrirModal');
->>>>>>> c7ebe300f949bb0bfb058ede626d0f8b5945c02f
       }
       
       idArticulo = objListadoTeclas.idArticle;

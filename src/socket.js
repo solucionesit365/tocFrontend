@@ -23,13 +23,42 @@ socket.on("cargarTrabajadores", (arrayTrabajadores) => {
 
 /* Eze 4.0 */
 socket.on("cargarCestas", (arrayCestas) => {
-  console.log("HOLA CARACOLA");
   try {
     if (arrayCestas) {
       console.log(arrayCestas);
       store.dispatch("Cestas/setArrayCestasAction", arrayCestas);
     } else {
       throw Error("Error, arrayCestas no es correcto");
+    }
+  } catch (err) {
+    console.log(err);
+    toast.error(err.message);
+  }
+});
+
+/* Eze 4.0 */
+socket.on("cargarParametros", (parametros) => {
+  try {
+    console.log("parametros: ", parametros);
+    if (parametros) {
+      store.dispatch("Parametros/setParametros", parametros);
+    } else {
+      throw Error("Error, parametros no es correcto");
+    }
+  } catch (err) {
+    console.log(err);
+    toast.error(err.message);
+  }
+});
+
+/* Eze 4.0 */
+socket.on("cargarVentas", (arrayTickets) => {
+  try {
+    console.log("arrayTickets: ", arrayTickets);
+    if (arrayTickets) {
+      // store.dispatch("Parametros/setParametros", parametros);
+    } else {
+      throw Error("Error, arrayTickets no es correcto");
     }
   } catch (err) {
     console.log(err);

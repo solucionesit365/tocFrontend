@@ -5,6 +5,7 @@ import InstallWizard from './modules/InstallWizard';
 import ModalPeso from './modules/ModalPeso';
 
 import Cestas from './modules/Cestas';
+import Parametros from './modules/Parametros';
 
 import Ticket from './modules/Ticket';
 
@@ -115,5 +116,6 @@ export default createStore({
     CestasActivas,
     ModalEditarProducto,
     Alergenos,
+    Parametros
   },
 });

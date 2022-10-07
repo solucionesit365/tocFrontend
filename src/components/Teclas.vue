@@ -135,7 +135,7 @@ export default {
     const store = useStore();
     let inicioMagic = null;
     let finalMagic = null;
-    const cesta = computed(() => store.state.Cesta.cesta);
+    const cesta = computed(() => store.state.Cestas.cesta);
     const cajaAbierta = computed(() => store.state.Caja.cajaAbierta);
     const listaMenus = ref([{ nomMenu: '' }]);
     const listaSubmenus = ref([{ nombre: '', tag: '' }]);

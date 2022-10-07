@@ -12,15 +12,14 @@ const baseURL = 'http://localhost:3000/'; // BUILD PARA TPV
 // const baseURL = 'http://54.195.159.7:3000'; // BUILD PARA SERVIDOR
 
 class tocGameV3 {
-    parametros = {database: "fac_tena"};
+    parametros = null;
 
     constructor() {
-        axios.post(baseURL + 'parametros/getParametros').then((res) => {
-            
-            if (res.data.error === false) {
-                this.parametros = res.data.parametros;
+        axios.post(baseURL + 'parametros/getParametros').then((respuesta) => {
+            if (respuesta.data) {
+                this.parametros = respuesta.data;
             } else {
-                throw "Error en parametros/getParametros";
+                throw Error("Error en el constructor de tocGame class");
             }
             
         }).catch((err) => {

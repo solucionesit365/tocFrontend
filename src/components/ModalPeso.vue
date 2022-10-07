@@ -60,7 +60,7 @@ export default {
     const store = useStore();
     const toast = useToast();
     const unidades = ref('0');
-    const cesta = computed(() => store.state.Cesta.cesta);
+    const cesta = computed(() => store.state.Cestas.cesta);
     const infoArticulo = computed(() => store.state.ModalPeso);
     // var idBoton = null;
     const getUnidades = computed(() => {

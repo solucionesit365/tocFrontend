@@ -282,8 +282,8 @@ export default {
     const tocVersion = ref('');
     const nombreTienda = ref('');
     const store = useStore();
-    const cesta = computed(() => store.state.Cesta.cesta);
-    const activo = computed(() => store.state.Cesta.activo);
+    const cesta = computed(() => store.state.Cestas.cesta);
+    const activo = computed(() => store.state.Cestas.activo);
     const notificaciones = computed(() => store.state.Notificaciones.cantidad);
     const conCliente = null;
     const unidades = computed(() => store.state.unidades);
@@ -691,7 +691,7 @@ export default {
         // toc.borrarItemCesta(activo.value);
         // ipcRenderer.send('mostrar-visor', {texto: "", pre
         // cio: "", total: toc.getCesta().tiposIva.importe2, dependienta: ""});
-        axios.post('/cestas/borrarItemCesta', { _id: store.state.Cesta.cesta._id, idArticulo: store.getters['Cestas/getItem'] }).then((res) => {
+        axios.post('/cestas/borrarItemCesta', { _id: store.state.Cestas.cesta._id, idArticulo: store.getters['Cestas/getItem'] }).then((res) => {
           if (res.data.okey) {           
             store.dispatch('Cestas/setCestaAction', res.data.cestaNueva);
           } else {

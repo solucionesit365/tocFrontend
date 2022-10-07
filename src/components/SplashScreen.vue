@@ -11,6 +11,8 @@ export default {
   setup() {
     emitSocket("cargarTrabajadores");
     emitSocket("cargarCestas");
+    emitSocket("cargarParametros");
+    emitSocket("cargarVentas");
 
     setTimeout(function() {
       router.push("/main");

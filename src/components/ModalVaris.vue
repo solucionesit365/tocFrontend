@@ -29,6 +29,7 @@ import { useStore } from 'vuex';
 import { useToast } from 'vue-toastification';
 import { tocGame } from '../services/tocGame';
 import axios from 'axios';
+import router from '../router';
 
 export default {
   name: 'ModalVaris',
@@ -38,22 +39,20 @@ export default {
     const nombre = ref('');
 
     function confirmar() {
-      
-    }
-
-    function cambiarPosicion() {
-      store.dispatch('ModalEditarProducto/cerrarModal');
-      store.dispatch('setModoActual', 'MOVER_ARTICULO');
+      store.dispatch('ModalVaris/cerrarModal'); 
+      axios.post('/cestas/modificarNombreCesta', {cestaId: store.getters['Cesta/getCestaId'], nombreArticulo: nombre.value}).then(response => {
+        
+      })
     }
 
     onMounted(() => {
         store.dispatch('ModalVaris/setModal');
     });
-
-    watch(() => store.getters['ModalEditarProducto/getNombre'], () => {
-        nombre.value = store.state.ModalEditarProducto.nombre;
+    watch(() => store.getters['ModalVaris/getNombre'], () => {
+        nombre.value = store.state.ModalVaris.nombre;
     })
-    return {
+
+  return {
         nombre,
         confirmar,
     };

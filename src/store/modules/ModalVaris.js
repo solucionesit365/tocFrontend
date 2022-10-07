@@ -17,7 +17,6 @@ export default {
         state.modal = new Modal(modalElement);
       }
     },
-    
     cerrarModalMutation(state) {
       state.modal.hide();
     },
@@ -27,8 +26,8 @@ export default {
     getNombre: (state) => state.nombre,
   },
   actions: {
-    abrirModal({ commit }) {
-      commit('abrirModalMutation');
+    abrirModal({ commit }, data) {
+      commit('abrirModalMutation', data);
     },
     cerrarModal({ commit }) {
       commit('cerrarModalMutation');

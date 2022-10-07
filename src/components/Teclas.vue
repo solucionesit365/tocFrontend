@@ -171,7 +171,7 @@ export default {
           if (res.data.okey) {
             console.log('tecals borrar item ')
            
-            store.dispatch('Cesta/setCestaAction', res.data.cestaNueva);
+            store.dispatch('Cestas/setCestaAction', res.data.cestaNueva);
             
           } else {
             console.log(res.data.okey);
@@ -638,7 +638,7 @@ export default {
             store.dispatch('resetUnidades');
            
            
-            store.dispatch('Cesta/setCestaAction', res2.data.cesta);
+            store.dispatch('Cestas/setCestaAction', res2.data.cesta);
         
           }
         } else {
@@ -672,7 +672,7 @@ export default {
           store.dispatch('resetUnidades');
           console.log('añadir suplemento ')
       
-          store.dispatch('Cesta/setCestaAction', res.data.cesta);
+          store.dispatch('Cestas/setCestaAction', res.data.cesta);
          
           suplementosSeleccionados.value = [];
           idArticulo = null;

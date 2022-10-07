@@ -239,7 +239,7 @@ export default {
     const metodoPagoActivo = ref('TARJETA');
     const totalTkrs = ref(0);
     const cuenta = ref(0);
-    const cesta =store.getters['Cesta/getCestaId'];
+    const cesta =store.getters['Cestas/getCestaId'];
     const arrayFichados = ref([]);
     const tipoDatafono = ref(null);
     const esperando = computed(() => store.state.esperandoDatafono); // ref(false);
@@ -405,7 +405,7 @@ export default {
       if (paytef.data.error === false) {
         if (paytef.data.continuo === false) { // Única forma de saber si el pago se ha hecho
           store.dispatch('setEsperandoDatafono', false);
-          store.dispatch('Cesta/setIdAction', -1);
+          store.dispatch('Cestas/setIdAction', -1);
           store.dispatch('setModoActual', 'NORMAL');
           store.dispatch('Clientes/resetClienteActivo');
           store.dispatch('Footer/resetMenuActivo');
@@ -425,7 +425,7 @@ export default {
     //     store.dispatch('setEsperandoDatafono', false);
 
     //     if (res.data.error == false) {
-    //       store.dispatch('Cesta/setIdAction', -1);
+    //       store.dispatch('Cestas/setIdAction', -1);
     //       store.dispatch('setModoActual', 'NORMAL');
     //       store.dispatch('Clientes/resetClienteActivo');
     //       store.dispatch('Footer/resetMenuActivo');
@@ -571,13 +571,13 @@ export default {
     async function reset() {
       const res = await axios.post('trabajadores/getCurrentTrabajador', {});
       if (!res.data.error) {
-        // store.dispatch('Cesta/setIdAction', res);
+        // store.dispatch('Cestas/setIdAction', res);
         // store.dispatch('CestasActivas/deleteCestaActivaAction', res.data.trabajador.idTrabajador);
       } else {
         toast.error(res.data.mensaje);
       }
       
-      //store.dispatch('Cesta/setIdAction', -1);
+      //store.dispatch('Cestas/setIdAction', -1);
       store.dispatch('setModoActual', 'NORMAL');
       store.dispatch('Clientes/resetClienteActivo');
       store.dispatch('Footer/resetMenuActivo');

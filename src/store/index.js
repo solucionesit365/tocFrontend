@@ -4,7 +4,7 @@ import InstallWizard from './modules/InstallWizard';
 
 import ModalPeso from './modules/ModalPeso';
 
-import Cesta from './modules/Cesta';
+import Cestas from './modules/Cestas';
 
 import Ticket from './modules/Ticket';
 
@@ -103,7 +103,7 @@ export default createStore({
 
     InstallWizard,
     ModalPeso,
-    Cesta,
+    Cestas,
     Ticket,
     Menu,
     Dinero,

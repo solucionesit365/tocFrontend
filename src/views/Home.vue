@@ -9,7 +9,6 @@
 </template>
 
 <script>
-
 import ModalMostrarAlergenos from "@/components/ModalMostrarAlergenos.vue";
 import Teclas from "@/components/Teclas.vue";
 import ModalPeso from "@/components/ModalPeso.vue";

@@ -298,7 +298,7 @@ export default {
     const UBER = store.getters['Clientes/getUber'];
     const TOO_GOOD_TO_GO = store.getters['Clientes/getTooGoodToGo'];
     const getClock = ref('');
-    let mesa = store.getters['Cesta/getName'];
+    let mesa = store.getters['Cestas/getName'];
     const ProhibirCercaArticles = ref(false);
 	   
   
@@ -343,11 +343,11 @@ export default {
     }
 
     function regalar(index) {
-      axios.post('cestas/regalarProducto', { idCesta: store.getters['Cesta/getCestaId'], index: (index - (cesta.value.lista.length -1))*-1 }).then((res) => {
+      axios.post('cestas/regalarProducto', { idCesta: store.getters['Cestas/getCestaId'], index: (index - (cesta.value.lista.length -1))*-1 }).then((res) => {
         if (res.data.error == false) {
           console.log('regalar')
          
-          store.dispatch('Cesta/setCestaAction', res.data.cesta);
+          store.dispatch('Cestas/setCestaAction', res.data.cesta);
          
         } else {
           toast.error(res.data.mensaje);
@@ -400,7 +400,7 @@ export default {
     });
     // onBeforeMount(() => {
     //   axios.post('/getCesta').then((res) => {
-    //     store.dispatch('Cesta/setCestaAction', res);
+    //     store.dispatch('Cestas/setCestaAction', res);
     //   });
     // });
     function cambioActivo() { // VIEJO
@@ -454,7 +454,7 @@ export default {
           if (!res.data.error) {
             axios.post('/cestas/getCesta').then((res) => {
               
-              store.dispatch('Cesta/setCestaAction', res.data);
+              store.dispatch('Cestas/setCestaAction', res.data);
              
             });
             /* Ejemplo de como limpiar el estado al completo */
@@ -484,7 +484,7 @@ export default {
           });
           axios.post('/cestas/getCesta').then((res) => {
             console.log('cerar devolucion ')
-            store.dispatch('Cesta/setCestaAction', res.data);
+            store.dispatch('Cestas/setCestaAction', res.data);
           });
           store.dispatch('setModoActual', 'NORMAL');
           store.dispatch('Clientes/resetClienteActivo');
@@ -505,7 +505,7 @@ export default {
       }).then((res) => {
         if (!res.data.error) {
           axios.post('/cestas/getCesta').then((res) => {           
-            store.dispatch('Cesta/setCestaAction', res.data);
+            store.dispatch('Cestas/setCestaAction', res.data);
           });
           store.dispatch('setModoActual', 'NORMAL');
           store.dispatch('Clientes/resetClienteActivo');
@@ -533,7 +533,7 @@ export default {
         let modoActual = store.getters['getModoActual'];
         let infoClienteVip = store.getters['Clientes/getInfoClienteVip'];
         let idClienteFinal = store.getters['Clientes/getInfoCliente'];
-        let idCesta = store.getters['Cesta/getCestaId'];
+        let idCesta = store.getters['Cestas/getCestaId'];
         
         
         /* Si se cumple que es VIP y no paga en tienda, se crea la deuda, sino, cobro normal */
@@ -603,11 +603,11 @@ export default {
       }
 
       /* INICIALIZACIÓN DE CESTA */
-      // axios.post('/cestas/getCestaByID', { idCesta: store.getters['Cesta/getCestaId'] }).then((res) => {
+      // axios.post('/cestas/getCestaByID', { idCesta: store.getters['Cestas/getCestaId'] }).then((res) => {
       //   if (res.data.error == false) {
       //     console.log(res.data.info)
       //     console.log('hola hoala vecunito')
-      //     store.dispatch('Cesta/setCestaAction', res.data.info);
+      //     store.dispatch('Cestas/setCestaAction', res.data.info);
       //   } else {
     
       //       toast.error(res.data.mensaje);
@@ -623,7 +623,7 @@ export default {
 
     function setActivo(index) {
       if(activo.value === index) {
-        axios.post('/cestas/modificarSuplementos', { cestaId: store.getters['Cesta/getCestaId'], idArticulo: store.getters['Cesta/getItem'], posArticulo: index }).then((res) => {
+        axios.post('/cestas/modificarSuplementos', { cestaId: store.getters['Cestas/getCestaId'], idArticulo: store.getters['Cestas/getItem'], posArticulo: index }).then((res) => {
           if(res.data.suplementos) {
             suplementos.value = res.data.suplementosData;
             console.log("🚀 ~ file: Footer.vue ~ line 516 ~ axios.post ~ suplementos.value", suplementos.value)
@@ -636,7 +636,7 @@ export default {
           console.log(err);
         });
       }
-      store.dispatch('Cesta/setActivoAction', index);
+      store.dispatch('Cestas/setActivoAction', index);
     }
     function selectSuplemento(idSuplemento) {
       const supl = suplementosSeleccionados.value.findIndex(o => o.suplemento === idSuplemento);
@@ -652,12 +652,12 @@ export default {
       return s !== -1 ? true : false;
     }
     function addSuplemento() {
-      axios.post('cestas/addSuplemento', { idCesta: store.getters['Cesta/getCestaId'], suplementos: suplementosSeleccionados.value, idArticulo: store.getters['Cesta/getItem'], posArticulo: activo.value }).then((res) => {
+      axios.post('cestas/addSuplemento', { idCesta: store.getters['Cestas/getCestaId'], suplementos: suplementosSeleccionados.value, idArticulo: store.getters['Cestas/getItem'], posArticulo: activo.value }).then((res) => {
         if(!res.data.error && !res.data.bloqueado) {
           store.dispatch('resetUnidades');
           console.log('suplemento')
     
-          store.dispatch('Cesta/setCestaAction', res.data.cesta);
+          store.dispatch('Cestas/setCestaAction', res.data.cesta);
       
           suplementosSeleccionados.value = [];
           cerrarModal();
@@ -679,7 +679,7 @@ export default {
         /* eslint no-underscore-dangle: 0 */
         axios.post('/cestas/borrarArticulosCesta', { idCesta: cesta.value._id }).then((res) => {
           if (res.data.error == false) {         
-            store.dispatch('Cesta/setCestaAction', res.data.info);
+            store.dispatch('Cestas/setCestaAction', res.data.info);
           } else {
             toast.error(res.data.mensaje);
           }
@@ -691,15 +691,15 @@ export default {
         // toc.borrarItemCesta(activo.value);
         // ipcRenderer.send('mostrar-visor', {texto: "", pre
         // cio: "", total: toc.getCesta().tiposIva.importe2, dependienta: ""});
-        axios.post('/cestas/borrarItemCesta', { _id: store.state.Cesta.cesta._id, idArticulo: store.getters['Cesta/getItem'] }).then((res) => {
+        axios.post('/cestas/borrarItemCesta', { _id: store.state.Cesta.cesta._id, idArticulo: store.getters['Cestas/getItem'] }).then((res) => {
           if (res.data.okey) {           
-            store.dispatch('Cesta/setCestaAction', res.data.cestaNueva);
+            store.dispatch('Cestas/setCestaAction', res.data.cestaNueva);
           } else {
             console.log(res.data.okey);
           }
         });
       }
-      store.dispatch('Cesta/setActivoAction', null);
+      store.dispatch('Cestas/setActivoAction', null);
     //   this.lineaDeRegalo = null;
     }
 

@@ -132,7 +132,7 @@
                  */
          
             function seleccionarCesta(data) {
-                store.dispatch('Cesta/setIdAction', data.idMongo);
+                store.dispatch('Cestas/setIdAction', data.idMongo);
                 //store.dispatch('CestasActivas/deleteCestaActivaAction', data.idMongo);
                 store.dispatch('CestasActivas/setCestasActivasAction', {idMongo: data.idMongo, nombre: data.nombre});
                 volver();

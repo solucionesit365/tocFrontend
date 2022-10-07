@@ -256,7 +256,7 @@ export default {
         function ficharReal(trabajador, index) {
             axios.post('trabajadores/fichar', { idTrabajador: trabajador.idTrabajador, idPlan: idPlanificacion.value }).then((res) => {
                 if (!res.data.error) {
-                    store.dispatch('Cesta/setIdAction', trabajador.idTrabajador);
+                    store.dispatch('Cestas/setIdAction', trabajador.idTrabajador);
                     arrayTrabajadores.value[index].fichado = true;
                    // actualizarTurnos();
                     idPlanificacion.value = 'SIN_TURNO';
@@ -271,7 +271,7 @@ export default {
         function inicioDescanso(trabajador, index) {
             axios.post('trabajadores/inicioDescanso', { idTrabajador: trabajador.idTrabajador, idPlan: idPlanificacion.value }).then((res) => {
                 if (!res.data.error) {
-                    store.dispatch('Cesta/setIdAction', trabajador.idTrabajador);
+                    store.dispatch('Cestas/setIdAction', trabajador.idTrabajador);
                     arrayTrabajadores.value[index].descanso = true;
                    // actualizarTurnos();
                     idPlanificacion.value = 'SIN_TURNO';
@@ -286,7 +286,7 @@ export default {
           function finDescanso(trabajador, index) {
             axios.post('trabajadores/finDescanso', { idTrabajador: trabajador.idTrabajador, idPlan: idPlanificacion.value }).then((res) => {
                 if (!res.data.error) {
-                    store.dispatch('Cesta/setIdAction', trabajador.idTrabajador);
+                    store.dispatch('Cestas/setIdAction', trabajador.idTrabajador);
                     arrayTrabajadores.value[index].descanso = false;
                    // actualizarTurnos();
                     idPlanificacion.value = 'SIN_TURNO';
@@ -316,7 +316,7 @@ export default {
         function desfichar() {
             axios.post('trabajadores/desfichar', { idTrabajador: store.state.Trabajadores.trabajadorActivo }).then((res) => {
                 if (!res.data.error) {
-                    let cesta = store.getters['Cesta/getCestaId'];
+                    let cesta = store.getters['Cestas/getCestaId'];
                   //  arrayTrabajadores.value[index].fichado = false;
                     axios.post('cestas/borrarCestaTrabajador',{id: store.state.Trabajadores.trabajadorActivo }).then((data)=>{
                         if(!data.data.okey){
@@ -325,7 +325,7 @@ export default {
                     })
                     store.dispatch('CestasActivas/deleteCestaActivaAction',store.state.Trabajadores.trabajadorActivo);
                     axios.post('cestas/getCestaDiferente', { id_cesta: store.state.Trabajadores.trabajadorActivo }).then((data) => {
-                        store.dispatch('Cesta/setIdAction', data.data._id);
+                        store.dispatch('Cestas/setIdAction', data.data._id);
                         // store.dispatch('Trabajadores/setTrabajadorActivo', parseInt(data.data._id));
                         axios.post('trabajadores/setActivo', { id: data.data._id }).then((data2) =>{
                             if (data2.data.error) {

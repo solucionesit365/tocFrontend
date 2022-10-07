@@ -96,17 +96,17 @@ class tocGameV3 {
                                 store.dispatch('Trabajadores/setTrabajadorActivo', infoTrabajador.data.trabajador.idTrabajador);
                                 store.dispatch('Trabajadores/setNombreTrabajadorActivo', infoTrabajador.data.trabajador.nombre);
                                 let idcesta
-                                if (store.getters['Cesta/getCestaId'] == -1){
+                                if (store.getters['Cestas/getCestaId'] == -1){
                                      idcesta =  infoTrabajador.data.trabajador._id
                                 }else{
-                                    idcesta = store.getters['Cesta/getCestaId']
+                                    idcesta = store.getters['Cestas/getCestaId']
                                 }
                              
                               
                                   axios.post('cestas/getCestaByTrabajadorId', { idCesta: idcesta }).then((resCesta) => {
                                     
                                     if (resCesta.data.error === false && resCesta.data.info != null) {
-                                        store.dispatch('Cesta/setCestaAction', resCesta.data.info);
+                                        store.dispatch('Cestas/setCestaAction', resCesta.data.info);
                                     } else {                                        
                                         toast.error(resCesta.data.mensaje);
                                     }

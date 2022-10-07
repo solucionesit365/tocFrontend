@@ -1,6 +1,7 @@
 export default {
   namespaced: true,
   state: {
+    arrayCestas: [],
     cesta: {
       _id: -1,
       lista: [],
@@ -9,6 +10,9 @@ export default {
     hayRegaloEnCesta: false
   },
   mutations: {
+    setArrayCestasMutation(state, payload) {
+      state.arrayCestas = payload;
+    },
     setCestaMutation(state, payload) {
       state.cesta = payload;
     },
@@ -40,6 +44,9 @@ export default {
     },
     setHayRegaloEnCestaAction({ commit }, valor) {
       commit('setHayRegaloEnCesta', valor);
+    },
+    setArrayCestasAction({commit}, payload) {
+      commit("setArrayCestasMutation", payload);
     }
   },
 };

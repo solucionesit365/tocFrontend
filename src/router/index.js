@@ -3,10 +3,15 @@ import Home from '../views/Home.vue';
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
+    path: '/main',
+    name: 'Main',
     props: true,
     component: Home,
+  },
+  {
+    path: "/",
+    name: "SplashScreen",
+    component: () => import("../components/SplashScreen.vue")
   },
   {
     path: "/doctor",

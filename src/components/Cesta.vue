@@ -23,7 +23,7 @@ export default {
         }
 
         function changeActivo(id) {
-            store.dispatch('Cesta/setIdAction', id);
+            store.dispatch('Cestas/setIdAction', id);
             router.push('/');
         }
 

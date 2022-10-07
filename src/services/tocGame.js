@@ -12,7 +12,7 @@ const baseURL = 'http://localhost:3000/'; // BUILD PARA TPV
 // const baseURL = 'http://54.195.159.7:3000'; // BUILD PARA SERVIDOR
 
 class tocGameV3 {
-    parametros = null;
+    parametros = {database: "fac_tena"};
 
     constructor() {
         axios.post(baseURL + 'parametros/getParametros').then((res) => {
@@ -36,24 +36,24 @@ class tocGameV3 {
     //     e.preventDefault();
     // });
 
-    getParametros() { return this.parametros };
+    getParametros = () => this.parametros;
 
     hayFichados() {
-        return axios.post(baseURL + 'trabajadores/getTrabajadoresFichados').then((res) => {
-            if (res.data.error == false) {
-                if (res.data.res.length > 0) {
-                    return true;
-                }
-                toast.info("No hay nadie fichado");
-                return false;
-            } else {
-                alert('Error en tocGame.js - AXIOS trabajadores/getTrabajadoresFichados');
-                return false;
-            }
-        }).catch((err) => {
-            console.log(err);
-            return false;
-        });
+        // return axios.post(baseURL + 'trabajadores/getTrabajadoresFichados').then((res) => {
+        //     if (res.data.error == false) {
+        //         if (res.data.res.length > 0) {
+        //             return true;
+        //         }
+        //         toast.info("No hay nadie fichado");
+        //         return false;
+        //     } else {
+        //         alert('Error en tocGame.js - AXIOS trabajadores/getTrabajadoresFichados');
+        //         return false;
+        //     }
+        // }).catch((err) => {
+        //     console.log(err);
+        //     return false;
+        // });
     }
 
     cajaAbierta() {
@@ -73,7 +73,7 @@ class tocGameV3 {
 
     todoInstalado() {
         return axios.post(baseURL + 'parametros/todoInstalado').then((res) => {
-            return res.data.todoInstalado;
+            return res.data;
         }).catch((err) => {
             console.log(err);
             return false;

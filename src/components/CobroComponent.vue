@@ -216,7 +216,7 @@ import {
 } from 'vue';
 import { useToast } from "vue-toastification";
 import router from '../router/index';
-import { emitSocket } from '../sockets/socket';
+import { emitSocket } from '../socket';
 
 export default {
   name: 'CobroComponent',
@@ -606,17 +606,17 @@ export default {
         toast.error("Error inicialización cobroMenu");
       });
 
-      axios.post('/trabajadores/getTrabajadoresFichados').then((res) => {
-        if (!res.data.error) {
-          if (res.data.res.length === 0) {
-            console.log('No hay trabajadores fichados');
-          }
-        } else {
-          console.log('Error!');
-        }
-      }).catch((err) => {
-          console.log(err);
-      });
+      // axios.post('/trabajadores/getTrabajadoresFichados').then((res) => {
+      //   if (!res.data.error) {
+      //     if (res.data.res.length === 0) {
+      //       console.log('No hay trabajadores fichados');
+      //     }
+      //   } else {
+      //     console.log('Error!');
+      //   }
+      // }).catch((err) => {
+      //     console.log(err);
+      // });
     });
 
     return {

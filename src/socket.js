@@ -1,22 +1,25 @@
-const io = require('socket.io-client');
-const socket = io('http://localhost:5051');
-//const socket = io('http://10.137.0.201:3000/');  // BUILD PARA ITERUM
-//const socket = io('http://10.137.0.243:3000/');  // BUILD PARA ITERUM windows 
-// const socket = io('http://54.195.159.7:3000'); // BUILD PARA SERVIDOR
-// const socket = io('http://34.78.247.153:3000'); // BUILD PARA SERVIDOR (?)
-import store from '../store/index';
-import router from '../router/index';
+import { io } from "socket.io-client";
+const socket = io("http://localhost:5051");
+
+import store from './store/index';
+import router from './router/index';
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
 
+socket.on("cargarTrabajadores", (data) => {
+  console.log("Trabajadores: ", data);
+});
+
 socket.on('disconnect', () => {
   console.log("Desconectado del servidor");
   socket.sendBuffer = [];
-})
+});
+
 socket.on('test', (data) => {
     console.log(data);
 });
+
 socket.on('resDatafono', (data) => {
     console.log(data);
 });
@@ -73,5 +76,7 @@ function emitSocket(canal, datos = null) {
     socket.emit(canal, datos);
   }
 }
+
+socket.emit("cargarTrabajadores", "laconchadetumadre")
 
 export { socket, emitSocket };

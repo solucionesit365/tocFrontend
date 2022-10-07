@@ -87,7 +87,7 @@ import { useStore } from 'vuex';
 import axios from 'axios';
 import { Modal } from 'bootstrap';
 import { useToast } from 'vue-toastification';
-import { socket, emitSocket } from '../sockets/socket';
+import { socket, emitSocket } from '../socket';
 
 export default {
   name: 'MenuClientes',

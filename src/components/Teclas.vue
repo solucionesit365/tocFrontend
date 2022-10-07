@@ -125,7 +125,7 @@ import { useStore } from 'vuex';
 import axios from 'axios';
 import router from '../router/index';
 import { useToast } from 'vue-toastification';
-import { socket, emitSocket } from "../sockets/socket";
+import { socket, emitSocket } from "../socket";
 import { tocGame } from '../services/tocGame';
 
 export default {

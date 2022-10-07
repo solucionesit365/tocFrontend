@@ -28,10 +28,7 @@ import ModalEditarProducto from './modules/ModalEditarProducto';
 
 import Alergenos from './modules/Alergenos';
 
-import socket from '../sockets/socket';
 import axios from 'axios';
-
-let timeoutBorrar = null;
 
 window.addEventListener('contextmenu', function (e) { 
   // do something here... 

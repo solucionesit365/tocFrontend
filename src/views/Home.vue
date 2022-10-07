@@ -1,45 +1,41 @@
 <template>
   <div>
-    <Teclas/>
-    <ModalPeso/>
+    <Teclas />
+    <ModalPeso />
     <ModalEditarProducto />
-    <Footer/>
-    <ModalMostrarAlergenos/> 
+    <Footer />
+    <ModalMostrarAlergenos />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import ModalMostrarAlergenos from '@/components/ModalMostrarAlergenos.vue'; // @ is an alias to /src
 
-import Teclas from '@/components/Teclas.vue'; // @ is an alias to /src
-import ModalPeso from '@/components/ModalPeso.vue'; // @ is an alias to /src
-import ModalEditarProducto from '@/components/ModalEditarProducto.vue'; // @ is an alias to /src
-import Footer from '@/components/Footer.vue'; // @ is an alias to /src
-import { useStore } from 'vuex';
+import ModalMostrarAlergenos from "@/components/ModalMostrarAlergenos.vue";
+import Teclas from "@/components/Teclas.vue";
+import ModalPeso from "@/components/ModalPeso.vue";
+import ModalEditarProducto from "@/components/ModalEditarProducto.vue";
+import Footer from "@/components/Footer.vue";
 import { useToast } from "vue-toastification";
 
 export default {
-  name: 'Home',
+  name: "Home",
   props: {
     tipoToast: {
-      required: false
+      required: false,
     },
     mensajeToast: {
-      required: false
-    }
+      required: false,
+    },
   },
   setup(props) {
     const toast = useToast();
-    const store = useStore();
-      if (props.tipoToast != undefined && props.mensajeToast != undefined) {
-        toast(props.mensajeToast, { type: props.tipoToast })
-      }
+    if (props.tipoToast != undefined && props.mensajeToast != undefined) {
+      toast(props.mensajeToast, { type: props.tipoToast });
+    }
 
     return {};
   },
   components: {
-   
     Teclas,
     ModalPeso,
     ModalEditarProducto,

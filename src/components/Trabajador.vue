@@ -35,30 +35,30 @@ export default {
         }
 
         function getFichados() {            
-            axios.post('trabajadores/getTrabajadoresFichados').then((info) => {
-                if(!info.data.error) {
-                    if (info.data.res.length > 0) {
-                        store.dispatch('Trabajadores/setArrayTrabajadores', info.data.res);
-                        arrayTrabajadores.value = info.data.res;
-                        axios.post('trabajadores/getCurrentTrabajador').then((infoTrabajador) => {
-                        if (!infoTrabajador.data.error) {
-                            trabajadorActivo.value = infoTrabajador.data.trabajador.idTrabajador;
-                            store.dispatch('Trabajadores/setTrabajadorActivo', infoTrabajador.data.trabajador.idTrabajador);
-                        } else {
-                            tosat.error('Error en getCurrentTrabajador');
-                        }
-                        }).catch((err) => {
-                            console.log(err);
-                        });
-                    } else {
-                        // ENVIAR DIRECTAMENTE A FICHAR TRABAJADOR !!!
-                    }
-                } else {
-                    toast.error('Error en getTrabajadoresFichados');
-                }
-            }).catch((err) => {
-                console.log(err);
-            });
+            // axios.post('trabajadores/getTrabajadoresFichados').then((info) => {
+            //     if(!info.data.error) {
+            //         if (info.data.res.length > 0) {
+            //             store.dispatch('Trabajadores/setArrayTrabajadores', info.data.res);
+            //             arrayTrabajadores.value = info.data.res;
+            //             axios.post('trabajadores/getCurrentTrabajador').then((infoTrabajador) => {
+            //             if (!infoTrabajador.data.error) {
+            //                 trabajadorActivo.value = infoTrabajador.data.trabajador.idTrabajador;
+            //                 store.dispatch('Trabajadores/setTrabajadorActivo', infoTrabajador.data.trabajador.idTrabajador);
+            //             } else {
+            //                 tosat.error('Error en getCurrentTrabajador');
+            //             }
+            //             }).catch((err) => {
+            //                 console.log(err);
+            //             });
+            //         } else {
+            //             // ENVIAR DIRECTAMENTE A FICHAR TRABAJADOR !!!
+            //         }
+            //     } else {
+            //         toast.error('Error en getTrabajadoresFichados');
+            //     }
+            // }).catch((err) => {
+            //     console.log(err);
+            // });
         }
         onMounted(() => {
             getFichados();

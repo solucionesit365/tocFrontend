@@ -1,53 +1,42 @@
-import { createStore } from 'vuex';
+import { createStore } from "vuex";
+import InstallWizard from "./modules/InstallWizard";
+import ModalPeso from "./modules/ModalPeso";
+import Cestas from "./modules/Cestas";
+import Parametros from "./modules/Parametros";
+import Ticket from "./modules/Ticket";
+import Menu from "./modules/Menu";
+import Dinero from "./modules/Dinero";
+import Notificaciones from "./modules/Notificaciones";
+import Trabajadores from "./modules/Trabajadores";
+import Clientes from "./modules/Clientes";
+import Footer from "./modules/Footer";
+import CestasActivas from "./modules/CestasActivas";
+import Caja from "./modules/Caja";
+import ModalEditarProducto from "./modules/ModalEditarProducto";
+import Alergenos from "./modules/Alergenos";
+import Datafono from "./modules/Datafono";
+import axios from "axios";
 
-import InstallWizard from './modules/InstallWizard';
-
-import ModalPeso from './modules/ModalPeso';
-
-import Cestas from './modules/Cestas';
-import Parametros from './modules/Parametros';
-
-import Ticket from './modules/Ticket';
-
-import Menu from './modules/Menu';
-
-import Dinero from './modules/Dinero';
-
-import Notificaciones from './modules/Notificaciones';
-
-import Trabajadores from './modules/Trabajadores';
-
-import Clientes from './modules/Clientes';
-
-import Footer from './modules/Footer';
-
-import CestasActivas from './modules/CestasActivas';
-
-import Caja from './modules/Caja';
-
-import ModalEditarProducto from './modules/ModalEditarProducto';
-
-import Alergenos from './modules/Alergenos';
-
-import axios from 'axios';
-
-window.addEventListener('contextmenu', function (e) { 
-  // do something here... 
-  e.preventDefault(); 
-}, false);
+window.addEventListener(
+  "contextmenu",
+  function(e) {
+    e.preventDefault();
+  },
+  false
+);
 
 export default createStore({
   state: {
     parametros: null,
-    modoActual: 'NORMAL',
-    unidades: '0',
-    esperandoDatafono: false
+    modoActual: "NORMAL",
+    unidades: "0",
+    esperandoDatafono: false,
   },
   getters: {
     getModoActual: (state) => state.modoActual,
     getParametros: (state) => state.parametros,
     getUnidades: (state) => Number(state.unidades),
-    getEsperandoDatafono: (state) => state.esperandoDatafono
+    getEsperandoDatafono: (state) => state.esperandoDatafono,
   },
   mutations: {
     setEsperandoDatafonoMutation(state, payload) {
@@ -64,44 +53,43 @@ export default createStore({
       state.unidades = `${Number(aux)}`;
     },
     resetUnidadesMutation(state) {
-      state.unidades = '0';
+      state.unidades = "0";
     },
     borrarDigitoMutation(state) {
       const aux = state.unidades.slice(0, -1);
-      if (aux == '') {
-        state.unidades = '0'
+      if (aux == "") {
+        state.unidades = "0";
       } else {
         state.unidades = aux;
       }
-    }
+    },
   },
   actions: {
     setEsperandoDatafono({ commit }, payload) {
-      commit('setEsperandoDatafonoMutation', payload);
+      commit("setEsperandoDatafonoMutation", payload);
     },
     setModoActual({ commit }, payload) {
-      if (payload == 'DEVOLUCION') {
-        axios.post('promociones/setEstadoPromociones', {
-          estadoPromociones: false
+      if (payload == "DEVOLUCION") {
+        axios.post("promociones/setEstadoPromociones", {
+          estadoPromociones: false,
         });
       }
-      commit('setModoActualMutation', payload);
+      commit("setModoActualMutation", payload);
     },
     setParametros({ commit }, payload) {
-      commit('setParametrosMutation', payload);
+      commit("setParametrosMutation", payload);
     },
     addDigitoUnidades({ commit }, unidades) {
-      commit('setUnidadesMutation', unidades);
+      commit("setUnidadesMutation", unidades);
     },
     resetUnidades({ commit }) {
-      commit('resetUnidadesMutation');
+      commit("resetUnidadesMutation");
     },
     borrarDigitoUnidades({ commit }) {
-      commit('borrarDigitoMutation');
-    }
+      commit("borrarDigitoMutation");
+    },
   },
   modules: {
-
     InstallWizard,
     ModalPeso,
     Cestas,
@@ -116,6 +104,7 @@ export default createStore({
     CestasActivas,
     ModalEditarProducto,
     Alergenos,
-    Parametros
+    Parametros,
+    Datafono,
   },
 });

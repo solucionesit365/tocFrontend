@@ -729,11 +729,11 @@ export default {
       return (modoActual.value === 'MODIFICAR_ARTICULO' || modoActual.value === 'MOVER_ARTICULO') && index === -1 ? true : false;
     }
     onMounted(() => {
-      axios.post('impresora/bienvenida')
-      modalSuplementos = new Modal(document.getElementById('modalSuplementos'), {
-        keyboard: false,
-        backdrop: 'static',
-      });
+      // axios.post('impresora/bienvenida')
+      // modalSuplementos = new Modal(document.getElementById('modalSuplementos'), {
+      //   keyboard: false,
+      //   backdrop: 'static',
+      // });
       document.onselectstart = function(){ return false; }
       /* OBSERVAR SI LA CAJA ESTÁ ABIERTA */
       tocGame.iniciarToc();

@@ -84,14 +84,14 @@ export default {
     }
 
     onMounted(() => {
-      axios.post('tickets/getTicketsIntervalo').then((arrayTickets) => {
-        total.value = 0;
-        for (let i = 0; i < arrayTickets.data.length; i += 1) {
-          total.value += arrayTickets.data[i].total;
-        }
-        listaTickets.value = arrayTickets.data;
-        // setTicketActivo('', true);
-      });
+      // axios.post('tickets/getTicketsIntervalo').then((arrayTickets) => {
+      //   total.value = 0;
+      //   for (let i = 0; i < arrayTickets.data.length; i += 1) {
+      //     total.value += arrayTickets.data[i].total;
+      //   }
+      //   listaTickets.value = arrayTickets.data;
+      //   // setTicketActivo('', true);
+      // });
     });
     return {
       goTo,

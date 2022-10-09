@@ -5,7 +5,7 @@ export default {
   },
   mutations: {
     setParametrosMutation(state, payload) {
-      state.cesta = payload;
+      state.parametros = payload;
     },
   },
   getters: {

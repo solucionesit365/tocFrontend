@@ -1,60 +1,76 @@
 <template>
   <div class="row pt-1">
-    <div class='col-md-1'>
-  <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
-  style="width: 140px; height: 100%">
-      <div class="list-group list-group-flush border-bottom scrollarea">
-        <router-link to="/" class="list-group-item list-group-item-action py-3 lh-tight">
-          <div class="d-flex w-100 align-items-center justify-content-center">
-            <!-- <img src='../assets/vender.png' class='img_size' /> -->
-            <i class="bi bi-cash iconosBootstrap me-3"></i>
-          </div>
-        </router-link>
-        <router-link to="/menu/caja/tickets"
-        class="list-group-item list-group-item-action py-3 lh-tight">
-          <div class="d-flex w-100 align-items-center justify-content-center">
-            <!-- <img src='../assets/caja_fuerte.png' class='img_size' /> -->
-            <i class="bi bi-piggy-bank iconosBootstrap me-3"></i>
-          </div>
-        </router-link>
-        <router-link to="/menu/fichajes"
-        class="list-group-item list-group-item-action py-3 lh-tight">
-          <div class="d-flex w-100 align-items-center justify-content-center">
-            <!-- <img src='../assets/puerta.png' class='img_size' /> -->
-            <i class="bi bi-door-open iconosBootstrap me-3"></i>
-          </div>
-        </router-link>
-        <button @click="devoluciones()"
-        class="list-group-item list-group-item-action py-3 lh-tight">
-          <div class="d-flex w-100 align-items-center justify-content-center">
-            <!-- <img src='../assets/devoluciones.png' class='img_size' /> -->
-            <i class="bi bi-trash iconosBootstrap me-3"></i>
-          </div>
-        </button>
-        <button @click="menuPedidos()"
-        class="list-group-item list-group-item-action py-3 lh-tight">
-          <div class="d-flex w-100 align-items-center justify-content-center">
-            <!-- <span>Pedidos</span> -->
-            <!-- <img src='../assets/entregas.png' class='img_size' /> -->
-            <i class="bi bi-globe iconosBootstrap me-3"></i>
-          </div>
-        </button>
-        <button @click="imprimirEntregas()"
-        class="list-group-item list-group-item-action py-3 lh-tight">
-          <div class="d-flex w-100 align-items-center justify-content-center">
-            <!-- <img src='../assets/entregas.png' class='img_size' /> -->
-            <i class="bi bi-pencil-square iconosBootstrap me-3"></i>
-          </div>
-        </button>
-        <router-link
-        to="/menuTecnico"
-        class="list-group-item list-group-item-action py-3 lh-tight">
-          <div class="d-flex w-100 align-items-center justify-content-center">
-            <!-- <img src='../assets/tecnico.png' class='img_size' /> -->
-            <i class="bi bi-key iconosBootstrap me-3"></i>
-          </div>
-        </router-link>
-        <!-- <router-link
+    <div class="col-md-1">
+      <div
+        class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
+        style="width: 140px; height: 100%"
+      >
+        <div class="list-group list-group-flush border-bottom scrollarea">
+          <router-link
+            to="/"
+            class="list-group-item list-group-item-action py-3 lh-tight"
+          >
+            <div class="d-flex w-100 align-items-center justify-content-center">
+              <!-- <img src='../assets/vender.png' class='img_size' /> -->
+              <i class="bi bi-cash iconosBootstrap me-3"></i>
+            </div>
+          </router-link>
+          <router-link
+            to="/menu/caja/tickets"
+            class="list-group-item list-group-item-action py-3 lh-tight"
+          >
+            <div class="d-flex w-100 align-items-center justify-content-center">
+              <!-- <img src='../assets/caja_fuerte.png' class='img_size' /> -->
+              <i class="bi bi-piggy-bank iconosBootstrap me-3"></i>
+            </div>
+          </router-link>
+          <router-link
+            to="/menu/fichajes"
+            class="list-group-item list-group-item-action py-3 lh-tight"
+          >
+            <div class="d-flex w-100 align-items-center justify-content-center">
+              <!-- <img src='../assets/puerta.png' class='img_size' /> -->
+              <i class="bi bi-door-open iconosBootstrap me-3"></i>
+            </div>
+          </router-link>
+          <button
+            @click="devoluciones()"
+            class="list-group-item list-group-item-action py-3 lh-tight"
+          >
+            <div class="d-flex w-100 align-items-center justify-content-center">
+              <!-- <img src='../assets/devoluciones.png' class='img_size' /> -->
+              <i class="bi bi-trash iconosBootstrap me-3"></i>
+            </div>
+          </button>
+          <button
+            @click="menuPedidos()"
+            class="list-group-item list-group-item-action py-3 lh-tight"
+          >
+            <div class="d-flex w-100 align-items-center justify-content-center">
+              <!-- <span>Pedidos</span> -->
+              <!-- <img src='../assets/entregas.png' class='img_size' /> -->
+              <i class="bi bi-globe iconosBootstrap me-3"></i>
+            </div>
+          </button>
+          <button
+            @click="imprimirEntregas()"
+            class="list-group-item list-group-item-action py-3 lh-tight"
+          >
+            <div class="d-flex w-100 align-items-center justify-content-center">
+              <!-- <img src='../assets/entregas.png' class='img_size' /> -->
+              <i class="bi bi-pencil-square iconosBootstrap me-3"></i>
+            </div>
+          </button>
+          <router-link
+            to="/menuTecnico"
+            class="list-group-item list-group-item-action py-3 lh-tight"
+          >
+            <div class="d-flex w-100 align-items-center justify-content-center">
+              <!-- <img src='../assets/tecnico.png' class='img_size' /> -->
+              <i class="bi bi-key iconosBootstrap me-3"></i>
+            </div>
+          </router-link>
+          <!-- <router-link
         to="/menu/administracion"
         class="list-group-item list-group-item-action py-3 lh-tight">
           <div class="d-flex w-100 align-items-center justify-content-center">
@@ -62,12 +78,12 @@
             <i class="bi bi-key iconosBootstrap me-3"></i>
           </div>
         </router-link> -->
-        <!-- TRABAJADORES FICHADOS -->
-        <Trabajador />
-        <!-- CESTAS ACTIVAS -->
-         <Cesta /> 
+          <!-- TRABAJADORES FICHADOS -->
+          <Trabajador />
+          <!-- CESTAS ACTIVAS -->
+          <Cesta />
+        </div>
       </div>
-    </div>
     </div>
     <div class="col">
       <router-view></router-view>
@@ -75,50 +91,51 @@
   </div>
 </template>
 <script>
-import { computed, onMounted, ref } from 'vue';
-import { useStore } from 'vuex';
-import axios from 'axios';
-import router from '../router/index';
-import { tocGame } from '../services/tocGame';
-import Trabajador from '@/components/Trabajador.vue'; // @ is an alias to /src
-import Cesta from '@/components/Cesta.vue'; // @ is an alias to /src
-import { useToast } from 'vue-toastification';
+import { computed, onMounted, ref } from "vue";
+import { useStore } from "vuex";
+import axios from "axios";
+import router from "../router/index";
+import { tocGame } from "../services/tocGame";
+import Trabajador from "@/components/Trabajador.vue"; // @ is an alias to /src
+import Cesta from "@/components/Cesta.vue"; // @ is an alias to /src
+import { useToast } from "vue-toastification";
 
 export default {
-  name: 'Menu',
+  name: "Menu",
   props: {
     tipoToast: {
-      required: false
+      required: false,
     },
     mensajeToast: {
-      required: false
-    }
+      required: false,
+    },
   },
   setup(props) {
     const toast = useToast();
     const store = useStore();
     const isHidden = computed(() => store.state.Menu.hidden);
     const params = tocGame.getParametros();
-    const url = ref('');
-
-    axios.get('parametros/getParametrosBonito').then((res) => {
-      if (res.data.error == false) {
-        url.value = `/menu/pedidos/${res.data.parametros.codigoTienda}/${res.data.parametros.database}`;
-      } else {
-        toast.error("Error en parametros/getParametrosBonito");
-      }
-    });
+    const url = ref("");
+    const parametros = computed(() => store.state.Parametros.parametros);
     
+    // axios.get('parametros/getParametrosBonito').then((res) => {
+    //   if (res.data.error == false) {
+    //     url.value = `/menu/pedidos/${res.data.parametros.codigoTienda}/${res.data.parametros.database}`;
+    //   } else {
+    //     toast.error("Error en parametros/getParametrosBonito");
+    //   }
+    // });
+
     if (props.tipoToast != undefined && props.mensajeToast != undefined) {
-      toast(props.mensajeToast, { type: props.tipoToast })
+      toast(props.mensajeToast, { type: props.tipoToast });
     }
 
     function quitarActivoTicket() {
-      store.dispatch('Ticket/setActivoAction', null);
+      store.dispatch("Ticket/setActivoAction", null);
     }
 
     function hideMenu() {
-      store.dispatch('Menu/setHiddenAction', true);
+      store.dispatch("Menu/setHiddenAction", true);
       quitarActivoTicket();
     }
 
@@ -129,15 +146,15 @@ export default {
     function goTo(url) {
       router.push(url);
     }
-    
+
     function menuPedidos() {
       goTo(url.value);
     }
 
     /* Establece el modo y redirige a la home */
     function devoluciones() {
-      store.dispatch('setModoActual', 'DEVOLUCION');
-      router.push('/');
+      store.dispatch("setModoActual", "DEVOLUCION");
+      router.push("/");
     }
 
     function imprimirEntregas() {
@@ -159,10 +176,16 @@ export default {
       //   // Mandar al backend para imprimir
       //   console.log(imprimir);
       // });
-      axios.post('impresora/imprimirEntregas');
+      axios.post("impresora/imprimirEntregas");
       hideMenu();
       quitarActivoTicket();
     }
+
+    onMounted(() => {
+      if (parametros.value) {
+        url.value = `/menu/pedidos/${parametros.value.codigoTienda}/${parametros.value.database}`;
+      }
+    });
 
     return {
       menuPedidos,
@@ -179,7 +202,7 @@ export default {
   components: {
     Trabajador,
     Cesta,
-  }
+  },
 };
 </script>
 <style scoped>
@@ -198,7 +221,7 @@ export default {
   text-decoration: none;
 }
 .sidebar a.active {
-  background-color: #04AA6D;
+  background-color: #04aa6d;
   color: white;
 }
 .sidebar a:hover:not(.active) {
@@ -218,8 +241,12 @@ export default {
     height: auto;
     position: relative;
   }
-  .sidebar a {float: left;}
-  div.content {margin-left: 0;}
+  .sidebar a {
+    float: left;
+  }
+  div.content {
+    margin-left: 0;
+  }
 }
 @media screen and (max-width: 400px) {
   .sidebar a {
@@ -227,7 +254,8 @@ export default {
     float: none;
   }
 }
-.img_size, img {
+.img_size,
+img {
   max-width: 100%;
   max-height: 100%;
   object-fit: cover;
@@ -235,5 +263,5 @@ export default {
 .iconosBootstrap {
   font-size: 36px;
   color: #c95907;
-}
-</style>>
+}</style
+>>

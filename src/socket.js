@@ -12,6 +12,7 @@ socket.on("cargarTrabajadores", (arrayTrabajadores) => {
   try {
     if (arrayTrabajadores) {
       store.dispatch("Trabajadores/setArrayTrabajadores", arrayTrabajadores);
+      store.dispatch("Trabajadores/setIndexActivo", 0);
     } else {
       throw Error("Error, arrayTrabajadores no es correcto");
     }
@@ -56,7 +57,7 @@ socket.on("cargarVentas", (arrayTickets) => {
   try {
     console.log("arrayTickets: ", arrayTickets);
     if (arrayTickets) {
-      // store.dispatch("Parametros/setParametros", parametros);
+      store.dispatch("Caja/setArrayVentas", arrayTickets);
     } else {
       throw Error("Error, arrayTickets no es correcto");
     }

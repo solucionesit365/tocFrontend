@@ -2,11 +2,12 @@ export default {
   namespaced: true,
   state: {
     arrayCestas: [],
+    idCestaActiva: null,
     cesta: {
       _id: -1,
       lista: [],
     },
-    activo: null,
+    activo: null, // Se refiere al item de la cesta
     hayRegaloEnCesta: false
   },
   mutations: {
@@ -24,13 +25,17 @@ export default {
     },
     setHayRegaloEnCesta(state, payload) {
       state.hayRegaloEnCesta = payload;
+    },
+    setIdCestaActivaMutation(state, payload) {
+      state.idCestaActiva = payload;
     }
   },
   getters: {
     // eslint-disable-next-line no-underscore-dangle
     getItem: (state) => state.cesta.lista[state.activo]._id,
     getCestaId: (state) => state.cesta._id,
-    getHayRegaloEnCesta: (state) => state.hayRegaloEnCesta
+    getHayRegaloEnCesta: (state) => state.hayRegaloEnCesta,
+    getIdCestaActiva: (state) => state.idCestaActiva
   },
   actions: {
     setCestaAction({ commit }, cesta) {
@@ -46,6 +51,8 @@ export default {
       commit('setHayRegaloEnCesta', valor);
     },
     setArrayCestasAction({commit}, payload) {
+      if (payload.length > 0)
+        commit("setIdCestaActivaMutation", payload[0]._id)
       commit("setArrayCestasMutation", payload);
     }
   },

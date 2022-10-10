@@ -14,7 +14,7 @@
           <i class="bi bi-list display-6"></i>
         </button>
         <button
-          v-if="parametros.prohibirBuscarArticulos === 'Si'"
+          v-if="parametros && parametros.prohibirBuscarArticulos === 'Si'"
           style="max-width: 106px"
           class="btn btn-secondary botonesPrincipales btn-sm ms-1 menusColorIvan"
           @click="imprimirTicket()"
@@ -439,7 +439,7 @@ export default {
     const notificaciones = computed(() => store.state.Notificaciones.cantidad);
     const conCliente = null;
     const unidades = computed(() => store.state.unidades);
-    const parametros = computed(() => store.state.Parametros.parametros);
+    const parametros = ref(null);
     const indexTrabajadorActivo = computed(
       () => store.state.Trabajadores.indexActivo
     );
@@ -449,6 +449,14 @@ export default {
     const nombreTrabajador = computed(
       () => arrayTrabajadores.value[indexTrabajadorActivo.value].nombre
     );
+    axios.post("parametros/getParametros").then((params) => {
+      console.log("TOMA PARAMS: ", params.data);
+      if (params.data) {
+        parametros.value = params.data;
+      } else {
+        toast.error("Error, no se han podido obtener los parámetros");
+      }
+    });
     console.log("EL NOMBRE ES: ", nombreTrabajador.value);
     const menuActivo = computed(() => store.state.Footer.menuActivo);
     const modoActual = computed(() => store.state.modoActual);

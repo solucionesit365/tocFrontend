@@ -1,128 +1,81 @@
 import axios from "axios";
-import store from "../store/index";
 import router from "../router/index";
 import { useToast } from "vue-toastification";
+import { emitSocket } from "../socket";
+
 const toast = useToast();
-
-const baseURL = "http://localhost:3000/"; // BUILD PARA TPV
-//const baseURL = 'http://10.137.0.201:3000/'; // BUILD PARA ITERUM
-//const baseURL = 'http://10.137.0.243:3000/'; // BUILD PARA ITERUM windows
-
-// const baseURL = 'http://54.195.159.7:3000'; // BUILD PARA SERVIDOR
+const baseURL = "http://localhost:3000/";
 
 class tocGameV3 {
-  parametros = null;
+  /* Eze 4.0 */
+  async todoInstalado() {
+    try {
+      return (await axios.get(baseURL+"parametros/todoInstalado")).data;
+    } catch (err) {
+      toast.error(err.message)
+      console.log(err);
+      return false;
+    }
+  }
 
-  constructor() {
-    axios
-      .post(baseURL + "parametros/getParametros")
-      .then((respuesta) => {
-        if (respuesta.data) {
-          this.parametros = respuesta.data;
+  /* Eze 4.0 */
+  async hayFichados() {
+    try {
+      return (await axios.get(baseURL+"trabajadores/hayFichados")).data
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+      return false;
+    }
+  }
+
+  /* Eze 4.0 */
+  async cajaAbierta() {
+    try {
+      return (await axios.get(baseURL+"caja/estadoCaja")).data;
+    } catch (err) {
+      toast.error(err.message);
+      console.log(err);
+      return false;
+    }
+  }
+
+  /* Eze 4.0 */
+  async getParametros() {
+    try {
+      return (await axios.post(baseURL+"parametros/getParametros")).data
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+      return null
+    }
+  }
+
+  /* Eze 4.0 */
+  async iniciarToc() {
+    if (await this.todoInstalado()) {
+      if (await this.hayFichados()) {
+        if (await this.cajaAbierta()) {
+          router.push("/main");
         } else {
-          throw Error("Error en el constructor de tocGame class");
+          router.push("/abrirCaja");
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      } else {
+        router.push("/menu/fichajes");
+      }
+    } else {
+      router.push("/installWizard");
+    }
   }
 
-  // document.addEventListener("keypress", function(e){
-  //     if(e.keyCode != 13) {
-  //         barcode.value += e.key;
-  //     }
-  //     e.preventDefault();
-  // });
+  /* Eze 4.0 */
+  cargarTrabajadoresFichados = () => emitSocket("cargarTrabajadores");
 
-  getParametros = () => this.parametros;
+  /* Eze 4.0 */
+  cargarCestas = () => emitSocket("cargarCestas");
 
-  hayFichados() {
-    // return axios.post(baseURL + 'trabajadores/getTrabajadoresFichados').then((res) => {
-    //     if (res.data.error == false) {
-    //         if (res.data.res.length > 0) {
-    //             return true;
-    //         }
-    //         toast.info("No hay nadie fichado");
-    //         return false;
-    //     } else {
-    //         alert('Error en tocGame.js - AXIOS trabajadores/getTrabajadoresFichados');
-    //         return false;
-    //     }
-    // }).catch((err) => {
-    //     console.log(err);
-    //     return false;
-    // });
-  }
-
-  cajaAbierta() {
-    return axios
-      .post(baseURL + "caja/estadoCaja")
-      .then((res) => {
-        if (res.data.error == false) {
-          store.dispatch("Caja/setEstadoCaja", true);
-          return res.data.abierta;
-        } else {
-          store.dispatch("Caja/setEstadoCaja", false);
-          return false;
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        return false;
-      });
-  }
-
-  todoInstalado() {
-    return axios
-      .post(baseURL + "parametros/todoInstalado")
-      .then((res) => {
-        return res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-        return false;
-      });
-  }
-
-  iniciarToc() {
-    console.log("INICIANDO TOC");
-    tocGame
-      .todoInstalado()
-      .then((hayLicencia) => {
-        if (hayLicencia) {
-          // Licencia OK
-          tocGame
-            .hayFichados()
-            .then((res) => {
-              if (res) {
-                // Fichaje mínimo OK
-                tocGame
-                  .cajaAbierta()
-                  .then((res2) => {
-                    if (res2 == false) {
-                      router.push("/abrirCaja");
-                    }
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-              } else {
-                router.push("/menu/fichajes");
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-              console.log("Error en catch tocGame.hayFicados()");
-            });
-        } else {
-          router.push("/installWizard");
-        }
-      })
-      .catch((err) => {
-        console.log("Error en catch tocGame.todoInstalado()");
-      });
-  }
+  /* Eze 4.0 */
+  cargarVentas = () => emitSocket("cargarVentas");
 }
 
 export const tocGame = new tocGameV3();

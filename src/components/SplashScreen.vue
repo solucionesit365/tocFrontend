@@ -3,20 +3,18 @@
 </template>
 
 <script>
-import router from "../router/index";
-import { emitSocket } from "../socket";
+import { tocGame } from "../services/tocGame";
 
 export default {
   name: "SplashScreenComponent",
   setup() {
-    emitSocket("cargarTrabajadores");
-    emitSocket("cargarCestas");
-    emitSocket("cargarParametros");
-    emitSocket("cargarVentas");
-
     setTimeout(function() {
-      router.push("/main");
+      tocGame.cargarTrabajadoresFichados();
+      tocGame.cargarCestas();
+      tocGame.cargarVentas();
+      tocGame.iniciarToc();
     }, 5000);
+
     return {};
   },
 };

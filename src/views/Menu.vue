@@ -7,7 +7,7 @@
       >
         <div class="list-group list-group-flush border-bottom scrollarea">
           <router-link
-            to="/"
+            to="/main"
             class="list-group-item list-group-item-action py-3 lh-tight"
           >
             <div class="d-flex w-100 align-items-center justify-content-center">
@@ -114,15 +114,21 @@ export default {
     const toast = useToast();
     const store = useStore();
     const isHidden = computed(() => store.state.Menu.hidden);
-    const params = tocGame.getParametros();
+    let params = null;
+    tocGame.getParametros().then((parametros) => {
+      if (parametros) { 
+        params = parametros;
+      } else {
+        toast.error("Error, params incorrectos");
+      }
+    });
     const url = ref("");
-    const parametros = computed(() => store.state.Parametros.parametros);
     
-    // axios.get('parametros/getParametrosBonito').then((res) => {
+    // axios.get('params/getParametrosBonito').then((res) => {
     //   if (res.data.error == false) {
-    //     url.value = `/menu/pedidos/${res.data.parametros.codigoTienda}/${res.data.parametros.database}`;
+    //     url.value = `/menu/pedidos/${res.data.params.codigoTienda}/${res.data.params.database}`;
     //   } else {
-    //     toast.error("Error en parametros/getParametrosBonito");
+    //     toast.error("Error en params/getParametrosBonito");
     //   }
     // });
 
@@ -182,8 +188,8 @@ export default {
     }
 
     onMounted(() => {
-      if (parametros.value) {
-        url.value = `/menu/pedidos/${parametros.value.codigoTienda}/${parametros.value.database}`;
+      if (params) {
+        url.value = `/menu/pedidos/${params.codigoTienda}/${params.database}`;
       }
     });
 

@@ -128,6 +128,7 @@ import { useToast } from 'vue-toastification';
 import { socket, emitSocket } from "../sockets/socket";
 import { tocGame } from '../services/tocGame';
 
+
 export default {
   name: 'Teclas',
   setup() {
@@ -585,6 +586,12 @@ export default {
 
 
     function clickTecla(objListadoTeclas) {
+      
+          
+      if (objListadoTeclas.nombreArticulo.nombre.includes('Varis')){
+        store.dispatch('ModalVaris/abrirModal', { nombre: objListadoTeclas.nombreArticulo.nombre});      
+      }
+
       idArticulo = objListadoTeclas.idArticle;
       // Eze, no le hagas caso a esto, de momento no sirve
       if(modoActual.value === 'MODIFICAR_ARTICULO' || modoActual.value === 'MOVER_ARTICULO') {
@@ -636,10 +643,9 @@ export default {
             modalSuplementos.show();
           } else {
             store.dispatch('resetUnidades');
-           
-           
+                    
             store.dispatch('Cesta/setCestaAction', res2.data.cesta);
-        
+
           }
         } else {
           console.log('Error en clickTeclaArticulo');
@@ -733,7 +739,8 @@ export default {
       modalSuplementos = new Modal(document.getElementById('modalSuplementos'), {
         keyboard: false,
         backdrop: 'static',
-      });
+      })
+
       document.onselectstart = function(){ return false; }
       /* OBSERVAR SI LA CAJA ESTÁ ABIERTA */
       tocGame.iniciarToc();
@@ -779,6 +786,7 @@ export default {
       selectSuplemento,
       checkSuplementoActivo,
       isEditarArticulos,
+      
     };
     /* FINAL SETUP */
   },

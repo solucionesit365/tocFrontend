@@ -4,23 +4,18 @@ export default {
   namespaced: true,
   state: {
     modal: null,
-    producto: 0,
-    codiBotiga:0,
- 
+    nombre: '',
   },
   mutations: {
     abrirModalMutation(state, payload) {
-      state.producto = payload.producto;
-      state.codiBotiga = payload.codiBotiga;
-        state.modal.show();
+      state.nombre = payload.nombre;  
+      state.modal.show();
     },
     setModalMutation(state) {
-
-      const modalElement = document.getElementById('modalMostrarAlergenos');
+      const modalElement = document.getElementById('ModalVaris');
       if (modalElement != null) {
         state.modal = new Modal(modalElement);
       }
-
     },
     cerrarModalMutation(state) {
       state.modal.hide();
@@ -28,7 +23,7 @@ export default {
   },
   getters: {
     // eslint-disable-next-line no-underscore-dangle
-    getProducto: (state) => state.producto,
+    getNombre: (state) => state.nombre,
   },
   actions: {
     abrirModal({ commit }, data) {

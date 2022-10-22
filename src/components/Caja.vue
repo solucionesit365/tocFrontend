@@ -29,6 +29,13 @@
           Entrada de dinero
         </router-link>
       </div>
+       <div class="col">
+        <router-link to="/menu/caja/ver-caja" class="btn btn-secondary
+          botonesPrincipales w-100 btn-block botonesWidth">
+          <!-- <i class="bi bi-box-arrow-in-right iconosBootstrap"></i> -->
+          Ver ultimo cierre
+        </router-link>
+      </div>
       <div class="col">
         <router-link to="/menu/caja/cerrar-caja" class="btn btn-secondary
           botonesPrincipales w-100 h-100 btn-block botonesWidth">

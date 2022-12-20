@@ -1,108 +1,87 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/Home.vue';
-
+import { createRouter, createWebHistory } from "vue-router";
+import LoaderComponent from "../components/Loader.vue";
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    props: true,
-    component: Home,
+    path: "/",
+    name: "Loader",
+    component: LoaderComponent,
   },
   {
-    path: "/doctor",
-    name: "Doctor",
-    component: () => import("../views/TocDoctor.vue"),
+    path: "/installWizard",
+    name: "Install Wizard",
+    component: () => import("../components/InstallWizard.vue"),
   },
   {
-    path: '/cobro',
-    name: 'Cobro',
-    component: () => import('../views/Cobro.vue'),
+    path: "/tecnico",
+    name: "Tecnico",
+    component: () => import("../views/TecnicoView.vue"),
   },
   {
-    path: '/menuResponsable',
-    name: 'Menu Responsable',
-    component: () => import('../views/MenuResponsableTienda.vue'),
+    path: "/abrirCaja",
+    name: "Abrir caja",
+    component: () => import("../views/AbrirCajaView.vue"),
   },
   {
-    path: '/installWizard',
-    name: 'InstallWizard',
-    component: () => import('../views/InstallWizard.vue'),
+    path: "/main",
+    name: "Main",
+    component: () => import("../views/MainView.vue"),
   },
   {
-    path: '/abrirCaja',
-    name: 'Abrir Caja',
-    component: () => import('../views/AbrirCaja.vue'),
+    path: "/cobro",
+    name: "Cobro",
+    component: () => import("../views/CobroView.vue"),
   },
   {
-    path: '/menuTecnico',
-    name: 'Menu Técnico',
-    component: () => import('../views/MenuTecnico.vue'),
+    path: "/cestas",
+    name: "Cestas",
+    component: () => import("../views/CestasView.vue"),
   },
   {
-    path: '/cerrarCaja',
-    name: 'Cerrar Caja',
-    component: () => import('../views/CerrarCaja.vue'),
-  },
- 
-  {
-    path: '/menu/',
-    name: 'Menu',
-    component: () => import('../views/Menu.vue'),
+    path: "/menu",
+    name: "Menu",
+    component: () => import("../views/MenuPrincipalView.vue"),
     children: [
       {
-        path: 'caja',
-        name:'cajaMenu',
-        component: () => import('../components/Caja.vue'),
+        path: "caja",
+        component: () => import("../views/CajaView.vue"),
         children: [
           {
-            path: 'tickets',
-            name:'tickets',
-            component: () => import('../components/Tickets.vue'),
+            path: "cerrarCaja",
+            component: () =>
+              import("../components/menu/caja/CerrarCajaComponent.vue"),
           },
           {
-            path: 'salida',
-            name:'salidaDinero',
-            component: () => import('../components/SalidaDinero.vue'),
+            path: "tickets",
+            component: () =>
+              import("../components/menu/caja/TicketsComponent.vue"),
           },
           {
-            path: 'entrada',
-            name:'entradaDinero',
-            component: () => import('../components/EntradaDinero.vue'),
+            path: "entradaDinero",
+            component: () =>
+              import("../components/menu/caja/EntradaComponent.vue"),
           },
           {
-            path: 'ver-caja',
-            name: 'Ver Caja',
-            component: () => import('../components/VerCaja.vue'),
+            path: "salidaDinero",
+            component: () =>
+              import("../components/menu/caja/SalidaComponent.vue"),
           },
           {
-            path: 'cerrar-caja',
-            name:'cerrarCaja',
-            component: () => import('../components/CerrarCaja.vue'),
+            path: "verUltimoCierre",
+            component: () =>
+              import("../components/menu/caja/VerUltimoCierreComponent.vue"),
           },
         ],
       },
       {
-        path: 'fichajes',
-        component: () => import('../components/Fichajes.vue'),
+        path: "fichajes",
+        component: () => import("../views/FichajesView.vue"),
       },
       {
-        path: 'pedidos/:codiBotiga/:database',
-        component: () => import('../components/Pedidos.vue'),
-      },
-      {
-        path: 'devoluciones',
-        component: () => import('../components/Devoluciones.vue'),
-      },
-      {
-        path: 'entregas',
-        component: () => import('../components/Entregas.vue'),
+        path: "pedidos",
+        component: () =>
+          import("../components/menu/pedidos/PedidosComponent.vue"),
       },
     ],
-  },
-  {
-    path: '/mesas',
-    name: 'Mesas',
-    component: () => import('../views/Mesas.vue'),
   },
 ];
 
